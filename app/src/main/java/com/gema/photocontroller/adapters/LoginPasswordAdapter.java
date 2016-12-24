@@ -1,12 +1,16 @@
 package com.gema.photocontroller.adapters;
 
+import android.content.Context;
+
+import com.gema.photocontroller.commons.AppPreference;
+
 public class LoginPasswordAdapter {
 
-    final private String login = "logunov";
-    final private String password = "123";
+    private String password;
 
-    public Boolean compareLogin(String login) {
-        return login.equals(this.login);
+    public LoginPasswordAdapter(Context context) {
+        AppPreference preference = new AppPreference(context);
+        this.password = preference.getStringValue("password_app");
     }
 
     public Boolean comparePassword(String password) {

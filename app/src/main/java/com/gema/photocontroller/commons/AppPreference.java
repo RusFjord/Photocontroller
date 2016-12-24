@@ -22,6 +22,8 @@ public class AppPreference {
     private final String REMOTE_LOGIN = "remote_login";
     private final String REMOTE_PASSWORD = "remote_password";
 
+    private final String PASSWORD_APP = "password_app";
+
     public AppPreference(Context context) {
         final String APP_PREFERENCES = "PhotoControllerPreference";
         this.currentPreference = context.getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
@@ -59,6 +61,7 @@ public class AppPreference {
         TelephonyManager telephonyManager = (TelephonyManager)context.getSystemService(context.TELEPHONY_SERVICE);
         String deviceIMEI = telephonyManager.getDeviceId();
         editor.putString(DEVICE_IMEI, deviceIMEI);
+        editor.putString(PASSWORD_APP, "123");
         editor.apply();
     }
 

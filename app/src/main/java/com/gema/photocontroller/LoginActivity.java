@@ -24,11 +24,10 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login);
         setAdapter();
         setUI();
-
     }
 
     private void setAdapter() {
-        adapter = new LoginPasswordAdapter();
+        adapter = new LoginPasswordAdapter(getApplicationContext());
     }
 
     private void setUI() {
@@ -40,33 +39,20 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View view) {
                 int result_text = 0;
-//                final EditText login_edittext = (EditText)findViewById(R.id.login_edittext);
-//                if (login_edittext.getText().toString().equals(""))
-//                {
-//                    result_text = R.string.error_login_required;
-//                }
-//                else
-//                {
                     final EditText password_edittext = (EditText)findViewById(R.id.password_edittext);
-                    if (password_edittext.getText().toString().equals(""))
-                    {
+                    if (password_edittext.getText().toString().equals("")) {
                         result_text = R.string.error_password_required;
                     }
                     else
                     {
-//                        if (adapter.compareLogin(login_edittext.getText().toString())&&adapter.comparePassword(password_edittext.getText().toString())) {
-//
+                        if (adapter.comparePassword(password_edittext.getText().toString())) {
+
                             Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
                             startActivity(intent);
-
-//                        } else {
-//
-//                            result_text = R.string.error_incorrect_credentials;
-//
-//                        }
+                        } else {
+                            result_text = R.string.error_incorrect_credentials;
+                        }
                     }
-//                }
-
                 if (result_text != 0) {
                     Toast.makeText(getApplicationContext(), result_text, Toast.LENGTH_SHORT).show();
                 }
@@ -79,5 +65,4 @@ public class LoginActivity extends Activity {
         String deviceID = preference.getStringValue("device_imei");
         device_id.setText(deviceID);
     }
-
 }
