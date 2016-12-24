@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/image_main_menu"
+        android:layout_gravity="bottom"/>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.gema.photocontroller.MainActivity"
+        android:layout_alignParentBottom="true">
+
+
+
+        <Button
+            android:id="@+id/tasks_btn"
+
+            android:text="@string/tasks_caption"
+            style="@style/BtnFont"
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/main_menu_btn_height"
+            android:background="@drawable/buttonshapeupper"
+            android:layout_marginBottom="@dimen/main_menu_btn_margin_bottom" />
+        <Button
+            android:id="@+id/placement_btn"
+
+            android:text="@string/placement_caption"
+            style="@style/BtnFont"
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/main_menu_btn_height"
+            android:background="@drawable/buttonshapemiddle"
+            android:layout_marginBottom="@dimen/main_menu_btn_margin_bottom" />
+        <Button
+            android:id="@+id/photoreports_btn"
+
+            android:text="@string/photoreports_caption"
+            style="@style/BtnFont"
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/main_menu_btn_height"
+            android:background="@drawable/buttonshapemiddle"
+            android:layout_marginBottom="@dimen/main_menu_btn_margin_bottom" />
+        <Button
+            android:id="@+id/detours_btn"
+
+            android:text="@string/detours_caption"
+            style="@style/BtnFont"
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/main_menu_btn_height"
+            android:background="@drawable/buttonshapemiddle"
+            android:layout_marginBottom="@dimen/main_menu_btn_margin_bottom" />
+        <Button
+            android:id="@+id/journal_btn"
+
+            android:text="@string/journal_caption"
+            style="@style/BtnFont"
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/main_menu_btn_height"
+            android:background="@drawable/buttonshapemiddle"
+            android:layout_marginBottom="@dimen/main_menu_btn_margin_bottom" />
+        <Button
+            android:id="@+id/settings_btn"
+
+            android:text="@string/settings_caption"
+            style="@style/BtnFont"
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/main_menu_btn_height"
+            android:background="@drawable/buttonshapemiddle"
+            android:layout_marginBottom="@dimen/main_menu_btn_margin_bottom" />
+        <Button
+            android:id="@+id/about_btn"
+
+            android:text="@string/about_caption"
+            style="@style/BtnFont"
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/main_menu_btn_height"
+            android:background="@drawable/buttonshapelower"
+            />
+    </LinearLayout>
+</RelativeLayout>

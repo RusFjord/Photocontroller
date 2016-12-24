@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_photoreports"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentBottom="true"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.gema.photocontroller.PhotoreportsActivity">
+
+    <TextView
+        android:id="@+id/photoreports_list_header"
+        style="@style/BtnFont"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_menu_btn_height"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="top"
+        android:layout_marginBottom="@dimen/main_menu_btn_margin_bottom"
+        android:background="@drawable/buttonshapeupper"
+        android:text="@string/header_table_photos"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/change_stations"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/photoreports_list_header"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/caption_place_for_ads"
+        android:padding="@dimen/caption_place_for_ads_padding"
+        android:text="@string/set_metro_station"
+        android:textSize="@dimen/caption_place_for_ads" />
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/change_stations"
+        android:textAlignment="center" />
+
+    <Button
+        android:id="@+id/group_photo_send_btn"
+        style="@style/BtnFont"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_menu_btn_height"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/main_menu_btn_margin_bottom"
+        android:background="@drawable/buttonshapelower"
+        android:text="@string/send_btn" />
+
+    <EditText
+        android:id="@+id/group_photo_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/group_photo_send_btn"
+        android:hint="@string/comments_edit_text" />
+</RelativeLayout>

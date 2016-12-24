@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Фотоконтролер</string>
+    <string name="detours_caption">Объезды</string>
+    <string name="journal_caption">Журнал</string>
+    <string name="photoreports_caption">Фотоотчеты</string>
+    <string name="placement_caption">Размещения</string>
+    <string name="tasks_caption">Задачи</string>
+    <string name="settings_caption">Настройки</string>
+    <string name="about_caption">О приложении</string>
+
+    <string name="error_incorrect_credentials">Учетные данные неверные</string>
+    <string name="error_login_required">Требуется логин</string>
+    <string name="error_password_required">Требуется пароль</string>
+
+    <string name="login_edittext">Логин</string>
+    <string name="password_edittext">Пароль</string>
+    <string name="sign_in_caption">Войти</string>
+
+    <string name="text_about">Приложение Фотоконтролер предназначено для оперативного учета в отделе фотоконтроля. Приложение помогает фотографам компании получить список текущих задач, провести как одиночные снимки, так и серии снимков рекламных материалов, а также отправить результаты на сервер. Разработано ООО Эксперт Консалт ГК Гема. Разработчик: Ендовицкий Федор.</string>
+
+    <string name="button_ok">ОК</string>
+    <string name="button_group_photo">Серия фото</string>
+    <string name="button_one_photo">Одно фото</string>
+    <string name="message_single_or_group">Выберите одно или группа фото</string>
+    <string name="text_group_or_single">Вы будете делать серию фотографий или одну?</string>
+    <string name="tasks_title_pref">Файл задач</string>
+    <string name="tasks_summary_pref">Наименование файла, содержащего задачи</string>
+    <string name="place_for_ads_summary_pref">Наименование файла, содержащего рекламные места</string>
+    <string name="place_for_ads_title_pref">Файл рекламных мест</string>
+    <string name="problems_title_pref">Файл проблем</string>
+    <string name="problems_summary_pref">Наименование файла, содержащего проблемы</string>
+    <string name="ftp_credentials_cat_pref">Настройки доступа FTP</string>
+    <string name="ftp_filenames_cat_pref">Файлы справочников на FTP</string>
+    <string name="ftp_host_summary_pref">Адрес FTP сервера</string>
+    <string name="ftp_login_summary_pref">Имя пользователя FTP сервера</string>
+    <string name="ftp_login_title_pref">Имя пользователя</string>
+    <string name="ftp_password_summary_pref">Пароль пользователя FTP сервера</string>
+    <string name="ftp_password_title_pref">Пароль</string>
+    <string name="ftp_ssh_summary_pref">SSH Key FTP сервера</string>
+    <string name="ftp_ssh_title_pref">SSH Key</string>
+    <string name="ftp_host_title_pref">Хост</string>
+    <string name="get_photo_caption">Галерея</string>
+    <string name="make_photo_caption">Фото</string>
+    <string name="header_table_photos">Список фотографий</string>
+    <string name="send_btn">Отправить</string>
+    <string name="set_place_for_ads">Выберите рекламное место</string>
+    <string name="set_problem">Укажите проблему</string>
+    <string name="comments_edit_text">Комментарии</string>
+    <string name="brand_name_placement_text">Бренд:</string>
+    <string name="id_placement_text">ID размещения:</string>
+    <string name="layout_placement_text">Макет:</string>
+    <string name="place_for_ads_placement_text">Рекламное место:</string>
+    <string name="error_file_not_found">Файл не найден</string>
+    <string name="error_io_read">Ошибка чтения файла</string>
+    <string name="error_io_write">Ошибка записи файла</string>
+    <string name="no_records_in_journal">В журнале нет записей</string>
+    <string name="send_journal_record">Отправление записи журнала</string>
+    <string name="journal_record_was_send">Эта запись уже отправлена</string>
+    <string name="set_metro_station">Выберите станцию метро</string>
+    <string name="placement_summary_pref">Наименование файла, содержащего размещения</string>
+    <string name="placement_title_pref">Файл размещений</string>
+    <string name="stations_summary_pref">Наименование файла, содержащего станции метро</string>
+    <string name="stations_title_pref">Файл станций метро</string>
+    <string name="record_journal_created">Создана запись в журнале</string>
+    <string name="no_placeforads">Необходимо добавить рекламное место</string>
+    <string name="no_station">Необходимо добавить станцию метро</string>
+</resources>

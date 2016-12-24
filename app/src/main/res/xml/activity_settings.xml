@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/ftp_credentials_cat_pref">
+        <EditTextPreference
+            android:summary="@string/ftp_host_summary_pref"
+            android:title="@string/ftp_host_title_pref"
+            android:key="remote_host" />
+        <EditTextPreference
+            android:summary="@string/ftp_login_summary_pref"
+            android:title="@string/ftp_login_title_pref"
+            android:key="remote_login" />
+        <EditTextPreference
+            android:summary="@string/ftp_password_summary_pref"
+            android:title="@string/ftp_password_title_pref"
+            android:key="remote_password" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/ftp_filenames_cat_pref">
+        <EditTextPreference
+            android:summary="@string/tasks_summary_pref"
+            android:title="@string/tasks_title_pref"
+            android:key="tasks_file" />
+        <EditTextPreference
+            android:summary="@string/problems_summary_pref"
+            android:title="@string/problems_title_pref"
+            android:key="problems_file" />
+        <EditTextPreference
+            android:summary="@string/place_for_ads_summary_pref"
+            android:title="@string/place_for_ads_title_pref"
+            android:key="placeforads_file" />
+        <EditTextPreference
+            android:summary="@string/stations_summary_pref"
+            android:title="@string/stations_title_pref"
+            android:key="stations_file" />
+        <EditTextPreference
+            android:summary="@string/placement_summary_pref"
+            android:title="@string/placement_title_pref"
+            android:key="placements_file" />
+        <!--<PreferenceScreen-->
+            <!--android:key="SecondPrefScreen"-->
+            <!--android:title="Second PreferenceScreen"-->
+            <!--android:summary="This is a second PreferenceScreen">-->
+            <!--<EditTextPreference-->
+                <!--android:name="An other EditText AppPreference"-->
+                <!--android:summary="This is a appPreference in the second PreferenceScreen"-->
+                <!--android:title="Edit text"-->
+                <!--android:key="SecondEditTextPref" />-->
+        <!--</PreferenceScreen>-->
+    </PreferenceCategory>
+</PreferenceScreen>

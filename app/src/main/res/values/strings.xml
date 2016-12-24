@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Photocontroler</string>
+    <string name="tasks_caption">Tasks</string>
+    <string name="placement_caption">Placement</string>
+    <string name="photoreports_caption">Photoreports</string>
+    <string name="detours_caption">Detours</string>
+    <string name="journal_caption">Journal</string>
+    <string name="settings_caption">Settings</string>
+    <string name="about_caption">About</string>
+
+    <string name="error_incorrect_credentials">The credentials is incorrect</string>
+    <string name="error_login_required">Login is required</string>
+    <string name="error_password_required">Password is required</string>
+
+    <string name="login_edittext">Login</string>
+    <string name="password_edittext">Password</string>
+    <string name="sign_in_caption">Sign in</string>
+
+    <string name="text_about">The app</string>
+
+    <string name="button_ok">OK</string>
+
+    <string name="error_file_not_found">File not found.</string>
+    <string name="error_io_read">Read file error.</string>
+    <string name="error_io_write">Write file error.</string>
+
+    <string name="button_group_photo">Group photos</string>
+    <string name="button_one_photo">Single photo</string>
+    <string name="message_single_or_group">Choose single or group photo</string>
+    <string name="text_group_or_single">Will do you do a series of photos or one photo?</string>
+    <string name="ftp_credentials_cat_pref">FTP Credentials</string>
+    <string name="ftp_filenames_cat_pref">FTP Filenames</string>
+    <string name="tasks_summary_pref">The name of tasks file</string>
+    <string name="tasks_title_pref">Tasks file</string>
+    <string name="problems_summary_pref">The name of problems file</string>
+    <string name="problems_title_pref">Problems File</string>
+    <string name="place_for_ads_summary_pref">The name of place for ads file</string>
+    <string name="place_for_ads_title_pref">Place for ads file</string>
+    <string name="ftp_host_summary_pref">Host name of FTP</string>
+    <string name="ftp_host_title_pref">Host</string>
+    <string name="ftp_login_summary_pref">Login of FTP</string>
+    <string name="ftp_login_title_pref">Login</string>
+    <string name="ftp_password_summary_pref">Password of FTP</string>
+    <string name="ftp_password_title_pref">Password</string>
+    <string name="ftp_ssh_summary_pref">SSH key of FTP</string>
+    <string name="ftp_ssh_title_pref">SSH Key</string>
+    <string name="make_photo_caption">Photo</string>
+    <string name="get_photo_caption">Gallery</string>
+    <string name="send_btn">Send</string>
+    <string name="header_table_photos">List of photos</string>
+
+    <string name="set_place_for_ads">Set place for ads</string>
+    <string name="set_problem">Set problem</string>
+    <string name="comments_edit_text">Comments</string>
+    <string name="id_placement_text">ID placement:</string>
+    <string name="place_for_ads_placement_text">Place for ads:</string>
+    <string name="brand_name_placement_text">Brand name:</string>
+    <string name="layout_placement_text">Layout:</string>
+    <string name="no_records_in_journal">No records in journal</string>
+    <string name="send_journal_record">Send journal record</string>
+    <string name="journal_record_was_send">The journal record was send</string>
+    <string name="set_metro_station">Set metro station</string>
+    <string name="stations_summary_pref">The name of metro stations file</string>
+    <string name="placement_summary_pref">The name of placement file</string>
+    <string name="stations_title_pref">Metro stations file</string>
+    <string name="placement_title_pref">Placements file</string>
+    <string name="record_journal_created">The record of journal is created</string>
+    <string name="no_station">Add station in record</string>
+    <string name="no_placeforads">Add place for ads in record</string>
+
+</resources>
