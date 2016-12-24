@@ -65,4 +65,5 @@
     <string name="record_journal_created">Создана запись в журнале</string>
     <string name="no_placeforads">Необходимо добавить рекламное место</string>
     <string name="no_station">Необходимо добавить станцию метро</string>
+    <string name="this_is_your_id">Это ваш ID:</string>
 </resources>

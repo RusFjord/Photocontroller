@@ -68,5 +68,6 @@
     <string name="record_journal_created">The record of journal is created</string>
     <string name="no_station">Add station in record</string>
     <string name="no_placeforads">Add place for ads in record</string>
+    <string name="this_is_your_id">This is your ID:</string>
 
 </resources>

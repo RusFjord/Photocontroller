@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gema.photocontroller.adapters.LoginPasswordAdapter;
 import com.gema.photocontroller.application.Photocontroler;
+import com.gema.photocontroller.commons.AppPreference;
 
 public class LoginActivity extends Activity {
 
@@ -21,14 +23,15 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setAdapter();
-        setButtons();
+        setUI();
+
     }
 
     private void setAdapter() {
         adapter = new LoginPasswordAdapter();
     }
 
-    private void setButtons() {
+    private void setUI() {
 
         final Button sign_in_btn = (Button)findViewById(R.id.sign_in_btn);
         Typeface typeface = Photocontroler.getFont(getApplicationContext());
@@ -37,13 +40,13 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View view) {
                 int result_text = 0;
-                final EditText login_edittext = (EditText)findViewById(R.id.login_edittext);
-                if (login_edittext.getText().toString().equals(""))
-                {
-                    result_text = R.string.error_login_required;
-                }
-                else
-                {
+//                final EditText login_edittext = (EditText)findViewById(R.id.login_edittext);
+//                if (login_edittext.getText().toString().equals(""))
+//                {
+//                    result_text = R.string.error_login_required;
+//                }
+//                else
+//                {
                     final EditText password_edittext = (EditText)findViewById(R.id.password_edittext);
                     if (password_edittext.getText().toString().equals(""))
                     {
@@ -51,24 +54,30 @@ public class LoginActivity extends Activity {
                     }
                     else
                     {
-                        if (adapter.compareLogin(login_edittext.getText().toString())&&adapter.comparePassword(password_edittext.getText().toString())) {
-
+//                        if (adapter.compareLogin(login_edittext.getText().toString())&&adapter.comparePassword(password_edittext.getText().toString())) {
+//
                             Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
                             startActivity(intent);
 
-                        } else {
-
-                            result_text = R.string.error_incorrect_credentials;
-
-                        }
+//                        } else {
+//
+//                            result_text = R.string.error_incorrect_credentials;
+//
+//                        }
                     }
-                }
+//                }
 
                 if (result_text != 0) {
                     Toast.makeText(getApplicationContext(), result_text, Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+        final TextView device_id = (TextView) findViewById(R.id.device_id);
+        device_id.setTypeface(typeface);
+        AppPreference preference = new AppPreference(getApplicationContext());
+        String deviceID = preference.getStringValue("device_imei");
+        device_id.setText(deviceID);
     }
 
 }
