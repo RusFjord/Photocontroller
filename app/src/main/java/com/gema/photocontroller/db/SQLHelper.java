@@ -1,8 +1,12 @@
 package com.gema.photocontroller.db;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SQLHelper extends SQLiteOpenHelper {
 
@@ -33,16 +37,25 @@ public class SQLHelper extends SQLiteOpenHelper {
                 + PhotoControllerContract.JournalEntry.COLUMN_IS_SEND + " INTEGER NOT NULL DEFAULT 0, "
                 + PhotoControllerContract.JournalEntry.COLUMN_TYPE + " TEXT NOT NULL, "
                 + PhotoControllerContract.JournalEntry.COLUMN_STATION + " INTEGER NOT NULL DEFAULT 0, "
-                + PhotoControllerContract.JournalEntry.COLUMN_WAGON + " INTEGER NOT NULL DEFAULT 0, "
+              //  + PhotoControllerContract.JournalEntry.COLUMN_WAGON + " INTEGER NOT NULL DEFAULT 0, "
                 + PhotoControllerContract.JournalEntry.COLUMN_PROBLEM + " INTEGER NOT NULL DEFAULT 0,"
                 + PhotoControllerContract.JournalEntry.COLUMN_COMMENT + " TEXT NOT NULL);";
 
-        // Запускаем создание таблицы
         db.execSQL(SQL_CREATE_JOURNAL_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+        Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
+        List<String> tables = new ArrayList<>();
+        while (c.moveToNext()) {
+            tables.add(c.getString(0));
+        }
+        for (String table : tables) {
+            String dropQuery = "DROP TABLE IF EXISTS " + table;
+            db.execSQL(dropQuery);
+        }
+        onCreate(db);
     }
 }
