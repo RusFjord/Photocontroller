@@ -4,21 +4,27 @@ import org.json.JSONObject;
 
 public class PlaceForAds {
 
-    private String id;
+    private int id;
+    private String code;
     private String name;
 
-    public PlaceForAds(String id, String name) {
+    public PlaceForAds(int id, String code, String name) {
         this.id = id;
+        this.code = code;
         this.name = name;
     }
 
     public PlaceForAds(JSONObject jsonObject) throws Exception {
-        this.id = jsonObject.getString("id");
+        this.code = jsonObject.getString("id");
         this.name = jsonObject.getString("name");
     }
 
-    public String getId() {
+    public int getId() {
         return this.id;
+    }
+
+    public String getCode() {
+        return this.code;
     }
 
     public String getName() {
