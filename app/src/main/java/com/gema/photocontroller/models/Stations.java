@@ -48,6 +48,7 @@ public class Stations {
     }
 
     public ContentValues getContentValues() {
+
         ContentValues contentValues = new ContentValues();
         contentValues.put(PhotoControllerContract.StationsEntry.COLUMN_CODE, this.code);
         contentValues.put(PhotoControllerContract.StationsEntry.COLUMN_NAME, this.name);

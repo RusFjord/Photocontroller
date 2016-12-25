@@ -1,5 +1,7 @@
 package com.gema.photocontroller.models;
 
+import com.gema.photocontroller.db.PhotoControllerContract;
+
 import org.json.JSONObject;
 
 public class PlacementPlace {
@@ -17,10 +19,11 @@ public class PlacementPlace {
     }
 
     public PlacementPlace(String[] data) {
-        this.placeForAds = new PlaceForAds(data[1], data[2]);
+
         this.id = data[0];
-        this.brandName = data[3];
-        this.layout = data[4];
+        this.placeForAds = PhotoControllerContract.PlaceForAdsEntry.getOneEntry(Integer.valueOf(data[1]));
+        this.brandName = data[2];
+        this.layout = data[3];
     }
 
     public PlacementPlace(JSONObject jsonObject) {

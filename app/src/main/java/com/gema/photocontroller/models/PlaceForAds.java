@@ -1,5 +1,9 @@
 package com.gema.photocontroller.models;
 
+import android.content.ContentValues;
+
+import com.gema.photocontroller.db.PhotoControllerContract;
+
 import org.json.JSONObject;
 
 public class PlaceForAds {
@@ -40,5 +44,13 @@ public class PlaceForAds {
             e.getStackTrace();
         }
         return placeForAdsJSON;
+    }
+
+    public ContentValues getContentValues() {
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(PhotoControllerContract.PlaceForAdsEntry.COLUMN_CODE, this.code);
+        contentValues.put(PhotoControllerContract.PlaceForAdsEntry.COLUMN_NAME, this.name);
+        return contentValues;
     }
 }

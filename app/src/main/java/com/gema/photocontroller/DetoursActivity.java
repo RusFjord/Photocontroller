@@ -132,8 +132,11 @@ public class DetoursActivity extends Activity {
 
             } else if (requestCode == PLACEFORADS_REQUEST) {
                 try {
-                    this.placeForAds = new PlaceForAds(data.getStringArrayExtra("data")[0], data.getStringArrayExtra("data")[1]);
-                    placeForAdsTextView.setText(this.placeForAds.getName());
+                    PlaceForAds placeForAds = PhotoControllerContract.PlaceForAdsEntry.getOneEntry(data.getIntExtra("data", 0));
+                    if (placeForAds != null) {
+                        this.placeForAds = placeForAds;
+                        placeForAdsTextView.setText(this.placeForAds.getName());
+                    }
                 } catch (Exception e) {
                     Log.e("PLACEFORADS_REQUEST", "Невозможно получить рекламное место");
                 }

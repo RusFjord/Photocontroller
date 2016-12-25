@@ -36,7 +36,7 @@ public class PlaceForAdsAdapter extends ArrayAdapter<PlaceForAds> implements Fil
                     .inflate(R.layout.list_placeforads, null);
         }
         ((TextView) convertView.findViewById(R.id.id_placeforads))
-                .setText(placeForAds.getId());
+                .setText(placeForAds.getCode());
         ((TextView) convertView.findViewById(R.id.name_placeforads))
                 .setText(placeForAds.getName());
         return convertView;
@@ -83,7 +83,7 @@ public class PlaceForAdsAdapter extends ArrayAdapter<PlaceForAds> implements Fil
 
             for (int i = 0; i < count; i++) {
                 PlaceForAds element = list.get(i);
-                if (element.getId().toLowerCase().contains(filterString)) {
+                if (element.getCode().toLowerCase().contains(filterString)) {
                     nlist.add(element);
                 }
             }

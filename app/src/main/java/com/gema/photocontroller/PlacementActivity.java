@@ -37,14 +37,13 @@ public class PlacementActivity extends ListActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
                 PlacementAdapter placementAdapter = (PlacementAdapter) adapter;
                 //Toast.makeText(getApplicationContext(), placementAdapter.getElement(pos).getPlaceForAds(), Toast.LENGTH_SHORT).show();
-                String[] data = new String[5];
+                String[] data = new String[4];
                 PlacementPlace place = placementAdapter.getItem(pos);
                 data[0] = place.getId();
                 //PlaceForAds placeForAds = new PlaceForAds()
-                data[1] = place.getPlaceForAds().getId();
-                data[2] = place.getPlaceForAds().getName();
-                data[3] = place.getBrandName();
-                data[4] = place.getLayout();
+                data[1] = String.valueOf(place.getPlaceForAds().getId());
+                data[2] = place.getBrandName();
+                data[3] = place.getLayout();
                 Intent intent = new Intent(getApplicationContext(), ShowPlacement.class);
                 intent.putExtra("data", data);
                 startActivityForResult(intent, PLACEMENT_SHOW);

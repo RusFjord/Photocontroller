@@ -34,13 +34,13 @@ public class PlaceForAdsActivity extends ListActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
                 PlaceForAdsAdapter placeForAdsAdapter = (PlaceForAdsAdapter) adapter;
-                PlaceForAds current = placeForAdsAdapter.getElement(pos);
-                String[] data = new String[2];
-                data[0] = current.getId();
-                data[1] = current.getName();
+//                PlaceForAds current = placeForAdsAdapter.getElement(pos);
+//                String[] data = new String[2];
+//                data[0] = current.getId();
+//                data[1] = current.getName();
 
                 Intent intent = getIntent();
-                intent.putExtra("data", data);
+                intent.putExtra("data", placeForAdsAdapter.getItem(pos).getId());
                 setResult(RESULT_OK, intent);
                 finish();
             }

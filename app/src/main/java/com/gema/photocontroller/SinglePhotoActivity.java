@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.gema.photocontroller.application.Photocontroler;
 import com.gema.photocontroller.commons.JournalList;
+import com.gema.photocontroller.db.PhotoControllerContract;
 import com.gema.photocontroller.models.JournalRecord;
 import com.gema.photocontroller.commons.PhotoHelper;
 import com.gema.photocontroller.models.PlaceForAds;
@@ -114,8 +115,13 @@ public class SinglePhotoActivity extends Activity {
 
             } else if (requestCode == PLACEFORADS_REQUEST) {
                 try {
-                    this.placeForAds = new PlaceForAds(data.getStringArrayExtra("data")[0], data.getStringArrayExtra("data")[1]);
-                    placeForAdsTextView.setText(this.placeForAds.getName());
+                    PlaceForAds placeForAds = PhotoControllerContract.PlaceForAdsEntry.getOneEntry(data.getIntExtra("data", 0));
+                    if (placeForAds != null) {
+                        this.placeForAds = placeForAds;
+                        placeForAdsTextView.setText(this.placeForAds.getName());
+                    }
+//                    this.placeForAds = new PlaceForAds(data.getStringArrayExtra("data")[0], data.getStringArrayExtra("data")[1]);
+//                    placeForAdsTextView.setText(this.placeForAds.getName());
                 } catch (Exception e) {
                     e.getStackTrace();
                 }
