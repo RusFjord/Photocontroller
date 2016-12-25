@@ -20,14 +20,7 @@ public class SQLHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    /*public final static String _ID = BaseColumns._ID;
-        public final static String COLUMN_DATE = "date";
-        public final static String COLUMN_IS_SEND = "is_send";
-        public final static String COLUMN_TYPE = "type";
-        public final static String COLUMN_STATION = "station";
-        public final static String COLUMN_WAGON = "wagon";
-        public final static String COLUMN_PROBLEM = "problem";
-        public final static String COLUMN_COMMENT = "comment";*/
+    /**/
     @Override
     public void onCreate(SQLiteDatabase db) {
         List<String> tables = new ArrayList<>();
@@ -59,6 +52,12 @@ public class SQLHelper extends SQLiteOpenHelper {
                 + PhotoControllerContract.FilesMd5Entry.COLUMN_FILENAME + " TEXT NOT NULL, "
                 + PhotoControllerContract.FilesMd5Entry.COLUMN_MD5 + " TEXT NOT NULL);";
         tables.add(SQL_CREATE_FILESMD5_TABLE);
+
+        String SQL_CREATE_PLACEFORADS_TABLE = "CREATE TABLE IF NOT EXISTS " + PhotoControllerContract.PlaceForAdsEntry.TABLE_NAME + " ("
+                + PhotoControllerContract.PlaceForAdsEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + PhotoControllerContract.PlaceForAdsEntry.COLUMN_CODE + " TEXT NOT NULL, "
+                + PhotoControllerContract.PlaceForAdsEntry.COLUMN_NAME + " TEXT NOT NULL);";
+        tables.add(SQL_CREATE_PLACEFORADS_TABLE);
 
         for (String table : tables) {
             db.execSQL(table);
