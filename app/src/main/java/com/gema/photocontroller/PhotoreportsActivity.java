@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.gema.photocontroller.adapters.PhotoreportsAdapter;
 import com.gema.photocontroller.application.Photocontroler;
 import com.gema.photocontroller.commons.JournalList;
+import com.gema.photocontroller.db.PhotoControllerContract;
 import com.gema.photocontroller.models.JournalRecord;
 import com.gema.photocontroller.commons.PhotoHelper;
 import com.gema.photocontroller.models.Stations;
@@ -161,8 +162,12 @@ public class PhotoreportsActivity extends ListActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == STATIONS_REQUEST) {
                 try {
-                    this.station = new Stations(data.getStringArrayExtra("data")[0], data.getStringArrayExtra("data")[1]);
-                    this.change_stations.setText(this.station.getName());
+                    //this.station = new Stations(data.getStringArrayExtra("data")[0], data.getStringArrayExtra("data")[1]);
+                    Stations station = PhotoControllerContract.StationsEntry.getOneEntry(data.getIntExtra("data", 0));
+                    if (station != null) {
+                        this.station = station;
+                        change_stations.setText(this.station.getName());
+                    }
                 } catch (Exception e) {
                     Log.e("STATIONS_REQUEST", "Невозможно получить станцию метро");
                 }

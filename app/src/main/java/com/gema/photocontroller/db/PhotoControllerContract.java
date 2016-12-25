@@ -6,6 +6,7 @@ import android.provider.BaseColumns;
 
 import com.gema.photocontroller.application.Photocontroler;
 import com.gema.photocontroller.models.Problems;
+import com.gema.photocontroller.models.Stations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,10 +99,10 @@ public final class PhotoControllerContract {
         public static ArrayList<Problems> getAllEntries() {
             SQLiteDatabase db = Photocontroler.getDb();
             ArrayList<Problems> list = new ArrayList<>();
-            try (Cursor cursor = db.query(PhotoControllerContract.ProblemsEntry.TABLE_NAME, null, null, null, null, null, null)) {
-                int idColumnIndex = cursor.getColumnIndex(PhotoControllerContract.ProblemsEntry._ID);
-                int nameColumnIndex = cursor.getColumnIndex(PhotoControllerContract.ProblemsEntry.COLUMN_NAME);
-                int codeColumnIndex = cursor.getColumnIndex(PhotoControllerContract.ProblemsEntry.COLUMN_CODE);
+            try (Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, null)) {
+                int idColumnIndex = cursor.getColumnIndex(_ID);
+                int nameColumnIndex = cursor.getColumnIndex(COLUMN_NAME);
+                int codeColumnIndex = cursor.getColumnIndex(COLUMN_CODE);
 
                 while (cursor.moveToNext()) {
                     // Используем индекс для получения строки или числа
@@ -116,11 +117,91 @@ public final class PhotoControllerContract {
     }
 
     public static final class StationsEntry implements BaseColumns {
+
         public final static String TABLE_NAME = "stations";
 
         public final static String _ID = BaseColumns._ID;
         public final static String COLUMN_CODE = "code";
         public final static String COLUMN_NAME = "name";
+
+        public static Stations getOneEntry(int id) {
+            SQLiteDatabase db = Photocontroler.getDb();
+            String[] projection = {
+                    _ID,
+                    COLUMN_CODE,
+                    COLUMN_NAME };
+            String selection = _ID + " = ?";
+            String[] selectionArgs = {String.valueOf(id)};
+            Stations station = null;
+            try (Cursor cursor = db.query(
+                    TABLE_NAME,   // таблица
+                    projection,            // столбцы
+                    selection,                  // столбцы для условия WHERE
+                    selectionArgs,                  // значения для условия WHERE
+                    null,                  // Don't group the rows
+                    null,                  // Don't filter by row groups
+                    null)) {
+                int idColumnIndex = cursor.getColumnIndex(_ID);
+                int nameColumnIndex = cursor.getColumnIndex(COLUMN_NAME);
+                int codeColumnIndex = cursor.getColumnIndex(COLUMN_CODE);
+                if (cursor.moveToNext()) {
+                    int currentID = cursor.getInt(idColumnIndex);
+                    String currentName = cursor.getString(nameColumnIndex);
+                    String currentCode = cursor.getString(codeColumnIndex);
+                    station = new Stations(currentID, currentCode, currentName);
+                }
+            }
+            return station;
+        }
+
+        public static Stations getOneEntry(String code) {
+            SQLiteDatabase db = Photocontroler.getDb();
+            String[] projection = {
+                    _ID,
+                    COLUMN_CODE,
+                    COLUMN_NAME };
+            String selection = COLUMN_CODE + " = ?";
+            String[] selectionArgs = {code};
+            Stations station = null;
+            try (Cursor cursor = db.query(
+                    TABLE_NAME,   // таблица
+                    projection,            // столбцы
+                    selection,                  // столбцы для условия WHERE
+                    selectionArgs,                  // значения для условия WHERE
+                    null,                  // Don't group the rows
+                    null,                  // Don't filter by row groups
+                    null)) {
+                int idColumnIndex = cursor.getColumnIndex(_ID);
+                int nameColumnIndex = cursor.getColumnIndex(COLUMN_NAME);
+                int codeColumnIndex = cursor.getColumnIndex(COLUMN_CODE);
+                if (cursor.moveToNext()) {
+                    int currentID = cursor.getInt(idColumnIndex);
+                    String currentName = cursor.getString(nameColumnIndex);
+                    String currentCode = cursor.getString(codeColumnIndex);
+                    station = new Stations(currentID, currentCode, currentName);
+                }
+            }
+            return station;
+        }
+
+        public static ArrayList<Stations> getAllEntries() {
+            SQLiteDatabase db = Photocontroler.getDb();
+            ArrayList<Stations> list = new ArrayList<>();
+            try (Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, null)) {
+                int idColumnIndex = cursor.getColumnIndex(_ID);
+                int nameColumnIndex = cursor.getColumnIndex(COLUMN_NAME);
+                int codeColumnIndex = cursor.getColumnIndex(COLUMN_CODE);
+
+                while (cursor.moveToNext()) {
+                    // Используем индекс для получения строки или числа
+                    int currentID = cursor.getInt(idColumnIndex);
+                    String currentName = cursor.getString(nameColumnIndex);
+                    String currentCode = cursor.getString(codeColumnIndex);
+                    list.add(new Stations(currentID, currentCode, currentName));
+                }
+            }
+            return list;
+        }
     }
 
     public static final class FilesMd5Entry implements BaseColumns {

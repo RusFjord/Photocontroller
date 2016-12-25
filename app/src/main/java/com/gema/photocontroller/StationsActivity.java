@@ -34,11 +34,11 @@ public class StationsActivity extends ListActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
                 StationsAdapter stationsAdapter = (StationsAdapter) adapter;
-                String[] data = new String[2];
-                data[0] = stationsAdapter.getItem(pos).getId();
-                data[1] = stationsAdapter.getItem(pos).getName();
+//                String[] data = new String[2];
+//                data[0] = stationsAdapter.getItem(pos).getId();
+//                data[1] = stationsAdapter.getItem(pos).getName();
                 Intent intent = getIntent();
-                intent.putExtra("data", data);
+                intent.putExtra("data", stationsAdapter.getItem(pos).getId());
                 setResult(RESULT_OK, intent);
                 finish();
             }
