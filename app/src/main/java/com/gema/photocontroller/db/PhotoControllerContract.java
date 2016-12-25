@@ -24,7 +24,7 @@ public final class PhotoControllerContract {
         public final static String COLUMN_IS_SEND = "is_send";
         public final static String COLUMN_TYPE = "type";
         public final static String COLUMN_STATION = "station";
-        public final static String COLUMN_WAGON = "wagon";
+        //public final static String COLUMN_WAGON = "wagon";
         public final static String COLUMN_PROBLEM = "problem";
         public final static String COLUMN_COMMENT = "comment";
     }

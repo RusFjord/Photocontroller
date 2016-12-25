@@ -30,7 +30,7 @@ public class SQLHelper extends SQLiteOpenHelper {
         public final static String COLUMN_COMMENT = "comment";*/
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Строка для создания таблицы
+        List<String> tables = new ArrayList<>();
         String SQL_CREATE_JOURNAL_TABLE = "CREATE TABLE " + PhotoControllerContract.JournalEntry.TABLE_NAME + " ("
                 + PhotoControllerContract.JournalEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + PhotoControllerContract.JournalEntry.COLUMN_DATE + " TEXT NOT NULL, "
@@ -40,8 +40,23 @@ public class SQLHelper extends SQLiteOpenHelper {
               //  + PhotoControllerContract.JournalEntry.COLUMN_WAGON + " INTEGER NOT NULL DEFAULT 0, "
                 + PhotoControllerContract.JournalEntry.COLUMN_PROBLEM + " INTEGER NOT NULL DEFAULT 0,"
                 + PhotoControllerContract.JournalEntry.COLUMN_COMMENT + " TEXT NOT NULL);";
+        tables.add(SQL_CREATE_JOURNAL_TABLE);
 
-        db.execSQL(SQL_CREATE_JOURNAL_TABLE);
+        String SQL_CREATE_PROBLEMS_TABLE = "CREATE TABLE " + PhotoControllerContract.ProblemsEntry.TABLE_NAME + " ("
+                + PhotoControllerContract.ProblemsEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + PhotoControllerContract.ProblemsEntry.COLUMN_CODE + " TEXT NOT NULL, "
+                + PhotoControllerContract.ProblemsEntry.COLUMN_NAME + " TEXT NOT NULL);";
+        tables.add(SQL_CREATE_PROBLEMS_TABLE);
+
+        String SQL_CREATE_STATIONS_TABLE = "CREATE TABLE " + PhotoControllerContract.StationsEntry.TABLE_NAME + " ("
+                + PhotoControllerContract.StationsEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + PhotoControllerContract.StationsEntry.COLUMN_CODE + " TEXT NOT NULL, "
+                + PhotoControllerContract.StationsEntry.COLUMN_NAME + " TEXT NOT NULL);";
+        tables.add(SQL_CREATE_STATIONS_TABLE);
+
+        for (String table : tables) {
+            db.execSQL(table);
+        }
     }
 
     @Override
