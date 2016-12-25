@@ -38,8 +38,6 @@ public class JournalRecord extends WorkFiles implements Comparable{
         this();
         this.date = new Date();
         this.type = type;
-//        this.placeForAds = null;
-//        this.problem = null;
     }
 
     public JournalRecord(String type, PlaceForAds placeForAds, File photo) {
@@ -79,7 +77,9 @@ public class JournalRecord extends WorkFiles implements Comparable{
                 JSONObject problemJSON = jsonObject.getJSONObject("problem");
                 this.problem = new Problems(problemJSON);
             }
-            this.comment = jsonObject.getString("comment");
+            if (jsonObject.has("comment")) {
+                this.comment = jsonObject.getString("comment");
+            }
             this.isSend = jsonObject.getBoolean("isSend");
             JSONArray filesJSON = jsonObject.getJSONArray("files");
             for (int i = 0; i < filesJSON.length(); i++) {
