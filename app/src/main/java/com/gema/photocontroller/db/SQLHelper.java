@@ -31,7 +31,7 @@ public class SQLHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         List<String> tables = new ArrayList<>();
-        String SQL_CREATE_JOURNAL_TABLE = "CREATE TABLE " + PhotoControllerContract.JournalEntry.TABLE_NAME + " ("
+        String SQL_CREATE_JOURNAL_TABLE = "CREATE TABLE IF NOT EXISTS " + PhotoControllerContract.JournalEntry.TABLE_NAME + " ("
                 + PhotoControllerContract.JournalEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + PhotoControllerContract.JournalEntry.COLUMN_DATE + " TEXT NOT NULL, "
                 + PhotoControllerContract.JournalEntry.COLUMN_IS_SEND + " INTEGER NOT NULL DEFAULT 0, "
@@ -42,17 +42,23 @@ public class SQLHelper extends SQLiteOpenHelper {
                 + PhotoControllerContract.JournalEntry.COLUMN_COMMENT + " TEXT NOT NULL);";
         tables.add(SQL_CREATE_JOURNAL_TABLE);
 
-        String SQL_CREATE_PROBLEMS_TABLE = "CREATE TABLE " + PhotoControllerContract.ProblemsEntry.TABLE_NAME + " ("
+        String SQL_CREATE_PROBLEMS_TABLE = "CREATE TABLE IF NOT EXISTS " + PhotoControllerContract.ProblemsEntry.TABLE_NAME + " ("
                 + PhotoControllerContract.ProblemsEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + PhotoControllerContract.ProblemsEntry.COLUMN_CODE + " TEXT NOT NULL, "
                 + PhotoControllerContract.ProblemsEntry.COLUMN_NAME + " TEXT NOT NULL);";
         tables.add(SQL_CREATE_PROBLEMS_TABLE);
 
-        String SQL_CREATE_STATIONS_TABLE = "CREATE TABLE " + PhotoControllerContract.StationsEntry.TABLE_NAME + " ("
+        String SQL_CREATE_STATIONS_TABLE = "CREATE TABLE IF NOT EXISTS " + PhotoControllerContract.StationsEntry.TABLE_NAME + " ("
                 + PhotoControllerContract.StationsEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + PhotoControllerContract.StationsEntry.COLUMN_CODE + " TEXT NOT NULL, "
                 + PhotoControllerContract.StationsEntry.COLUMN_NAME + " TEXT NOT NULL);";
         tables.add(SQL_CREATE_STATIONS_TABLE);
+
+        String SQL_CREATE_FILESMD5_TABLE = "CREATE TABLE IF NOT EXISTS " + PhotoControllerContract.FilesMd5Entry.TABLE_NAME + " ("
+                + PhotoControllerContract.FilesMd5Entry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + PhotoControllerContract.FilesMd5Entry.COLUMN_FILENAME + " TEXT NOT NULL, "
+                + PhotoControllerContract.FilesMd5Entry.COLUMN_MD5 + " TEXT NOT NULL);";
+        tables.add(SQL_CREATE_FILESMD5_TABLE);
 
         for (String table : tables) {
             db.execSQL(table);

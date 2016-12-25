@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.gema.photocontroller.application.Photocontroler;
 import com.gema.photocontroller.commons.JournalList;
+import com.gema.photocontroller.db.PhotoControllerContract;
 import com.gema.photocontroller.models.JournalRecord;
 import com.gema.photocontroller.commons.PhotoHelper;
 import com.gema.photocontroller.models.PlaceForAds;
@@ -139,8 +140,11 @@ public class DetoursActivity extends Activity {
 
             } else if (requestCode == PROBLEMS_REQUEST) {
                 try {
-                    this.problem = new Problems(data.getStringArrayExtra("data")[0], data.getStringArrayExtra("data")[1]);
-                    problemsTextView.setText(this.problem.getName());
+                    Problems problem = PhotoControllerContract.ProblemsEntry.getOneEntry(data.getIntExtra("data", 0));
+                    if (problem != null) {
+                        this.problem = problem;
+                        problemsTextView.setText(this.problem.getName());
+                    }
                 } catch (Exception e) {
                     e.getStackTrace();
                 }

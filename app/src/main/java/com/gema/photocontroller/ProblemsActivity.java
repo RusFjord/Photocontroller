@@ -36,11 +36,11 @@ public class ProblemsActivity extends ListActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
                 ProblemsAdapter problemsAdapter = (ProblemsAdapter) adapter;
                 //Toast.makeText(getApplicationContext(), problemsAdapter.getItem(pos).getName(), Toast.LENGTH_SHORT).show();
-                String[] data = new String[2];
-                data[0] = problemsAdapter.getItem(pos).getId();
-                data[1] = problemsAdapter.getItem(pos).getName();
+                //String[] data = new String[2];
+                //data[0] = problemsAdapter.getItem(pos).getId();
+                //data[1] = problemsAdapter.getItem(pos).getName();
                 Intent intent = getIntent();
-                intent.putExtra("data", data);
+                intent.putExtra("data", problemsAdapter.getItem(pos).getId());
                 setResult(RESULT_OK, intent);
                 finish();
             }
