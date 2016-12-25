@@ -39,7 +39,7 @@ public class ProblemsList extends WorkFiles {
 
     private void updateTable(SQLiteDatabase db, String fileList) {
 
-        String dropQuery = "DELETE FROM " + PhotoControllerContract.FilesMd5Entry.TABLE_NAME + "; VACUUM;";
+        String dropQuery = "DELETE FROM " + PhotoControllerContract.ProblemsEntry.TABLE_NAME + "; VACUUM;";
         db.execSQL(dropQuery);
         try {
             JSONObject dataJson = new JSONObject(fileList);

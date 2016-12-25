@@ -53,7 +53,7 @@ public class Problems {
 
     public ContentValues getContentValues() {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(PhotoControllerContract.ProblemsEntry.COLUMN_CODE, this.id);
+        contentValues.put(PhotoControllerContract.ProblemsEntry.COLUMN_CODE, this.code);
         contentValues.put(PhotoControllerContract.ProblemsEntry.COLUMN_NAME, this.name);
         return contentValues;
     }
