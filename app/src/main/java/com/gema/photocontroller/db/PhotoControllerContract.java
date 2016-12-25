@@ -16,6 +16,7 @@ public final class PhotoControllerContract {
     private Problems problem;*/
 
     public static final class JournalEntry implements BaseColumns {
+
         public final static String TABLE_NAME = "journal";
 
         public final static String _ID = BaseColumns._ID;
@@ -26,8 +27,21 @@ public final class PhotoControllerContract {
         public final static String COLUMN_WAGON = "wagon";
         public final static String COLUMN_PROBLEM = "problem";
         public final static String COLUMN_COMMENT = "comment";
-
-
     }
 
+    public static final class ProblemsEntry implements BaseColumns {
+        public final static String TABLE_NAME = "problems";
+
+        public final static String _ID = BaseColumns._ID;
+        public final static String COLUMN_CODE = "code";
+        public final static String COLUMN_NAME = "name";
+    }
+
+    public static final class StationsEntry implements BaseColumns {
+        public final static String TABLE_NAME = "stations";
+
+        public final static String _ID = BaseColumns._ID;
+        public final static String COLUMN_CODE = "code";
+        public final static String COLUMN_NAME = "name";
+    }
 }
