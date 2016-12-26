@@ -1,7 +1,13 @@
 package com.gema.photocontroller.commons;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
+import com.gema.photocontroller.application.Photocontroler;
+import com.gema.photocontroller.db.PhotoControllerContract;
 import com.gema.photocontroller.files.WorkFiles;
 import com.gema.photocontroller.models.JournalRecord;
 
@@ -25,24 +31,25 @@ public class JournalList extends WorkFiles {
     private void prepareList(Context context) {
 
         String fileList = super.ReadFile(context);
-        if (fileList != null) {
-            try {
-                JSONObject dataJson = new JSONObject(fileList);
-                //Log.d("JSON", dataJson.toString());
-                JSONArray records = dataJson.getJSONArray("journal");
-                for (int i = 0; i < records.length(); i++) {
-                    JSONObject record = records.getJSONObject(i);
-                    list.add(new JournalRecord(record));
-                }
+//        if (fileList != null) {
+//            try {
+//                JSONObject dataJson = new JSONObject(fileList);
+//                //Log.d("JSON", dataJson.toString());
+//                JSONArray records = dataJson.getJSONArray("journal");
+//                for (int i = 0; i < records.length(); i++) {
+//                    JSONObject record = records.getJSONObject(i);
+//                    list.add(new JournalRecord(record));
+//                }
+//
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
+        this.list = PhotoControllerContract.JournalEntry.getAllEntries();
     }
 
-    public void writeJSONArrayIntoFile(Context context) {
+   public void writeJSONArrayIntoFile(Context context) {
 
         JSONObject journalJSON = new JSONObject();
         try {
