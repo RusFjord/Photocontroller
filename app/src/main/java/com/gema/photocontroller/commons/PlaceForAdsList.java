@@ -20,15 +20,15 @@ public class PlaceForAdsList extends WorkFiles{
 
     private final String FILENAME = "placeforads.json";
 
-    private ArrayList<PlaceForAds> list;
+    //private ArrayList<PlaceForAds> list;
 
     public PlaceForAdsList(Context context, String filename) {
         super(filename);
-        list = new ArrayList<PlaceForAds>();
-        prepareList(context);
+        //list = new ArrayList<PlaceForAds>();
+        //prepareList(context);
     }
 
-    private void prepareList(Context context) {
+    public void prepareList(Context context) {
 
         //String fileList = super.ReadFile(context);
         String fileList = super.ReadFile(context);
@@ -37,7 +37,7 @@ public class PlaceForAdsList extends WorkFiles{
         if (!md5Equals(db, fileList)) {
             updateTable(db, fileList);
         }
-        this.list = PhotoControllerContract.PlaceForAdsEntry.getAllEntries();
+        //this.list = PhotoControllerContract.PlaceForAdsEntry.getAllEntries();
 
 //        try {
 //            JSONObject dataJson = new JSONObject(fileList);
@@ -107,8 +107,8 @@ public class PlaceForAdsList extends WorkFiles{
         return result;
     }
 
-    public ArrayList<PlaceForAds> getList() {
-        return list;
-    }
+//    public ArrayList<PlaceForAds> getList() {
+//        return list;
+//    }
 
 }

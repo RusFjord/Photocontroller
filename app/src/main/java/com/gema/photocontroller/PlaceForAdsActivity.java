@@ -32,6 +32,9 @@ public class PlaceForAdsActivity extends ListActivity {
 
     private void getPlaceForAds() {
 
+        PlaceForAdsList updateList = new PlaceForAdsList(this, "placeforads.json");
+        updateList.prepareList(this);
+
         Cursor cursor = PhotoControllerContract.PlaceForAdsEntry.getAllEntriesCursor();
         if (cursor == null) {
             Log.e("CURSOR PLACEFORADS", "Ошибка получения данных рекламных мест");
