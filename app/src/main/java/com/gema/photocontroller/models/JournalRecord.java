@@ -21,6 +21,7 @@ public class JournalRecord extends WorkFiles implements Comparable{
 
     private final String DIRNAME_RESULT = "uploads/app/result/";
 
+    private int id;
     private Date date;
     private PlaceForAds placeForAds;
     private ArrayList<File> files = new ArrayList<>();
@@ -123,6 +124,10 @@ public class JournalRecord extends WorkFiles implements Comparable{
             e.getStackTrace();
         }
         return recordJSON;
+    }
+
+    public int getId() {
+        return this.id;
     }
 
     public Date getDate() {
