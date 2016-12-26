@@ -98,9 +98,45 @@ public class JournalRecord extends WorkFiles implements Comparable{
         }
     }
 
+        /*private int id;
+    private Date date;
+    private PlaceForAds placeForAds;
+    private ArrayList<File> files = new ArrayList<>();
+    private boolean isSend = false;
+    private String type;
+    private Stations station;
+    private String comment;
+    private Problems problem;*/
+
     public JournalRecord(Cursor cursor) {
+
         this();
-        //TODO: Реализовать конструктор
+
+        int idColumnIndex = cursor.getColumnIndex(PhotoControllerContract.JournalEntry._ID);
+        int dateColumnIndex = cursor.getColumnIndex(PhotoControllerContract.JournalEntry.COLUMN_DATE);
+        int issendColumnIndex = cursor.getColumnIndex(PhotoControllerContract.JournalEntry.COLUMN_IS_SEND);
+        int typeColumnIndex = cursor.getColumnIndex(PhotoControllerContract.JournalEntry.COLUMN_TYPE);
+        int placeforadsColumnIndex = cursor.getColumnIndex(PhotoControllerContract.JournalEntry.COLUMN_PLACEFORADS);
+        int problemColumnIndex = cursor.getColumnIndex(PhotoControllerContract.JournalEntry.COLUMN_PROBLEM);
+        int stationColumnIndex = cursor.getColumnIndex(PhotoControllerContract.JournalEntry.COLUMN_STATION);
+        int commentColumnIndex = cursor.getColumnIndex(PhotoControllerContract.JournalEntry.COLUMN_COMMENT);
+
+        this.id = cursor.getInt(idColumnIndex);
+        this.comment = cursor.getString(commentColumnIndex);
+        this.type = cursor.getString(typeColumnIndex);
+        int isSendInt = cursor.getInt(issendColumnIndex);
+        this.isSend = (isSendInt != 0);
+        String dateString = cursor.getString(dateColumnIndex);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssS", Locale.getDefault());
+        try {
+            this.date = dateFormat.parse(dateString);
+        } catch (Exception e) {
+            Log.e("JOURNAL REC DATE FORMAT", "Ошибка форматирования даты");
+        }
+        this.placeForAds = PhotoControllerContract.PlaceForAdsEntry.getOneEntry(cursor.getInt(placeforadsColumnIndex));
+        this.problem = PhotoControllerContract.ProblemsEntry.getOneEntry(problemColumnIndex);
+        this.station = PhotoControllerContract.StationsEntry.getOneEntry(stationColumnIndex);
+
     }
 
     public JSONObject getJSON() {
@@ -234,15 +270,7 @@ public class JournalRecord extends WorkFiles implements Comparable{
         String result = "user-" + preference.getStringValue("device_imei") + "-" + getFormatDate() +  extention;
         return result;
     }
-    /*private int id;
-    private Date date;
-    private PlaceForAds placeForAds;
-    private ArrayList<File> files = new ArrayList<>();
-    private boolean isSend = false;
-    private String type;
-    private Stations station;
-    private String comment;
-    private Problems problem;*/
+
     private ContentValues getContentValues() {
 
         ContentValues currentEntry = new ContentValues();
