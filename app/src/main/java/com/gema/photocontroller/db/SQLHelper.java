@@ -60,6 +60,12 @@ public class SQLHelper extends SQLiteOpenHelper {
                 + PhotoControllerContract.PlaceForAdsEntry.COLUMN_NAME + " TEXT NOT NULL);";
         tables.add(SQL_CREATE_PLACEFORADS_TABLE);
 
+        String SQL_CREATE_PLACEFORADS_TABLE_INDEX = "CREATE INDEX IF NOT EXISTS " + PhotoControllerContract.PlaceForAdsEntry.TABLE_NAME  + "_index ON " + PhotoControllerContract.PlaceForAdsEntry.TABLE_NAME + " ("
+                + PhotoControllerContract.PlaceForAdsEntry._ID + " , "
+                + PhotoControllerContract.PlaceForAdsEntry.COLUMN_CODE + " , "
+                + PhotoControllerContract.PlaceForAdsEntry.COLUMN_NAME + ");";
+        tables.add(SQL_CREATE_PLACEFORADS_TABLE_INDEX);
+
         for (String table : tables) {
             db.execSQL(table);
         }
