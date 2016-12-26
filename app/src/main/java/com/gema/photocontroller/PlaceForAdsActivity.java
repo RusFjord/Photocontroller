@@ -2,16 +2,22 @@ package com.gema.photocontroller;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.FilterQueryProvider;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 
 import com.gema.photocontroller.adapters.PlaceForAdsAdapter;
+import com.gema.photocontroller.db.PhotoControllerContract;
 import com.gema.photocontroller.models.PlaceForAds;
 import com.gema.photocontroller.commons.PlaceForAdsList;
 
@@ -25,22 +31,36 @@ public class PlaceForAdsActivity extends ListActivity {
     }
 
     private void getPlaceForAds() {
-        PlaceForAdsList placeForAdsList = new PlaceForAdsList(getApplicationContext(), "placeforads.json");
-        final ArrayAdapter<PlaceForAds> adapter = new PlaceForAdsAdapter(this, placeForAdsList.getList());
-        setListAdapter(adapter);
 
-        ListView listView = (ListView) findViewById(android.R.id.list);
+        Cursor cursor = PhotoControllerContract.PlaceForAdsEntry.getAllEntriesCursor();
+        if (cursor == null) {
+            Log.e("CURSOR PLACEFORADS", "Ошибка получения данных рекламных мест");
+            finish();
+        }
+
+        String[] from = new String[] {"code", "name"};
+        int[] to = new int[] {R.id.id_placeforads, R.id.name_placeforads};
+        final SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.list_placeforads, cursor, from, to, 0);
+
+        adapter.setFilterQueryProvider(new FilterQueryProvider() {
+            @Override
+            public Cursor runQuery(CharSequence charSequence) {
+                return PhotoControllerContract.PlaceForAdsEntry.getFilterCodeEntries(charSequence.toString());
+            }
+        });
+
+        final ListView listView = (ListView) findViewById(android.R.id.list);
+        listView.setAdapter(adapter);
+        listView.setFastScrollEnabled(true);
+        listView.setTextFilterEnabled(true);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
-                PlaceForAdsAdapter placeForAdsAdapter = (PlaceForAdsAdapter) adapter;
-//                PlaceForAds current = placeForAdsAdapter.getElement(pos);
-//                String[] data = new String[2];
-//                data[0] = current.getId();
-//                data[1] = current.getName();
+                Cursor cursor = ((SimpleCursorAdapter)adapterView.getAdapter()).getCursor();
+                cursor.moveToPosition(pos);
 
                 Intent intent = getIntent();
-                intent.putExtra("data", placeForAdsAdapter.getItem(pos).getId());
+                intent.putExtra("data", cursor.getInt(0));
                 setResult(RESULT_OK, intent);
                 finish();
             }
@@ -55,7 +75,9 @@ public class PlaceForAdsActivity extends ListActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                adapter.getFilter().filter(charSequence);
+
+                SimpleCursorAdapter filterAdapter = (SimpleCursorAdapter)listView.getAdapter();
+                filterAdapter.getFilter().filter(charSequence.toString());
             }
 
             @Override

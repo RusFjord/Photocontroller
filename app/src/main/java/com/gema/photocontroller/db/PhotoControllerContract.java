@@ -343,6 +343,34 @@ public final class PhotoControllerContract {
             }
             return list;
         }
+
+        public static Cursor getAllEntriesCursor() {
+
+            SQLiteDatabase db = Photocontroler.getDb();
+            Cursor cursor = null;
+            cursor = db.query(TABLE_NAME, null, null, null, null, null, null);
+            return cursor;
+        }
+
+        public static Cursor getFilterCodeEntries(String filter) {
+
+            SQLiteDatabase db = Photocontroler.getDb();
+            String[] projection = {
+                    _ID,
+                    COLUMN_CODE,
+                    COLUMN_NAME };
+            String selection = COLUMN_CODE + " like ?";
+            String[] selectionArgs = {"%" + filter + "%"};
+            Cursor cursor = db.query(
+                    TABLE_NAME,   // таблица
+                    projection,            // столбцы
+                    selection,                  // столбцы для условия WHERE
+                    selectionArgs,                  // значения для условия WHERE
+                    null,                  // Don't group the rows
+                    null,                  // Don't filter by row groups
+                    null);
+            return cursor;
+        }
     }
 
     public static final class FilesMd5Entry implements BaseColumns {
