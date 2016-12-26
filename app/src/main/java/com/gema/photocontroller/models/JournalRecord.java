@@ -1,11 +1,16 @@
 package com.gema.photocontroller.models;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.gema.photocontroller.application.Photocontroler;
 import com.gema.photocontroller.commons.AppPreference;
 import com.gema.photocontroller.commons.JobWithZip;
 import com.gema.photocontroller.commons.SFTPClient;
+import com.gema.photocontroller.db.PhotoControllerContract;
 import com.gema.photocontroller.files.WorkFiles;
 
 import org.json.JSONArray;
@@ -91,6 +96,11 @@ public class JournalRecord extends WorkFiles implements Comparable{
         } catch (Exception e) {
             Log.e("JOURNAL RECORD", e.getMessage());
         }
+    }
+
+    public JournalRecord(Cursor cursor) {
+        this();
+        //TODO: Реализовать конструктор
     }
 
     public JSONObject getJSON() {
@@ -223,5 +233,37 @@ public class JournalRecord extends WorkFiles implements Comparable{
 
         String result = "user-" + preference.getStringValue("device_imei") + "-" + getFormatDate() +  extention;
         return result;
+    }
+    /*private int id;
+    private Date date;
+    private PlaceForAds placeForAds;
+    private ArrayList<File> files = new ArrayList<>();
+    private boolean isSend = false;
+    private String type;
+    private Stations station;
+    private String comment;
+    private Problems problem;*/
+    private ContentValues getContentValues() {
+
+        ContentValues currentEntry = new ContentValues();
+        currentEntry.put("id", this.id);
+        currentEntry.put("type", this.type);
+        currentEntry.put("date", getFormatDate());
+        currentEntry.put("comment", this.comment);
+        currentEntry.put("is_send", this.isSend);
+        int stationId = this.station == null ? 0 : this.station.getId();
+        currentEntry.put("station", stationId);
+        int placeforadsId = this.placeForAds == null ? 0 : this.placeForAds.getId();
+        currentEntry.put("placeforads", placeforadsId);
+        int problemId = this.problem == null ? 0 : this.problem.getId();
+        currentEntry.put("problem", problemId);
+
+        return currentEntry;
+    }
+
+    public void add() {
+        SQLiteDatabase db = Photocontroler.getDb();
+        ContentValues currentEntry = getContentValues();
+        db.replace(PhotoControllerContract.JournalEntry.TABLE_NAME, null, currentEntry);
     }
 }
