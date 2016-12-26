@@ -271,10 +271,11 @@ public class JournalRecord extends WorkFiles implements Comparable{
         return result;
     }
 
-    private ContentValues getContentValues() {
+    private ContentValues getContentValues(boolean isNew) {
 
         ContentValues currentEntry = new ContentValues();
-        currentEntry.put("_id", this.id);
+
+        currentEntry.put("_id", isNew ? null : this.id);
         currentEntry.put("type", this.type);
         currentEntry.put("date", getFormatDate());
         String comment = this.comment == null ? "" : this.comment;
@@ -290,9 +291,9 @@ public class JournalRecord extends WorkFiles implements Comparable{
         return currentEntry;
     }
 
-    public void add() {
+    public void add(boolean isNew) {
         SQLiteDatabase db = Photocontroler.getDb();
-        ContentValues currentEntry = getContentValues();
+        ContentValues currentEntry = getContentValues(isNew);
         db.replace(PhotoControllerContract.JournalEntry.TABLE_NAME, null, currentEntry);
     }
 }

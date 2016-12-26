@@ -30,7 +30,7 @@ public class JournalList extends WorkFiles {
 
     private void prepareList(Context context) {
 
-        String fileList = super.ReadFile(context);
+        //String fileList = super.ReadFile(context);
 //        if (fileList != null) {
 //            try {
 //                JSONObject dataJson = new JSONObject(fileList);

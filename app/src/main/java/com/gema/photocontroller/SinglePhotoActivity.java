@@ -87,7 +87,7 @@ public class SinglePhotoActivity extends Activity {
                 if (!comment.isEmpty()) {
                     journalRecord.setComment(comment);
                 }
-                journalRecord.add();
+                journalRecord.add(true);
 //                JournalList journal = new JournalList("journal.json", getApplicationContext());
 //                journal.add(journalRecord, getApplicationContext());
                 finish();

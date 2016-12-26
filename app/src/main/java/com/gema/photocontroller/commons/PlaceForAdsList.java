@@ -65,6 +65,7 @@ public class PlaceForAdsList extends WorkFiles{
                 db.insert(PhotoControllerContract.PlaceForAdsEntry.TABLE_NAME, null, currentPlaceforads.getContentValues());
             }
             String currentMd5 = Photocontroler.getMD5EncryptedString(fileList);
+            db.beginTransaction();
             try (Cursor cursor = db.rawQuery("select md5 from " + PhotoControllerContract.FilesMd5Entry.TABLE_NAME + " where filename = ?", new String[]{FILENAME})) {
                 int idColumnIndex = cursor.getColumnIndex(PhotoControllerContract.FilesMd5Entry._ID);
                 long rowIndex = 0;
@@ -76,6 +77,8 @@ public class PlaceForAdsList extends WorkFiles{
                 contentValues.put(PhotoControllerContract.FilesMd5Entry.COLUMN_FILENAME, FILENAME);
                 contentValues.put(PhotoControllerContract.FilesMd5Entry.COLUMN_MD5, currentMd5);
                 db.replace(PhotoControllerContract.FilesMd5Entry.TABLE_NAME, null, contentValues);
+            } finally {
+                db.endTransaction();
             }
 
         } catch (Exception e) {

@@ -105,7 +105,7 @@ public class DetoursActivity extends Activity {
                 }
 //                JournalList journal = new JournalList("journal.json", getApplicationContext());
 //                journal.add(journalRecord, getApplicationContext());
-                journalRecord.add();
+                journalRecord.add(true);
                 Toast.makeText(getApplicationContext(), R.string.record_journal_created, Toast.LENGTH_SHORT).show();
                 finish();
             }
