@@ -103,8 +103,9 @@ public class DetoursActivity extends Activity {
                 if (!comment.isEmpty()) {
                     journalRecord.setComment(comment);
                 }
-                JournalList journal = new JournalList("journal.json", getApplicationContext());
-                journal.add(journalRecord, getApplicationContext());
+//                JournalList journal = new JournalList("journal.json", getApplicationContext());
+//                journal.add(journalRecord, getApplicationContext());
+                journalRecord.add();
                 Toast.makeText(getApplicationContext(), R.string.record_journal_created, Toast.LENGTH_SHORT).show();
                 finish();
             }

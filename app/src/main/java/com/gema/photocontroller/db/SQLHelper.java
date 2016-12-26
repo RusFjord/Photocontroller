@@ -30,6 +30,7 @@ public class SQLHelper extends SQLiteOpenHelper {
                 + PhotoControllerContract.JournalEntry.COLUMN_IS_SEND + " INTEGER NOT NULL DEFAULT 0, "
                 + PhotoControllerContract.JournalEntry.COLUMN_TYPE + " TEXT NOT NULL, "
                 + PhotoControllerContract.JournalEntry.COLUMN_STATION + " INTEGER NOT NULL DEFAULT 0, "
+                + PhotoControllerContract.JournalEntry.COLUMN_PLACEFORADS + " INTEGER NOT NULL DEFAULT 0, "
               //  + PhotoControllerContract.JournalEntry.COLUMN_WAGON + " INTEGER NOT NULL DEFAULT 0, "
                 + PhotoControllerContract.JournalEntry.COLUMN_PROBLEM + " INTEGER NOT NULL DEFAULT 0,"
                 + PhotoControllerContract.JournalEntry.COLUMN_COMMENT + " TEXT NOT NULL);";

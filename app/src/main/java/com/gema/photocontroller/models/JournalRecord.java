@@ -246,10 +246,11 @@ public class JournalRecord extends WorkFiles implements Comparable{
     private ContentValues getContentValues() {
 
         ContentValues currentEntry = new ContentValues();
-        currentEntry.put("id", this.id);
+        currentEntry.put("_id", this.id);
         currentEntry.put("type", this.type);
         currentEntry.put("date", getFormatDate());
-        currentEntry.put("comment", this.comment);
+        String comment = this.comment == null ? "" : this.comment;
+        currentEntry.put("comment", comment);
         currentEntry.put("is_send", this.isSend);
         int stationId = this.station == null ? 0 : this.station.getId();
         currentEntry.put("station", stationId);
