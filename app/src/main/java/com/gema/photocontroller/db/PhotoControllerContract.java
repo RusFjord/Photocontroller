@@ -17,6 +17,41 @@ public final class PhotoControllerContract {
 
     public PhotoControllerContract() {}
 
+    public static final class FilesEntry {
+
+        public final static String TABLE_NAME = "files";
+
+        public final static String COLUMN_RECORD_ID = "record_id";
+        public final static String COLUMN_PATH = "path";
+
+        public static ArrayList<String> getAllForID (long id) {
+
+            SQLiteDatabase db = Photocontroler.getDb();
+            String[] projection = {
+                    COLUMN_PATH};
+            String selection = COLUMN_RECORD_ID + " = ?";
+            String[] selectionArgs = {String.valueOf(id)};
+            ArrayList<String> paths = new ArrayList<>();
+            try (Cursor cursor = db.query(
+                    TABLE_NAME,   // таблица
+                    projection,            // столбцы
+                    selection,                  // столбцы для условия WHERE
+                    selectionArgs,                  // значения для условия WHERE
+                    null,                  // Don't group the rows
+                    null,                  // Don't filter by row groups
+                    null)) {
+                int pathColumnIndex = cursor.getColumnIndex(COLUMN_PATH);
+
+                if (cursor.moveToNext()) {
+                    paths.add(cursor.getString(pathColumnIndex));
+                }
+            }
+            return paths;
+        }
+
+    }
+
+
     public static final class JournalEntry implements BaseColumns {
 
         public final static String TABLE_NAME = "journal";
@@ -66,15 +101,8 @@ public final class PhotoControllerContract {
             SQLiteDatabase db = Photocontroler.getDb();
             ArrayList<JournalRecord> list = new ArrayList<>();
             try (Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, null)) {
-//                int idColumnIndex = cursor.getColumnIndex(_ID);
-//                int nameColumnIndex = cursor.getColumnIndex(COLUMN_NAME);
-//                int codeColumnIndex = cursor.getColumnIndex(COLUMN_CODE);
-
                 while (cursor.moveToNext()) {
                     // Используем индекс для получения строки или числа
-//                    int currentID = cursor.getInt(idColumnIndex);
-//                    String currentName = cursor.getString(nameColumnIndex);
-//                    String currentCode = cursor.getString(codeColumnIndex);
                     list.add(new JournalRecord(cursor));
                 }
             }

@@ -66,6 +66,15 @@ public class SQLHelper extends SQLiteOpenHelper {
                 + PhotoControllerContract.PlaceForAdsEntry.COLUMN_NAME + ");";
         tables.add(SQL_CREATE_PLACEFORADS_TABLE_INDEX);
 
+        String SQL_CREATE_FILES_TABLE = "CREATE TABLE IF NOT EXISTS " + PhotoControllerContract.FilesEntry.TABLE_NAME  + " ("
+                + PhotoControllerContract.FilesEntry.COLUMN_RECORD_ID + " , "
+                + PhotoControllerContract.FilesEntry.COLUMN_PATH + ");";
+        tables.add(SQL_CREATE_FILES_TABLE);
+
+        String SQL_CREATE_FILES_TABLE_INDEX = "CREATE INDEX IF NOT EXISTS " + PhotoControllerContract.FilesEntry.TABLE_NAME  + "_index ON " + PhotoControllerContract.FilesEntry.TABLE_NAME + " ("
+                + PhotoControllerContract.FilesEntry.COLUMN_RECORD_ID + ");";
+        tables.add(SQL_CREATE_FILES_TABLE_INDEX);
+
         for (String table : tables) {
             db.execSQL(table);
         }

@@ -26,7 +26,7 @@ public class JournalRecord extends WorkFiles implements Comparable{
 
     private final String DIRNAME_RESULT = "uploads/app/result/";
 
-    private int id;
+    private long id;
     private Date date;
     private PlaceForAds placeForAds;
     private ArrayList<File> files = new ArrayList<>();
@@ -98,16 +98,6 @@ public class JournalRecord extends WorkFiles implements Comparable{
         }
     }
 
-        /*private int id;
-    private Date date;
-    private PlaceForAds placeForAds;
-    private ArrayList<File> files = new ArrayList<>();
-    private boolean isSend = false;
-    private String type;
-    private Stations station;
-    private String comment;
-    private Problems problem;*/
-
     public JournalRecord(Cursor cursor) {
 
         this();
@@ -121,7 +111,7 @@ public class JournalRecord extends WorkFiles implements Comparable{
         int stationColumnIndex = cursor.getColumnIndex(PhotoControllerContract.JournalEntry.COLUMN_STATION);
         int commentColumnIndex = cursor.getColumnIndex(PhotoControllerContract.JournalEntry.COLUMN_COMMENT);
 
-        this.id = cursor.getInt(idColumnIndex);
+        this.id = cursor.getLong(idColumnIndex);
         this.comment = cursor.getString(commentColumnIndex);
         this.type = cursor.getString(typeColumnIndex);
         int isSendInt = cursor.getInt(issendColumnIndex);
@@ -137,9 +127,15 @@ public class JournalRecord extends WorkFiles implements Comparable{
         this.problem = PhotoControllerContract.ProblemsEntry.getOneEntry(problemColumnIndex);
         this.station = PhotoControllerContract.StationsEntry.getOneEntry(stationColumnIndex);
 
+        ArrayList<String> paths = PhotoControllerContract.FilesEntry.getAllForID(this.id);
+        for (String path : paths) {
+            this.files.add(new File(path));
+        }
+
     }
 
     public JSONObject getJSON() {
+
         JSONObject recordJSON = new JSONObject();
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault());
@@ -172,7 +168,7 @@ public class JournalRecord extends WorkFiles implements Comparable{
         return recordJSON;
     }
 
-    public int getId() {
+    public long getId() {
         return this.id;
     }
 
@@ -294,6 +290,15 @@ public class JournalRecord extends WorkFiles implements Comparable{
     public void add(boolean isNew) {
         SQLiteDatabase db = Photocontroler.getDb();
         ContentValues currentEntry = getContentValues(isNew);
-        db.replace(PhotoControllerContract.JournalEntry.TABLE_NAME, null, currentEntry);
+        long currentId = db.replace(PhotoControllerContract.JournalEntry.TABLE_NAME, null, currentEntry);
+        if (currentId > 0) {
+            ContentValues currentFileEntry = new ContentValues();
+            for (File file : this.files) {
+                currentFileEntry.clear();
+                currentFileEntry.put(PhotoControllerContract.FilesEntry.COLUMN_RECORD_ID, String.valueOf(currentId));
+                currentFileEntry.put(PhotoControllerContract.FilesEntry.COLUMN_PATH, file.getAbsolutePath());
+                db.insert(PhotoControllerContract.FilesEntry.TABLE_NAME, null, currentFileEntry);
+            }
+        }
     }
 }

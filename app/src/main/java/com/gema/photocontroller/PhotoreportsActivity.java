@@ -81,8 +81,6 @@ public class PhotoreportsActivity extends ListActivity {
                     journalRecord.setComment(comment);
                 }
                 journalRecord.add(true);
-//                JournalList journal = new JournalList("journal.json", getApplicationContext());
-//                journal.add(journalRecord, getApplicationContext());
                 finish();
             }
         });
