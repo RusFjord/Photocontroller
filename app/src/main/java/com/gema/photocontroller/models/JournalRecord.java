@@ -124,8 +124,8 @@ public class JournalRecord extends WorkFiles implements Comparable{
             Log.e("JOURNAL REC DATE FORMAT", "Ошибка форматирования даты");
         }
         this.placeForAds = PhotoControllerContract.PlaceForAdsEntry.getOneEntry(cursor.getInt(placeforadsColumnIndex));
-        this.problem = PhotoControllerContract.ProblemsEntry.getOneEntry(problemColumnIndex);
-        this.station = PhotoControllerContract.StationsEntry.getOneEntry(stationColumnIndex);
+        this.problem = PhotoControllerContract.ProblemsEntry.getOneEntry(cursor.getInt(problemColumnIndex));
+        this.station = PhotoControllerContract.StationsEntry.getOneEntry(cursor.getInt(stationColumnIndex));
 
         ArrayList<String> paths = PhotoControllerContract.FilesEntry.getAllForID(this.id);
         for (String path : paths) {
@@ -200,11 +200,13 @@ public class JournalRecord extends WorkFiles implements Comparable{
 
     @Override
     public int compareTo(Object o) {
+
         JournalRecord otherRecord = (JournalRecord) o;
         return (int) (otherRecord.getDate().getTime() - this.date.getTime());
     }
 
     public void send(Context context) {
+
         String dirPath = context.getApplicationInfo().dataDir + "/send/";
         File dir = new File(dirPath);
         if (!dir.exists()) {
@@ -212,12 +214,9 @@ public class JournalRecord extends WorkFiles implements Comparable{
         }
 
         final AppPreference preference = new AppPreference(context);
-        //String filenamePart  = "user-" + preference.getStringValue("device_imei") + "-" + getFormatDate() +  ".zip";
         String filenamePart  = getTempFilename(preference, ".zip");
-        //String filenameRec  = "user-" + preference.getStringValue("device_imei") + "-" + getFormatDate() +  ".json";
         String filenameRec  = getTempFilename(preference, ".json");
         String localFileName = dir.getAbsolutePath() + File.separatorChar + filenamePart;
-
 
         this.WriteFile(context, "/send/" + filenameRec, getJSON().toString());
         String localFileNameRec = dir.getAbsolutePath() + File.separatorChar + filenameRec;
@@ -239,13 +238,18 @@ public class JournalRecord extends WorkFiles implements Comparable{
         try {
             sftpClient.upload(new File(localFileName), remoteFilePath);
             this.isSend = true;
+            SQLiteDatabase db = Photocontroler.getDb();
+            ContentValues contentValues = this.getContentValues(false);
+            db.replace(PhotoControllerContract.JournalEntry.TABLE_NAME, null, contentValues);
         } catch (Exception e) {
             Log.e("SEND JOURNALRECORD", e.getMessage());
         }
         this.deleteTempFiles(dir);
+        //return this.isSend;
     }
 
     private void deleteTempFiles(File tempDir) {
+
         if (this.isSend) {
             if (tempDir.isDirectory()) {
                 File[] tempFiles = tempDir.listFiles();
@@ -257,6 +261,7 @@ public class JournalRecord extends WorkFiles implements Comparable{
     }
 
     private String getFormatDate() {
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssS", Locale.getDefault());
         return dateFormat.format(this.date);
     }

@@ -11,7 +11,6 @@ import com.gema.photocontroller.models.Problems;
 import com.gema.photocontroller.models.Stations;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public final class PhotoControllerContract {
 
@@ -42,7 +41,7 @@ public final class PhotoControllerContract {
                     null)) {
                 int pathColumnIndex = cursor.getColumnIndex(COLUMN_PATH);
 
-                if (cursor.moveToNext()) {
+                while (cursor.moveToNext()) {
                     paths.add(cursor.getString(pathColumnIndex));
                 }
             }

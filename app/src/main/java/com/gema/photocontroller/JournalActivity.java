@@ -105,7 +105,6 @@ public class JournalActivity extends ListActivity implements ChangeSendStateJour
         protected Void doInBackground(Void... params) {
             try {
                 this.journalRecord.send(getApplicationContext());
-                isSend = true;
             } catch (Exception e) {
                 Log.e("JOURNALRECORDSEND", "Ошибка отправления записи журнала.");
             }
@@ -115,8 +114,8 @@ public class JournalActivity extends ListActivity implements ChangeSendStateJour
 
         @Override
         protected void onPostExecute(Void result) {
-            if (isSend) {
-                journalList.writeJSONArrayIntoFile(getApplicationContext());
+            if (journalRecord.getSendState()) {
+                //journalList.writeJSONArrayIntoFile(getApplicationContext());
                 adapter.notifyDataSetChanged();
             }
             super.onPostExecute(result);
