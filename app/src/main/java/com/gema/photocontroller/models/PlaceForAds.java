@@ -8,11 +8,11 @@ import org.json.JSONObject;
 
 public class PlaceForAds {
 
-    private int id;
+    private long id;
     private String code;
     private String name;
 
-    public PlaceForAds(int id, String code, String name) {
+    public PlaceForAds(long id, String code, String name) {
         this.id = id;
         this.code = code;
         this.name = name;
@@ -23,7 +23,7 @@ public class PlaceForAds {
         this.name = jsonObject.getString("name");
     }
 
-    public int getId() {
+    public long getId() {
         return this.id;
     }
 
