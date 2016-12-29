@@ -75,6 +75,16 @@ public class SQLHelper extends SQLiteOpenHelper {
                 + PhotoControllerContract.FilesEntry.COLUMN_RECORD_ID + ");";
         tables.add(SQL_CREATE_FILES_TABLE_INDEX);
 
+        String SQL_CREATE_PLACEMENT_TABLE = "CREATE TABLE IF NOT EXISTS " + PhotoControllerContract.PlacementEntry.TABLE_NAME + " ("
+                + PhotoControllerContract.PlacementEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + PhotoControllerContract.PlacementEntry.COLUMN_AID + " TEXT NOT NULL, "
+                + PhotoControllerContract.PlacementEntry.COLUMN_START_PLACEMENT + " TEXT NOT NULL, "
+                + PhotoControllerContract.PlacementEntry.COLUMN_STOP_PLACEMENT + " TEXT NOT NULL, "
+                + PhotoControllerContract.PlacementEntry.COLUMN_BRANDNAME + " TEXT NOT NULL, "
+                + PhotoControllerContract.PlacementEntry.COLUMN_PLACEFORADS + " INTEGER DEFAULT 0, "
+                + PhotoControllerContract.PlacementEntry.COLUMN_LAYOUT + " TEXT NOT NULL);";
+        tables.add(SQL_CREATE_PLACEMENT_TABLE);
+
         for (String table : tables) {
             db.execSQL(table);
         }

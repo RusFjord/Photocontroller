@@ -36,31 +36,34 @@ public class PlacementActivity extends ListActivity {
             Log.e("CURSOR PLACEFORADS", "Ошибка получения данных рекламных мест");
             finish();
         }
-
-        String[] from = new String[] {"aid", "placeforads", "brandname"};
+        PlacementList placementList = new PlacementList(getApplicationContext(), "placements.json");
+        String[] from = new String[] {"aid", "placeforadsName", "brandname"};
         int[] to = new int[] {R.id.id_placement, R.id.placeforads_placement, R.id.brand_name_placement};
         final SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.list_placement, cursor, from, to, 0);
 
-//        PlacementList placementList = new PlacementList(getApplicationContext(), "placements.json");
+
 //        final ArrayAdapter<PlacementPlace> adapter = new PlacementAdapter(this, placementList.getList());
 //        setListAdapter(adapter);
 
 
         ListView listView = (ListView) findViewById(android.R.id.list);
+        listView.setAdapter(adapter);
+        listView.setFastScrollEnabled(true);
+        listView.setTextFilterEnabled(true);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
-                PlacementAdapter placementAdapter = (PlacementAdapter) adapter;
+                //PlacementAdapter placementAdapter = (PlacementAdapter) adapter;
                 //Toast.makeText(getApplicationContext(), placementAdapter.getElement(pos).getPlaceForAds(), Toast.LENGTH_SHORT).show();
                 //String[] data = new String[4];
-                PlacementPlace place = placementAdapter.getItem(pos);
+                //PlacementPlace place = placementAdapter.getItem(pos);
                 //data[0] = place.getId();
                 //PlaceForAds placeForAds = new PlaceForAds()
 //                data[1] = String.valueOf(place.getPlaceForAds().getId());
 //                data[2] = place.getBrandName();
 //                data[3] = place.getLayout();
                 Intent intent = new Intent(getApplicationContext(), ShowPlacement.class);
-                intent.putExtra("data", place.getId());
+                //intent.putExtra("data", place.getId());
                 startActivityForResult(intent, PLACEMENT_SHOW);
             }
         });

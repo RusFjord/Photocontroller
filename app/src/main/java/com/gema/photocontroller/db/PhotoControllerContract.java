@@ -532,9 +532,18 @@ public final class PhotoControllerContract {
 
         public static Cursor getAllEntriesCursor() {
 
+
+            /*public final static String _ID = BaseColumns._ID;
+        public final static String COLUMN_AID = "aid";
+        public final static String COLUMN_START_PLACEMENT = "start_placement";
+        public final static String COLUMN_STOP_PLACEMENT = "stop_placement";
+        public final static String COLUMN_PLACEFORADS = "placeforads";
+        public final static String COLUMN_BRANDNAME = "brandname";
+        public final static String COLUMN_LAYOUT = "layout";*/
             SQLiteDatabase db = Photocontroler.getDb();
             Cursor cursor = null;
-            cursor = db.query(TABLE_NAME, null, null, null, null, null, null);
+            //cursor = db.query(TABLE_NAME, null, null, null, null, null, null);
+            cursor = db.rawQuery("SELECT placement._id, placement.aid, placement.start_placement, placement.stop_placement, placement.brandname, placement.layout, placeforads.name placeforadsName, placeforads._id placeforadsId FROM placement placement LEFT OUTER JOIN placeforads placeforads ON placement.placeforads = placeforads._id", null);
             return cursor;
         }
 

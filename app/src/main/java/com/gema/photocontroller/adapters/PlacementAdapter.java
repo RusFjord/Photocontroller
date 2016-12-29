@@ -29,7 +29,7 @@ public class PlacementAdapter extends ArrayAdapter<PlacementPlace> {
         ((TextView) convertView.findViewById(R.id.placeforads_placement))
                 .setText(placementPlace.getPlaceForAds().getName());
         ((TextView) convertView.findViewById(R.id.id_placement))
-                .setText(placementPlace.getId());
+                .setText(placementPlace.getAid());
         ((TextView) convertView.findViewById(R.id.brand_name_placement))
                 .setText(placementPlace.getBrandName());
         return convertView;

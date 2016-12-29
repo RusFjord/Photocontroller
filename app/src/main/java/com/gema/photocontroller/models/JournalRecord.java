@@ -284,7 +284,7 @@ public class JournalRecord extends WorkFiles implements Comparable{
         currentEntry.put("is_send", this.isSend);
         int stationId = this.station == null ? 0 : this.station.getId();
         currentEntry.put("station", stationId);
-        int placeforadsId = this.placeForAds == null ? 0 : this.placeForAds.getId();
+        long placeforadsId = this.placeForAds == null ? 0 : this.placeForAds.getId();
         currentEntry.put("placeforads", placeforadsId);
         int problemId = this.problem == null ? 0 : this.problem.getId();
         currentEntry.put("problem", problemId);

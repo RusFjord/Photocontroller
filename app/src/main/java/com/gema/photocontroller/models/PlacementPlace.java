@@ -1,5 +1,6 @@
 package com.gema.photocontroller.models;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -16,7 +17,7 @@ import java.util.Locale;
 
 public class PlacementPlace {
 
-    private long id;
+    private long id = 0;
     private Date startPlacement;
     private Date stopPlacement;
     private PlaceForAds placeForAds;
@@ -121,4 +122,35 @@ public class PlacementPlace {
         return this.layout;
     }
 
+    public ContentValues getContentValues() {
+
+        ContentValues contentValues = new ContentValues();
+        /*int idColumnIndex = cursor.getColumnIndex(PhotoControllerContract.PlacementEntry._ID);
+        int startPlacementColumnIndex = cursor.getColumnIndex(PhotoControllerContract.PlacementEntry.COLUMN_START_PLACEMENT);
+        int stopPlacementColumnIndex = cursor.getColumnIndex(PhotoControllerContract.PlacementEntry.COLUMN_STOP_PLACEMENT);
+        int aidColumnIndex = cursor.getColumnIndex(PhotoControllerContract.PlacementEntry.COLUMN_AID);
+        int brandNameColumnIndex = cursor.getColumnIndex(PhotoControllerContract.PlacementEntry.COLUMN_BRANDNAME);
+        int placeforadsColumnIndex = cursor.getColumnIndex(PhotoControllerContract.PlacementEntry.COLUMN_PLACEFORADS);
+        int layoutColumnIndex = cursor.getColumnIndex(PhotoControllerContract.PlacementEntry.COLUMN_LAYOUT);*/
+
+        contentValues.put(PhotoControllerContract.PlacementEntry._ID, String.valueOf(this.id == 0 ? null : this.id));
+        contentValues.put(PhotoControllerContract.PlacementEntry.COLUMN_AID, this.aid);
+        contentValues.put(PhotoControllerContract.PlacementEntry.COLUMN_BRANDNAME, this.brandName);
+        contentValues.put(PhotoControllerContract.PlacementEntry.COLUMN_LAYOUT, this.layout);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault());
+        String startDate;
+        String stopDate;
+        try {
+            startDate = dateFormat.format(this.startPlacement);
+            contentValues.put(PhotoControllerContract.PlacementEntry.COLUMN_START_PLACEMENT, startDate);
+            stopDate = dateFormat.format(this.stopPlacement);
+            contentValues.put(PhotoControllerContract.PlacementEntry.COLUMN_STOP_PLACEMENT, stopDate);
+        } catch (Exception e) {
+            Log.e("PLACEMENT DATE FORMAT", "Ошибка форматирования даты");
+        }
+        if (this.placeForAds != null) {
+            contentValues.put(PhotoControllerContract.PlacementEntry.COLUMN_PLACEFORADS, this.placeForAds.getId());
+        }
+        return contentValues;
+    }
 }
