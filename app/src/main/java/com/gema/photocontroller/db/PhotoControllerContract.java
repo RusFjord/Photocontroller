@@ -324,6 +324,7 @@ public final class PhotoControllerContract {
         }
 
         public static PlaceForAds getOneEntry(String code) {
+
             SQLiteDatabase db = Photocontroler.getDb();
             String[] projection = {
                     _ID,

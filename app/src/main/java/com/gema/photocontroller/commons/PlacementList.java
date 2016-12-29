@@ -61,7 +61,7 @@ public class PlacementList extends WorkFiles {
             for (int i = 0; i < placements.length(); i++) {
                 JSONObject placement = placements.getJSONObject(i);
                 PlacementPlace currentPlace = new PlacementPlace(placement);
-                db.insert(PhotoControllerContract.PlacementEntry.TABLE_NAME, null, currentPlace.getContentValues());
+                db.replace(PhotoControllerContract.PlacementEntry.TABLE_NAME, null, currentPlace.getContentValues());
             }
             String currentMd5 = Photocontroler.getMD5EncryptedString(fileList);
             db.beginTransaction();

@@ -47,7 +47,9 @@ public class PlacementPlace {
             this.aid = jsonObject.getString("id");
             if (jsonObject.has("placeforads")) {
                 JSONObject placeForAdsJSON = jsonObject.getJSONObject("placeforads");
-                this.placeForAds = new PlaceForAds(placeForAdsJSON);
+                String code = placeForAdsJSON.getString("id");
+//                this.placeForAds = new PlaceForAds(placeForAdsJSON);
+                this.placeForAds = PhotoControllerContract.PlaceForAdsEntry.getOneEntry(code);
             }
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault());
             if (jsonObject.has("startPlacement")) {
@@ -125,15 +127,7 @@ public class PlacementPlace {
     public ContentValues getContentValues() {
 
         ContentValues contentValues = new ContentValues();
-        /*int idColumnIndex = cursor.getColumnIndex(PhotoControllerContract.PlacementEntry._ID);
-        int startPlacementColumnIndex = cursor.getColumnIndex(PhotoControllerContract.PlacementEntry.COLUMN_START_PLACEMENT);
-        int stopPlacementColumnIndex = cursor.getColumnIndex(PhotoControllerContract.PlacementEntry.COLUMN_STOP_PLACEMENT);
-        int aidColumnIndex = cursor.getColumnIndex(PhotoControllerContract.PlacementEntry.COLUMN_AID);
-        int brandNameColumnIndex = cursor.getColumnIndex(PhotoControllerContract.PlacementEntry.COLUMN_BRANDNAME);
-        int placeforadsColumnIndex = cursor.getColumnIndex(PhotoControllerContract.PlacementEntry.COLUMN_PLACEFORADS);
-        int layoutColumnIndex = cursor.getColumnIndex(PhotoControllerContract.PlacementEntry.COLUMN_LAYOUT);*/
-
-        contentValues.put(PhotoControllerContract.PlacementEntry._ID, String.valueOf(this.id == 0 ? null : this.id));
+        contentValues.put(PhotoControllerContract.PlacementEntry._ID, this.id == 0 ? null : this.id);
         contentValues.put(PhotoControllerContract.PlacementEntry.COLUMN_AID, this.aid);
         contentValues.put(PhotoControllerContract.PlacementEntry.COLUMN_BRANDNAME, this.brandName);
         contentValues.put(PhotoControllerContract.PlacementEntry.COLUMN_LAYOUT, this.layout);
