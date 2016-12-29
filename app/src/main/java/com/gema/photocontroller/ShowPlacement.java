@@ -42,6 +42,13 @@ public class ShowPlacement extends Activity {
                 final TextView id_single_placement = (TextView) findViewById(R.id.id_single_placement);
                 id_single_placement.setTypeface(typeface);
                 id_single_placement.setText(this.placementPlace.getAid());
+                final TextView dates_single_placement = (TextView) findViewById(R.id.dates_single_placement);
+                dates_single_placement.setTypeface(typeface);
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append(this.placementPlace.getStartPlacement());
+                stringBuilder.append(" - ");
+                stringBuilder.append(this.placementPlace.getStopPlacement());
+                dates_single_placement.setText(stringBuilder.toString());
                 final TextView placeforads_single_placement = (TextView) findViewById(R.id.placeforads_single_placement);
                 placeforads_single_placement.setTypeface(typeface);
                 //this.placeForAds = new PlaceForAds(data[1], data[2]);
