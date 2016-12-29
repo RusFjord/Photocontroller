@@ -551,24 +551,17 @@ public final class PhotoControllerContract {
         public static Cursor getFilterCodeEntries(String filter) {
 
             SQLiteDatabase db = Photocontroler.getDb();
-            String[] projection = {
-                    _ID,
-                    COLUMN_AID,
-                    COLUMN_START_PLACEMENT,
-                    COLUMN_STOP_PLACEMENT,
-                    COLUMN_PLACEFORADS,
-                    COLUMN_BRANDNAME,
-                    COLUMN_LAYOUT };
-            String selection = COLUMN_AID + " like ?";
-            String[] selectionArgs = {"%" + filter + "%"};
-            Cursor cursor = db.query(
-                    TABLE_NAME,   // таблица
-                    projection,            // столбцы
-                    selection,                  // столбцы для условия WHERE
-                    selectionArgs,                  // значения для условия WHERE
-                    null,                  // Don't group the rows
-                    null,                  // Don't filter by row groups
-                    null);
+//            String[] projection = {
+//                    _ID,
+//                    COLUMN_AID,
+//                    COLUMN_START_PLACEMENT,
+//                    COLUMN_STOP_PLACEMENT,
+//                    COLUMN_PLACEFORADS,
+//                    COLUMN_BRANDNAME,
+//                    COLUMN_LAYOUT };
+//            String selection = COLUMN_AID + " like ?";
+//            String[] selectionArgs = {"%" + filter + "%"};
+            Cursor cursor = db.rawQuery("SELECT placement._id, placement.aid, placement.start_placement, placement.stop_placement, placement.brandname, placement.layout, placeforads.name placeforadsName, placeforads._id placeforadsId FROM placement placement LEFT OUTER JOIN placeforads placeforads ON placement.placeforads = placeforads._id WHERE placement.aid =%" + filter + "%" , null);
             return cursor;
         }
     }

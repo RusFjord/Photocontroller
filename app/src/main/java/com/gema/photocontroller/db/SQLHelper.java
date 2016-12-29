@@ -85,6 +85,10 @@ public class SQLHelper extends SQLiteOpenHelper {
                 + PhotoControllerContract.PlacementEntry.COLUMN_LAYOUT + " TEXT NOT NULL);";
         tables.add(SQL_CREATE_PLACEMENT_TABLE);
 
+        String SQL_CREATE_PLACEMENT_TABLE_INDEX = "CREATE INDEX IF NOT EXISTS " + PhotoControllerContract.PlacementEntry.TABLE_NAME  + "_index ON " + PhotoControllerContract.PlacementEntry.TABLE_NAME + " ("
+                + PhotoControllerContract.PlacementEntry.COLUMN_AID + ");";
+        tables.add(SQL_CREATE_PLACEMENT_TABLE_INDEX);
+
         for (String table : tables) {
             db.execSQL(table);
         }
