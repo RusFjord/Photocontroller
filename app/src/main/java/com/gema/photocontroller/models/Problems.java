@@ -22,7 +22,6 @@ public class Problems {
     }
 
     public Problems(JSONObject jsonObject) throws Exception {
-        //SQLiteDatabase db = Photocontroler.getDb();
 
         this.code = jsonObject.getString("id");
         this.name = jsonObject.getString("name");
