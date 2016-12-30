@@ -89,6 +89,20 @@ public class SQLHelper extends SQLiteOpenHelper {
                 + PhotoControllerContract.PlacementEntry.COLUMN_AID + ");";
         tables.add(SQL_CREATE_PLACEMENT_TABLE_INDEX);
 
+        String SQL_CREATE_WAGON_TABLE = "CREATE TABLE IF NOT EXISTS " + PhotoControllerContract.WagonEntry.TABLE_NAME + " ("
+                + PhotoControllerContract.WagonEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + PhotoControllerContract.WagonEntry.COLUMN_CODE + " TEXT NOT NULL, "
+                + PhotoControllerContract.WagonEntry.COLUMN_NAME + " TEXT NOT NULL, "
+                + PhotoControllerContract.WagonEntry.COLUMN_NUMBER + " INTEGER DEFAULT 0, "
+                + PhotoControllerContract.WagonEntry.COLUMN_WAGON_TYPE + " INTEGER DEFAULT 0);";
+        tables.add(SQL_CREATE_WAGON_TABLE);
+
+        String SQL_CREATE_WAGON_TYPE_TABLE = "CREATE TABLE IF NOT EXISTS " + PhotoControllerContract.WagonTypeEntry.TABLE_NAME + " ("
+                + PhotoControllerContract.WagonTypeEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + PhotoControllerContract.WagonTypeEntry.COLUMN_CODE + " TEXT NOT NULL, "
+                + PhotoControllerContract.WagonTypeEntry.COLUMN_NAME + " TEXT NOT NULL);";
+        tables.add(SQL_CREATE_WAGON_TYPE_TABLE);
+
         for (String table : tables) {
             db.execSQL(table);
         }

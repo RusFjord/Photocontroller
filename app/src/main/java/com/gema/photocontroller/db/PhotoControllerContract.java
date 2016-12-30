@@ -566,4 +566,24 @@ public final class PhotoControllerContract {
         }
     }
 
+    public static final class WagonEntry implements BaseColumns {
+
+        public final static String TABLE_NAME = "wagon";
+
+        public final static String _ID = BaseColumns._ID;
+        public final static String COLUMN_CODE = "code";
+        public final static String COLUMN_NAME = "name";
+        public final static String COLUMN_NUMBER = "number";
+        public final static String COLUMN_WAGON_TYPE = "wagon_type";
+    }
+
+    public static final class WagonTypeEntry implements BaseColumns {
+
+        public final static String TABLE_NAME = "wagon_type";
+
+        public final static String _ID = BaseColumns._ID;
+        public final static String COLUMN_CODE = "code";
+        public final static String COLUMN_NAME = "name";
+    }
+
 }
