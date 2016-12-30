@@ -96,6 +96,18 @@ public class PlacementPlace {
         this.layout = cursor.getString(layoutColumnIndex);
     }
 
+    private String getStringDate(Date date) {
+        String result = "";
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+        try {
+            result = dateFormat.format(date);
+        } catch (Exception e) {
+            Log.e("PLACEMENT DATE FORMAT", "Ошибка форматирования даты");
+        }
+        return result;
+    }
+
     public PlaceForAds getPlaceForAds() {
         return this.placeForAds;
     }
@@ -114,6 +126,19 @@ public class PlacementPlace {
 
     public Date getStopPlacement() {
         return this.stopPlacement;
+    }
+
+    public String getStartStopPlacement() {
+
+        String result = "";
+        if (this.startPlacement != null && this.stopPlacement != null) {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(getStringDate(this.startPlacement));
+            stringBuilder.append(" - ");
+            stringBuilder.append(getStringDate(this.stopPlacement));
+            result = stringBuilder.toString();
+        }
+        return result;
     }
 
     public String getBrandName() {

@@ -53,17 +53,11 @@ public class PlacementActivity extends ListActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
-                //PlacementAdapter placementAdapter = (PlacementAdapter) adapter;
-                //Toast.makeText(getApplicationContext(), placementAdapter.getElement(pos).getPlaceForAds(), Toast.LENGTH_SHORT).show();
-                //String[] data = new String[4];
-                //PlacementPlace place = placementAdapter.getItem(pos);
-                //data[0] = place.getId();
-                //PlaceForAds placeForAds = new PlaceForAds()
-//                data[1] = String.valueOf(place.getPlaceForAds().getId());
-//                data[2] = place.getBrandName();
-//                data[3] = place.getLayout();
+                Cursor cursor = ((SimpleCursorAdapter)adapterView.getAdapter()).getCursor();
+                cursor.moveToPosition(pos);
+
                 Intent intent = new Intent(getApplicationContext(), ShowPlacement.class);
-                //intent.putExtra("data", place.getId());
+                intent.putExtra("data", cursor.getLong(0));
                 startActivityForResult(intent, PLACEMENT_SHOW);
             }
         });
