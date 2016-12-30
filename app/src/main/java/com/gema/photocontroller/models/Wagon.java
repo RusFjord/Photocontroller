@@ -1,13 +1,21 @@
 package com.gema.photocontroller.models;
 
+import android.content.ContentValues;
+import android.content.Loader;
+
+import com.gema.photocontroller.db.PhotoControllerContract;
+
+import org.json.JSONObject;
+
 public class Wagon {
 
+    private long id;
     private long number;
     private String code;
     private String name;
     private WagonType type;
 
-    public Wagon(int number, String code, String name, WagonType type) {
+    public Wagon(long number, String code, String name, WagonType type) {
         this.number = number;
         this.type = type;
         this.code = code;
@@ -28,5 +36,29 @@ public class Wagon {
 
     public String getName() {
         return name;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public Wagon(JSONObject jsonObject) throws Exception {
+
+        this.number = jsonObject.getLong("number");
+        this.code = jsonObject.getString("code");
+        this.name = jsonObject.getString("name");
+        String typeCode = jsonObject.getString("type");
+        this.type = PhotoControllerContract.WagonTypeEntry.getOneEntry(typeCode);
+    }
+
+    public ContentValues getContentValues() {
+
+        ContentValues contentValues = new ContentValues();
+        if (this.id != 0 ) {
+            contentValues.put(PhotoControllerContract.WagonTypeEntry._ID, this.id);
+        }
+        contentValues.put(PhotoControllerContract.WagonTypeEntry.COLUMN_CODE, this.code);
+        contentValues.put(PhotoControllerContract.WagonTypeEntry.COLUMN_NAME, this.name);
+        return contentValues;
     }
 }

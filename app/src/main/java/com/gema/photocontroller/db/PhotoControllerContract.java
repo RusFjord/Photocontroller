@@ -10,6 +10,7 @@ import com.gema.photocontroller.models.PlaceForAds;
 import com.gema.photocontroller.models.PlacementPlace;
 import com.gema.photocontroller.models.Problems;
 import com.gema.photocontroller.models.Stations;
+import com.gema.photocontroller.models.WagonType;
 
 import java.util.ArrayList;
 
@@ -448,21 +449,7 @@ public final class PhotoControllerContract {
                     null,                  // Don't group the rows
                     null,                  // Don't filter by row groups
                     null)) {
-//                int idColumnIndex = cursor.getColumnIndex(_ID);
-//                int startPlacementColumnIndex = cursor.getColumnIndex(COLUMN_START_PLACEMENT);
-//                int stopPlacementColumnIndex = cursor.getColumnIndex(COLUMN_STOP_PLACEMENT);
-//                int aidColumnIndex = cursor.getColumnIndex(COLUMN_AID);
-//                int brandNameColumnIndex = cursor.getColumnIndex(COLUMN_BRANDNAME);
-//                int placeforadsColumnIndex = cursor.getColumnIndex(COLUMN_PLACEFORADS);
-//                int layoutColumnIndex = cursor.getColumnIndex(COLUMN_LAYOUT);
                 if (cursor.moveToNext()) {
-//                    long currentID = cursor.getInt(idColumnIndex);
-//                    String startPlacement = cursor.getString(startPlacementColumnIndex);
-//                    String stopPlacement = cursor.getString(stopPlacementColumnIndex);
-//                    String aid = cursor.getString(aidColumnIndex);
-//                    String brandName = cursor.getString(brandNameColumnIndex);
-//                    long placeforads = cursor.getLong(placeforadsColumnIndex);
-//                    String layout = cursor.getString(layoutColumnIndex);
                     placementPlace = new PlacementPlace(cursor);
                 }
             }
@@ -491,56 +478,15 @@ public final class PhotoControllerContract {
                     null,                  // Don't group the rows
                     null,                  // Don't filter by row groups
                     null)) {
-//                int idColumnIndex = cursor.getColumnIndex(_ID);
-//                int startPlacementColumnIndex = cursor.getColumnIndex(COLUMN_START_PLACEMENT);
-//                int stopPlacementColumnIndex = cursor.getColumnIndex(COLUMN_STOP_PLACEMENT);
-//                int aidColumnIndex = cursor.getColumnIndex(COLUMN_AID);
-//                int brandNameColumnIndex = cursor.getColumnIndex(COLUMN_BRANDNAME);
-//                int placeforadsColumnIndex = cursor.getColumnIndex(COLUMN_PLACEFORADS);
-//                int layoutColumnIndex = cursor.getColumnIndex(COLUMN_LAYOUT);
                 if (cursor.moveToNext()) {
-//                    long currentID = cursor.getInt(idColumnIndex);
-//                    String startPlacement = cursor.getString(startPlacementColumnIndex);
-//                    String stopPlacement = cursor.getString(stopPlacementColumnIndex);
-//                    String aid = cursor.getString(aidColumnIndex);
-//                    String brandName = cursor.getString(brandNameColumnIndex);
-//                    long placeforads = cursor.getLong(placeforadsColumnIndex);
-//                    String layout = cursor.getString(layoutColumnIndex);
                     placementPlace = new PlacementPlace(cursor);
                 }
             }
             return placementPlace;
         }
 
-//        public static ArrayList<PlaceForAds> getAllEntries() {
-//            SQLiteDatabase db = Photocontroler.getDb();
-//            ArrayList<PlaceForAds> list = new ArrayList<>();
-//            try (Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, null)) {
-//                int idColumnIndex = cursor.getColumnIndex(_ID);
-//                int nameColumnIndex = cursor.getColumnIndex(COLUMN_NAME);
-//                int codeColumnIndex = cursor.getColumnIndex(COLUMN_CODE);
-//
-//                while (cursor.moveToNext()) {
-//                    // Используем индекс для получения строки или числа
-//                    int currentID = cursor.getInt(idColumnIndex);
-//                    String currentName = cursor.getString(nameColumnIndex);
-//                    String currentCode = cursor.getString(codeColumnIndex);
-//                    list.add(new PlaceForAds(currentID, currentCode, currentName));
-//                }
-//            }
-//            return list;
-//        }
-
         public static Cursor getAllEntriesCursor() {
 
-
-            /*public final static String _ID = BaseColumns._ID;
-        public final static String COLUMN_AID = "aid";
-        public final static String COLUMN_START_PLACEMENT = "start_placement";
-        public final static String COLUMN_STOP_PLACEMENT = "stop_placement";
-        public final static String COLUMN_PLACEFORADS = "placeforads";
-        public final static String COLUMN_BRANDNAME = "brandname";
-        public final static String COLUMN_LAYOUT = "layout";*/
             SQLiteDatabase db = Photocontroler.getDb();
             Cursor cursor = null;
             //cursor = db.query(TABLE_NAME, null, null, null, null, null, null);
@@ -551,16 +497,6 @@ public final class PhotoControllerContract {
         public static Cursor getFilterAidEntries(String filter) {
 
             SQLiteDatabase db = Photocontroler.getDb();
-//            String[] projection = {
-//                    _ID,
-//                    COLUMN_AID,
-//                    COLUMN_START_PLACEMENT,
-//                    COLUMN_STOP_PLACEMENT,
-//                    COLUMN_PLACEFORADS,
-//                    COLUMN_BRANDNAME,
-//                    COLUMN_LAYOUT };
-//            String selection = COLUMN_AID + " like ?";
-//            String[] selectionArgs = {"%" + filter + "%"};
             Cursor cursor = db.rawQuery("SELECT placement._id, placement.aid, placement.start_placement, placement.stop_placement, placement.brandname, placement.layout, placeforads.name placeforadsName, placeforads._id placeforadsId FROM placement placement LEFT OUTER JOIN placeforads placeforads ON placement.placeforads = placeforads._id WHERE placement.aid like ?" , new String[]{("%" + filter + "%")});
             return cursor;
         }
@@ -584,6 +520,39 @@ public final class PhotoControllerContract {
         public final static String _ID = BaseColumns._ID;
         public final static String COLUMN_CODE = "code";
         public final static String COLUMN_NAME = "name";
+
+        public static WagonType getOneEntry(String typeCode) {
+
+            SQLiteDatabase db = Photocontroler.getDb();
+            String[] projection = {
+                    _ID,
+                    COLUMN_CODE,
+                    COLUMN_NAME };
+            String selection = COLUMN_CODE + " = ?";
+            String[] selectionArgs = {typeCode};
+            WagonType wagonType = null;
+            try (Cursor cursor = db.query(
+                    TABLE_NAME,   // таблица
+                    projection,            // столбцы
+                    selection,                  // столбцы для условия WHERE
+                    selectionArgs,                  // значения для условия WHERE
+                    null,                  // Don't group the rows
+                    null,                  // Don't filter by row groups
+                    null)) {
+//                int idColumnIndex = cursor.getColumnIndex(_ID);
+//                int startPlacementColumnIndex = cursor.getColumnIndex(COLUMN_START_PLACEMENT);
+//                int stopPlacementColumnIndex = cursor.getColumnIndex(COLUMN_STOP_PLACEMENT);
+                if (cursor.moveToNext()) {
+//                    long currentID = cursor.getInt(idColumnIndex);
+//                    String startPlacement = cursor.getString(startPlacementColumnIndex);
+//                    String stopPlacement = cursor.getString(stopPlacementColumnIndex);
+                    wagonType = new WagonType(cursor);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return wagonType;
+        }
     }
 
 }
