@@ -548,7 +548,7 @@ public final class PhotoControllerContract {
             return cursor;
         }
 
-        public static Cursor getFilterCodeEntries(String filter) {
+        public static Cursor getFilterAidEntries(String filter) {
 
             SQLiteDatabase db = Photocontroler.getDb();
 //            String[] projection = {
@@ -561,7 +561,7 @@ public final class PhotoControllerContract {
 //                    COLUMN_LAYOUT };
 //            String selection = COLUMN_AID + " like ?";
 //            String[] selectionArgs = {"%" + filter + "%"};
-            Cursor cursor = db.rawQuery("SELECT placement._id, placement.aid, placement.start_placement, placement.stop_placement, placement.brandname, placement.layout, placeforads.name placeforadsName, placeforads._id placeforadsId FROM placement placement LEFT OUTER JOIN placeforads placeforads ON placement.placeforads = placeforads._id WHERE placement.aid =%" + filter + "%" , null);
+            Cursor cursor = db.rawQuery("SELECT placement._id, placement.aid, placement.start_placement, placement.stop_placement, placement.brandname, placement.layout, placeforads.name placeforadsName, placeforads._id placeforadsId FROM placement placement LEFT OUTER JOIN placeforads placeforads ON placement.placeforads = placeforads._id WHERE placement.aid like ?" , new String[]{("%" + filter + "%")});
             return cursor;
         }
     }

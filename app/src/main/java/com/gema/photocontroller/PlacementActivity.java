@@ -4,10 +4,14 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
@@ -40,13 +44,14 @@ public class PlacementActivity extends ListActivity {
         String[] from = new String[] {"aid", "placeforadsName", "brandname"};
         int[] to = new int[] {R.id.id_placement, R.id.placeforads_placement, R.id.brand_name_placement};
         final SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.list_placement, cursor, from, to, 0);
+        adapter.setFilterQueryProvider(new FilterQueryProvider() {
+            @Override
+            public Cursor runQuery(CharSequence charSequence) {
+                return PhotoControllerContract.PlacementEntry.getFilterAidEntries(charSequence.toString());
+            }
+        });
 
-
-//        final ArrayAdapter<PlacementPlace> adapter = new PlacementAdapter(this, placementList.getList());
-//        setListAdapter(adapter);
-
-
-        ListView listView = (ListView) findViewById(android.R.id.list);
+        final ListView listView = (ListView) findViewById(android.R.id.list);
         listView.setAdapter(adapter);
         listView.setFastScrollEnabled(true);
         listView.setTextFilterEnabled(true);
@@ -59,6 +64,26 @@ public class PlacementActivity extends ListActivity {
                 Intent intent = new Intent(getApplicationContext(), ShowPlacement.class);
                 intent.putExtra("data", cursor.getLong(0));
                 startActivityForResult(intent, PLACEMENT_SHOW);
+            }
+        });
+
+        final EditText placeforads_search = (EditText) findViewById(R.id.placement_search);
+        placeforads_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                SimpleCursorAdapter filterAdapter = (SimpleCursorAdapter)listView.getAdapter();
+                filterAdapter.getFilter().filter(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
     }
