@@ -59,13 +59,15 @@ public class PlaceForAdsList extends WorkFiles{
         try {
             JSONObject dataJson = new JSONObject(fileList);
             JSONArray placeforadses = dataJson.getJSONArray("placeforads");
+            //db.beginTransaction();
             for (int i = 0; i < placeforadses.length(); i++) {
                 JSONObject placeforads = placeforadses.getJSONObject(i);
                 PlaceForAds currentPlaceforads = new PlaceForAds(placeforads);
                 db.insert(PhotoControllerContract.PlaceForAdsEntry.TABLE_NAME, null, currentPlaceforads.getContentValues());
             }
+            //db.endTransaction();
             String currentMd5 = Photocontroler.getMD5EncryptedString(fileList);
-            db.beginTransaction();
+            //db.beginTransaction();
             try (Cursor cursor = db.rawQuery("select md5 from " + PhotoControllerContract.FilesMd5Entry.TABLE_NAME + " where filename = ?", new String[]{FILENAME})) {
                 int idColumnIndex = cursor.getColumnIndex(PhotoControllerContract.FilesMd5Entry._ID);
                 long rowIndex = 0;
@@ -73,12 +75,10 @@ public class PlaceForAdsList extends WorkFiles{
                     rowIndex = cursor.getInt(idColumnIndex);
                 }
                 ContentValues contentValues = new ContentValues();
-                contentValues.put(PhotoControllerContract.FilesMd5Entry._ID, rowIndex);
+                contentValues.put(PhotoControllerContract.FilesMd5Entry._ID, (rowIndex == 0 ? null : rowIndex));
                 contentValues.put(PhotoControllerContract.FilesMd5Entry.COLUMN_FILENAME, FILENAME);
                 contentValues.put(PhotoControllerContract.FilesMd5Entry.COLUMN_MD5, currentMd5);
                 db.replace(PhotoControllerContract.FilesMd5Entry.TABLE_NAME, null, contentValues);
-            } finally {
-                db.endTransaction();
             }
 
         } catch (Exception e) {

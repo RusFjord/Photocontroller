@@ -53,14 +53,21 @@ public class PhotoHelper {
 
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES), "PhotoControler");
+        File result;
 
-        if (! mediaStorageDir.exists()){
-            if (! mediaStorageDir.mkdirs()){
-                Log.d("Camera", "failed to create directory");
-                mediaStorageDir = null;
+        boolean isExist = mediaStorageDir.exists();
+        if (isExist) {
+            result = mediaStorageDir;
+        } else {
+            boolean isMkDir = mediaStorageDir.mkdir();
+            if (isMkDir) {
+                result = mediaStorageDir;
+            } else {
+                Log.e("Camera", "failed to create directory");
+                result = null;
             }
         }
-        return mediaStorageDir;
+        return result;
     }
 
     public File getResult(int requestCode, int resultCode, Intent data, Activity parent) {
