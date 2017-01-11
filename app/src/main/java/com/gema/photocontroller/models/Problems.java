@@ -16,6 +16,7 @@ public class Problems {
     private String name;
 
     public Problems(int id, String code, String name) {
+
         this.id = id;
         this.code = code;
         this.name = name;
@@ -28,6 +29,7 @@ public class Problems {
     }
 
     public JSONObject getJSON() {
+
         JSONObject problemJSON = new JSONObject();
         try {
             problemJSON.put("id", this.id);
@@ -51,6 +53,7 @@ public class Problems {
     }
 
     public ContentValues getContentValues() {
+
         ContentValues contentValues = new ContentValues();
         contentValues.put(PhotoControllerContract.ProblemsEntry.COLUMN_CODE, this.code);
         contentValues.put(PhotoControllerContract.ProblemsEntry.COLUMN_NAME, this.name);

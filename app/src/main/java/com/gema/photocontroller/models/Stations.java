@@ -25,6 +25,7 @@ public class Stations {
     }
 
     public JSONObject getJSON() {
+
         JSONObject problemJSON = new JSONObject();
         try {
             problemJSON.put("id", this.id);
