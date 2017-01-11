@@ -521,7 +521,7 @@ public final class PhotoControllerContract {
         public final static String COLUMN_CODE = "code";
         public final static String COLUMN_NAME = "name";
 
-        public static WagonType getOneEntry(String typeCode) {
+        public static WagonType getOneEntryCode(String typeCode) {
 
             SQLiteDatabase db = Photocontroler.getDb();
             String[] projection = {
@@ -539,13 +539,34 @@ public final class PhotoControllerContract {
                     null,                  // Don't group the rows
                     null,                  // Don't filter by row groups
                     null)) {
-//                int idColumnIndex = cursor.getColumnIndex(_ID);
-//                int startPlacementColumnIndex = cursor.getColumnIndex(COLUMN_START_PLACEMENT);
-//                int stopPlacementColumnIndex = cursor.getColumnIndex(COLUMN_STOP_PLACEMENT);
                 if (cursor.moveToNext()) {
-//                    long currentID = cursor.getInt(idColumnIndex);
-//                    String startPlacement = cursor.getString(startPlacementColumnIndex);
-//                    String stopPlacement = cursor.getString(stopPlacementColumnIndex);
+                    wagonType = new WagonType(cursor);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return wagonType;
+        }
+
+        public static WagonType getOneEntry(long typeId) {
+
+            SQLiteDatabase db = Photocontroler.getDb();
+            String[] projection = {
+                    _ID,
+                    COLUMN_CODE,
+                    COLUMN_NAME };
+            String selection = _ID + " = ?";
+            String[] selectionArgs = {String.valueOf(typeId)};
+            WagonType wagonType = null;
+            try (Cursor cursor = db.query(
+                    TABLE_NAME,   // таблица
+                    projection,            // столбцы
+                    selection,                  // столбцы для условия WHERE
+                    selectionArgs,                  // значения для условия WHERE
+                    null,                  // Don't group the rows
+                    null,                  // Don't filter by row groups
+                    null)) {
+                if (cursor.moveToNext()) {
                     wagonType = new WagonType(cursor);
                 }
             } catch (Exception e) {

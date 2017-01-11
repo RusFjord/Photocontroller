@@ -27,6 +27,10 @@ public class WagonType {
         int idColumnIndex = cursor.getColumnIndex(PhotoControllerContract.WagonTypeEntry._ID);
         int codeColumnIndex = cursor.getColumnIndex(PhotoControllerContract.WagonTypeEntry.COLUMN_CODE);
         int nameColumnIndex = cursor.getColumnIndex(PhotoControllerContract.WagonTypeEntry.COLUMN_NAME);
+
+        this.id = cursor.getLong(idColumnIndex);
+        this.code = cursor.getString(codeColumnIndex);
+        this.name = cursor.getString(nameColumnIndex);
     }
 
     public long getId() {

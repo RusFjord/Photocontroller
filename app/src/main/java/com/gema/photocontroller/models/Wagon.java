@@ -1,7 +1,7 @@
 package com.gema.photocontroller.models;
 
 import android.content.ContentValues;
-import android.content.Loader;
+import android.database.Cursor;
 
 import com.gema.photocontroller.db.PhotoControllerContract;
 
@@ -16,6 +16,7 @@ public class Wagon {
     private WagonType type;
 
     public Wagon(long number, String code, String name, WagonType type) {
+
         this.number = number;
         this.type = type;
         this.code = code;
@@ -48,7 +49,27 @@ public class Wagon {
         this.code = jsonObject.getString("code");
         this.name = jsonObject.getString("name");
         String typeCode = jsonObject.getString("type");
-        this.type = PhotoControllerContract.WagonTypeEntry.getOneEntry(typeCode);
+        this.type = PhotoControllerContract.WagonTypeEntry.getOneEntryCode(typeCode);
+    }
+
+    public Wagon(Cursor cursor) {
+
+        /*int idColumnIndex = cursor.getColumnIndex(PhotoControllerContract.WagonTypeEntry._ID);
+        int codeColumnIndex = cursor.getColumnIndex(PhotoControllerContract.WagonTypeEntry.COLUMN_CODE);
+        int nameColumnIndex = cursor.getColumnIndex(PhotoControllerContract.WagonTypeEntry.COLUMN_NAME);*/
+        int idColumnIndex = cursor.getColumnIndex(PhotoControllerContract.WagonEntry._ID);
+        int numberColumnIndex = cursor.getColumnIndex(PhotoControllerContract.WagonEntry.COLUMN_NUMBER);
+        int codeColumnIndex = cursor.getColumnIndex(PhotoControllerContract.WagonEntry.COLUMN_CODE);
+        int nameColumnIndex = cursor.getColumnIndex(PhotoControllerContract.WagonEntry.COLUMN_NAME);
+        int wagonTypeColumnIndex = cursor.getColumnIndex(PhotoControllerContract.WagonEntry.COLUMN_WAGON_TYPE);
+
+        this.id = cursor.getLong(idColumnIndex);
+        this.number = cursor.getLong(numberColumnIndex);
+        this.code = cursor.getString(codeColumnIndex);
+        this.name = cursor.getString(nameColumnIndex);
+        long idWagonType = cursor.getLong(wagonTypeColumnIndex);
+        this.type = PhotoControllerContract.WagonTypeEntry.getOneEntry(idWagonType);
+
     }
 
     public ContentValues getContentValues() {
