@@ -1,9 +1,14 @@
 package com.gema.photocontroller.commons;
 
 import android.content.Context;
+import android.os.Environment;
 import android.util.Log;
 
+import com.gema.photocontroller.commands.AppUpdateCommand;
 import com.gema.photocontroller.files.WorkFiles;
+import com.gema.photocontroller.interfaces.Command;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -12,6 +17,8 @@ public class DownloadFiles extends WorkFiles{
 
     private final String REMOTE_PATH_DATA = "/uploads/app/data/";
     private AppPreference preference;
+    private PreferenceData preferenceData;
+    private boolean isUpdate = false;
 
     public DownloadFiles(String path, Context context) {
         super("tasks.json");
@@ -79,41 +86,78 @@ public class DownloadFiles extends WorkFiles{
         return result;
     }
 
-    public void getFiles(Context context) {
+    private File getFile(SFTPClient sftpClient, String remoteFileName, String localFileName) {
 
-//        String server = "trk-media.ru";
-//        String user = "xml_sftp";
-//        String pass = "cpu2800";
-        AppPreference.RemoteStructure remoteStructure = this.preference.getRemoteSettings();
+        File result = null;
+        if (sftpClient.exist(remoteFileName)) {
+            result = sftpClient.download(localFileName, remoteFileName);
+        }
+        return result;
+    }
 
-        ArrayList<String> filenames = getListServerFiles();
-        ArrayList<File> files = new ArrayList<>();
+    private void preparePreferenceData(Context context, String filename) {
+        this.preferenceData = new PreferenceData(filename, context);
+    }
 
-        SFTPClient sftpClient = new SFTPClient(remoteStructure.getRemoteHost(), remoteStructure.getRemoteLogin(), remoteStructure.getRemotePassword());
-        for (String filename: filenames) {
-            File returnedFile = getFile(context, sftpClient, filename);
-            if (returnedFile != null) {
-                files.add(returnedFile);
+    private void tryVersion(Context context, SFTPClient sftpClient, String remoteRoot, String currentVersion) {
+        String filenamePreference = "preference.json";
+        String remoteFileName = remoteRoot + filenamePreference;
+        String localFileName = context.getApplicationInfo().dataDir + File.separatorChar + filenamePreference;
+        if (sftpClient.exist(remoteFileName)) {
+            sftpClient.download(localFileName, remoteFileName);
+            preparePreferenceData(context, filenamePreference);
+            if (!currentVersion.equals(this.preferenceData.getVersion())) {
+                this.isUpdate = true;
             }
         }
+    }
 
-        JobWithZip jobWithZip = new JobWithZip();
-        File destDir = new File(context.getApplicationInfo().dataDir);
-        for (File zipFile : files) {
-            String localFileName = zipFile.getAbsolutePath();
-            if (localFileName.contains(".zip")) {
-                try {
-                    ArrayList<File> unZipFiles = jobWithZip.toUnZip(localFileName, destDir);
-                    for (File file : unZipFiles) {
-                        Log.i("UnZip", "Файл " + file.getName() + " разархивирован");
+    public boolean tryUpdate(Context context) {
+        return this.isUpdate;
+    }
+
+    public void getFiles(Context context) {
+        AppPreference.RemoteStructure remoteStructure = this.preference.getRemoteSettings();
+        SFTPClient sftpClient = new SFTPClient(remoteStructure.getRemoteHost(), remoteStructure.getRemoteLogin(), remoteStructure.getRemotePassword());
+        tryVersion(context, sftpClient, remoteStructure.getRemoteRoot(), preference.getStringValue("current_version"));
+        if (this.isUpdate) {
+            getUpdateFile(context);
+        } else {
+            ArrayList<String> filenames = getListServerFiles();
+            ArrayList<File> files = new ArrayList<>();
+            for (String filename : filenames) {
+                File returnedFile = getFile(context, sftpClient, filename);
+                if (returnedFile != null) {
+                    files.add(returnedFile);
+                }
+            }
+            JobWithZip jobWithZip = new JobWithZip();
+            File destDir = new File(context.getApplicationInfo().dataDir);
+            for (File zipFile : files) {
+                String localFileName = zipFile.getAbsolutePath();
+                if (localFileName.contains(".zip")) {
+                    try {
+                        ArrayList<File> unZipFiles = jobWithZip.toUnZip(localFileName, destDir);
+                        for (File file : unZipFiles) {
+                            Log.i("UnZip", "Файл " + file.getName() + " разархивирован");
+                        }
+                    } catch (Exception e) {
+                        Log.e("UnZip", e.getMessage());
                     }
-                } catch (Exception e) {
-                    Log.e("UnZip", e.getMessage());
                 }
             }
         }
 
-
     }
 
+    private void getUpdateFile(Context context) {
+        AppPreference.RemoteStructure remoteStructure = this.preference.getRemoteSettings();
+        SFTPClient sftpClient = new SFTPClient(remoteStructure.getRemoteHost(), remoteStructure.getRemoteLogin(), remoteStructure.getRemotePassword());
+        String remoteFileName = remoteStructure.getRemoteRoot() + preference.getStringValue("distribution_path") + "photocontroller.apk";
+        File localDistributionDir = new File(context.getApplicationInfo().dataDir + File.separatorChar + preference.getStringValue("distribution_path"));
+        localDistributionDir.mkdir();
+        String localFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separatorChar + Environment.DIRECTORY_DOWNLOADS + File.separatorChar + "photocontroller.apk";
+        File updateFile = getFile(sftpClient, remoteFileName, localFileName);
+        updateFile.deleteOnExit();
+    }
 }

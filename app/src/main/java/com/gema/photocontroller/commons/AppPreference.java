@@ -15,6 +15,10 @@ public class AppPreference {
     private final String STATIONS_FILE = "stations_file";
     private final String PLACEMENTS_FILE = "placements_file";
     private final String PROBLEMS_FILE = "problems_file";
+    private final String CURRENT_VERSION = "current_version";
+    private final String PREFERENCE_FILE = "preference_file";
+    private final String DISTRIBUTION_PATH = "distribution_path";
+    private final String ROOT_REMOTE_DIRECTORY = "root_remote_directory";
     private SharedPreferences currentPreference;
 
     private final String APP_FIRST_START = "app_first_start";
@@ -62,11 +66,18 @@ public class AppPreference {
         String deviceIMEI = telephonyManager.getDeviceId();
         editor.putString(DEVICE_IMEI, deviceIMEI);
         editor.putString(PASSWORD_APP, "123");
+        editor.putString(CURRENT_VERSION, "0");
+        editor.putString(PREFERENCE_FILE, "preference.zip");
+        editor.putString(DISTRIBUTION_PATH, "distribution/");
+        editor.putString(ROOT_REMOTE_DIRECTORY, "/uploads/app/");
         editor.apply();
     }
 
     public RemoteStructure getRemoteSettings() {
-        return new RemoteStructure(currentPreference.getString(REMOTE_HOST, ""), currentPreference.getString(REMOTE_LOGIN, ""), currentPreference.getString(REMOTE_PASSWORD, ""));
+        return new RemoteStructure(currentPreference.getString(REMOTE_HOST, ""),
+                currentPreference.getString(REMOTE_LOGIN, ""),
+                currentPreference.getString(REMOTE_PASSWORD, ""),
+                currentPreference.getString(ROOT_REMOTE_DIRECTORY, ""));
     }
 
     public Map<String, String> getRemoteFilenames() {
@@ -84,11 +95,13 @@ public class AppPreference {
         private String remoteHost;
         private String remoteLogin;
         private String remotePassword;
+        private String remoteRoot;
 
-        RemoteStructure(String remoteHost, String remoteLogin, String remotePassword) {
+        RemoteStructure(String remoteHost, String remoteLogin, String remotePassword, String remoteRoot) {
             this.remoteHost = remoteHost;
             this.remoteLogin = remoteLogin;
             this.remotePassword = remotePassword;
+            this.remoteRoot = remoteRoot;
         }
 
 
@@ -102,6 +115,10 @@ public class AppPreference {
 
         public String getRemotePassword() {
             return remotePassword;
+        }
+
+        public String getRemoteRoot() {
+            return remoteRoot;
         }
     }
 
