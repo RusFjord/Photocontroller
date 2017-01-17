@@ -4,11 +4,7 @@ import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
-import com.gema.photocontroller.commands.AppUpdateCommand;
 import com.gema.photocontroller.files.WorkFiles;
-import com.gema.photocontroller.interfaces.Command;
-
-import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -112,7 +108,8 @@ public class DownloadFiles extends WorkFiles{
         }
     }
 
-    public boolean tryUpdate(Context context) {
+    public boolean tryUpdate() {
+
         return this.isUpdate;
     }
 

@@ -2,6 +2,7 @@ package com.gema.photocontroller;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Application;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -29,6 +30,8 @@ import java.io.File;
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
+    private AppPreference preference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +40,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         setImage();
         update();
 
-        AppPreference appPreference = new AppPreference(getApplicationContext());
+        this.preference = new AppPreference(getApplicationContext());
     }
 
     private void setImage() {
@@ -51,8 +54,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         myTask.execute();
     }
 
-    private void tryUpdateApp(DownloadFiles downloadFiles) {
-        if (downloadFiles.tryUpdate(getApplicationContext())) {
+    private void tryUpdateApp(DownloadFiles downloadFiles)
+    {
+        if (downloadFiles.tryUpdate()) {
             Command update = new AppUpdateCommand();
             update.execute(getApplicationContext());
             finish();

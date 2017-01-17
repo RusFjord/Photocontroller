@@ -3,6 +3,7 @@ package com.gema.photocontroller.commons;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +36,13 @@ public class AppPreference {
         if(appFirstStart) {
             this.onFirstStart(context);
         }
+        String versionName = "";
+        try {
+            versionName = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
+        } catch (Exception e) {
+            Log.e("APP PREFERENCE", e.getMessage());
+        }
+        setCurrentVersion(versionName);
     }
 
     public String getStringValue(String key) {
@@ -66,10 +74,18 @@ public class AppPreference {
         String deviceIMEI = telephonyManager.getDeviceId();
         editor.putString(DEVICE_IMEI, deviceIMEI);
         editor.putString(PASSWORD_APP, "123");
-        editor.putString(CURRENT_VERSION, "0");
+
+
+        //editor.putString(CURRENT_VERSION, versionName);
         editor.putString(PREFERENCE_FILE, "preference.zip");
         editor.putString(DISTRIBUTION_PATH, "distribution/");
         editor.putString(ROOT_REMOTE_DIRECTORY, "/uploads/app/");
+        editor.apply();
+    }
+
+    public void setCurrentVersion(String currentVersion) {
+        SharedPreferences.Editor editor = this.currentPreference.edit();
+        editor.putString(CURRENT_VERSION, currentVersion);
         editor.apply();
     }
 
