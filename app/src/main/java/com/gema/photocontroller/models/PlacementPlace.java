@@ -2,11 +2,10 @@ package com.gema.photocontroller.models;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.gema.photocontroller.application.Photocontroler;
 import com.gema.photocontroller.db.PhotoControllerContract;
+import com.gema.photocontroller.interfaces.PlacementAdv;
 
 import org.json.JSONObject;
 
@@ -15,7 +14,7 @@ import java.util.Date;
 import java.util.Locale;
 
 
-public class PlacementPlace {
+public class PlacementPlace implements PlacementAdv {
 
     private long id = 0;
     private Date startPlacement;
@@ -25,30 +24,12 @@ public class PlacementPlace {
     private String brandName;
     private String layout;
 
-    @Deprecated
-    public PlacementPlace(PlaceForAds placeForAds, String id, String brandName, String layout) {
-        this.placeForAds = placeForAds;
-        //this.id = id;
-        this.brandName = brandName;
-        this.layout = layout;
-    }
-
-    @Deprecated
-    public PlacementPlace(String[] data) {
-
-        //this.id = data[0];
-        this.placeForAds = PhotoControllerContract.PlaceForAdsEntry.getOneEntry(Integer.valueOf(data[1]));
-        this.brandName = data[2];
-        this.layout = data[3];
-    }
-
     public PlacementPlace(JSONObject jsonObject) {
         try {
             this.aid = jsonObject.getString("id");
             if (jsonObject.has("placeforads")) {
                 JSONObject placeForAdsJSON = jsonObject.getJSONObject("placeforads");
                 String code = placeForAdsJSON.getString("id");
-//                this.placeForAds = new PlaceForAds(placeForAdsJSON);
                 this.placeForAds = PhotoControllerContract.PlaceForAdsEntry.getOneEntry(code);
             }
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault());
@@ -68,7 +49,6 @@ public class PlacementPlace {
     }
 
     public PlacementPlace(Cursor cursor) {
-
         int idColumnIndex = cursor.getColumnIndex(PhotoControllerContract.PlacementEntry._ID);
         int startPlacementColumnIndex = cursor.getColumnIndex(PhotoControllerContract.PlacementEntry.COLUMN_START_PLACEMENT);
         int stopPlacementColumnIndex = cursor.getColumnIndex(PhotoControllerContract.PlacementEntry.COLUMN_STOP_PLACEMENT);
@@ -91,14 +71,12 @@ public class PlacementPlace {
         this.aid = cursor.getString(aidColumnIndex);
         this.brandName = cursor.getString(brandNameColumnIndex);
         long placeforadsId = cursor.getLong(placeforadsColumnIndex);
-        //SQLiteDatabase db = Photocontroler.getDb();
         this.placeForAds = PhotoControllerContract.PlaceForAdsEntry.getOneEntry(placeforadsId);
         this.layout = cursor.getString(layoutColumnIndex);
     }
 
     private String getStringDate(Date date) {
         String result = "";
-
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
         try {
             result = dateFormat.format(date);
@@ -116,6 +94,7 @@ public class PlacementPlace {
         return this.aid;
     }
 
+    @Override
     public long getId() {
         return this.id;
     }
@@ -129,7 +108,6 @@ public class PlacementPlace {
     }
 
     public String getStartStopPlacement() {
-
         String result = "";
         if (this.startPlacement != null && this.stopPlacement != null) {
             StringBuilder stringBuilder = new StringBuilder();
@@ -149,8 +127,21 @@ public class PlacementPlace {
         return this.layout;
     }
 
-    public ContentValues getContentValues() {
+    @Override
+    public JSONObject getJSON() {
+        JSONObject placementPlaceJson = new JSONObject();
+        try {
+            placementPlaceJson.put("id", this.id);
+            placementPlaceJson.put("aid", this.aid);
+            placementPlaceJson.put("placeForAds", this.placeForAds.getCode());
+        } catch (Exception e) {
+            Log.e("PLACEMENT PLACE", "Ошибка формирования json");
+        }
+        return placementPlaceJson;
+    }
 
+    @Override
+    public ContentValues getContentValues() {
         ContentValues contentValues = new ContentValues();
         contentValues.put(PhotoControllerContract.PlacementEntry._ID, this.id == 0 ? null : this.id);
         contentValues.put(PhotoControllerContract.PlacementEntry.COLUMN_AID, this.aid);

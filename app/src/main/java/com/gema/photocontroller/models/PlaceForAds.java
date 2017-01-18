@@ -1,12 +1,14 @@
 package com.gema.photocontroller.models;
 
 import android.content.ContentValues;
+import android.util.Log;
 
 import com.gema.photocontroller.db.PhotoControllerContract;
+import com.gema.photocontroller.interfaces.PlacementAdv;
 
 import org.json.JSONObject;
 
-public class PlaceForAds {
+public class PlaceForAds implements PlacementAdv {
 
     private long id;
     private String code;
@@ -23,6 +25,7 @@ public class PlaceForAds {
         this.name = jsonObject.getString("name");
     }
 
+    @Override
     public long getId() {
         return this.id;
     }
@@ -41,7 +44,7 @@ public class PlaceForAds {
             placeForAdsJSON.put("id", this.id);
             placeForAdsJSON.put("name", this.name);
         } catch (Exception e) {
-            e.getStackTrace();
+            Log.e("PLACEFORADS", "Ошибка формирования json");
         }
         return placeForAdsJSON;
     }
