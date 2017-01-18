@@ -2,6 +2,7 @@ package com.gema.photocontroller.models;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.gema.photocontroller.db.PhotoControllerContract;
 
@@ -21,9 +22,6 @@ public class WagonType {
     }
 
     public WagonType(Cursor cursor) {
-//        int idColumnIndex = cursor.getColumnIndex(_ID);
-//                int startPlacementColumnIndex = cursor.getColumnIndex(COLUMN_START_PLACEMENT);
-//                int stopPlace
         int idColumnIndex = cursor.getColumnIndex(PhotoControllerContract.WagonTypeEntry._ID);
         int codeColumnIndex = cursor.getColumnIndex(PhotoControllerContract.WagonTypeEntry.COLUMN_CODE);
         int nameColumnIndex = cursor.getColumnIndex(PhotoControllerContract.WagonTypeEntry.COLUMN_NAME);
@@ -51,7 +49,7 @@ public class WagonType {
         this.name = jsonObject.getString("name");
     }
 
-    public ContentValues getContentValues() {
+    private ContentValues getContentValues() {
 
         ContentValues contentValues = new ContentValues();
         if (this.id != 0 ) {
@@ -60,5 +58,9 @@ public class WagonType {
         contentValues.put(PhotoControllerContract.WagonTypeEntry.COLUMN_CODE, this.code);
         contentValues.put(PhotoControllerContract.WagonTypeEntry.COLUMN_NAME, this.name);
         return contentValues;
+    }
+
+    public void putDb(SQLiteDatabase db) {
+        db.insert(PhotoControllerContract.StationsEntry.TABLE_NAME, null, getContentValues());
     }
 }
