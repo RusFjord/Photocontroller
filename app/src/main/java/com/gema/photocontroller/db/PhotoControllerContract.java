@@ -10,6 +10,7 @@ import com.gema.photocontroller.models.PlaceForAds;
 import com.gema.photocontroller.models.PlacementPlace;
 import com.gema.photocontroller.models.Problems;
 import com.gema.photocontroller.models.Stations;
+import com.gema.photocontroller.models.Wagon;
 import com.gema.photocontroller.models.WagonType;
 
 import java.util.ArrayList;
@@ -538,6 +539,34 @@ public final class PhotoControllerContract {
                     null,                  // Don't filter by row groups
                     null);
             return cursor;
+        }
+
+        public static Wagon getOneEntry(long id) {
+            SQLiteDatabase db = Photocontroler.getDb();
+            String[] projection = {
+                    _ID,
+                    COLUMN_CODE,
+                    COLUMN_NAME,
+                    COLUMN_NUMBER,
+                    COLUMN_WAGON_TYPE};
+            String selection = _ID + " = ?";
+            String[] selectionArgs = {String.valueOf(id)};
+            Wagon wagon = null;
+            try (Cursor cursor = db.query(
+                    TABLE_NAME,   // таблица
+                    projection,            // столбцы
+                    selection,                  // столбцы для условия WHERE
+                    selectionArgs,                  // значения для условия WHERE
+                    null,                  // Don't group the rows
+                    null,                  // Don't filter by row groups
+                    null)) {
+                if (cursor.moveToNext()) {
+                    wagon = new Wagon(cursor);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return wagon;
         }
     }
 
