@@ -56,4 +56,12 @@ public class PlaceForAds implements PlacementAdv {
         contentValues.put(PhotoControllerContract.PlaceForAdsEntry.COLUMN_NAME, this.name);
         return contentValues;
     }
+
+    @Override
+    public String getRepresentation() {
+        StringBuilder representation = new StringBuilder(this.code);
+        representation.append(" ");
+        representation.append(this.name);
+        return representation.toString();
+    }
 }

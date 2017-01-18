@@ -134,6 +134,7 @@ public class PlacementPlace implements PlacementAdv {
             placementPlaceJson.put("id", this.id);
             placementPlaceJson.put("aid", this.aid);
             placementPlaceJson.put("placeForAds", this.placeForAds.getCode());
+            placementPlaceJson.put("type", "placementplace");
         } catch (Exception e) {
             Log.e("PLACEMENT PLACE", "Ошибка формирования json");
         }
@@ -162,5 +163,11 @@ public class PlacementPlace implements PlacementAdv {
             contentValues.put(PhotoControllerContract.PlacementEntry.COLUMN_PLACEFORADS, this.placeForAds.getId());
         }
         return contentValues;
+    }
+
+    @Override
+    public String getRepresentation() {
+        //TODO: Реализовать получение представления объекта
+        return null;
     }
 }

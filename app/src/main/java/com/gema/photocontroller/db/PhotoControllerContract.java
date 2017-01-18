@@ -52,7 +52,6 @@ public final class PhotoControllerContract {
 
     }
 
-
     public static final class JournalEntry implements BaseColumns {
 
         public final static String TABLE_NAME = "journal";
@@ -63,7 +62,8 @@ public final class PhotoControllerContract {
         public final static String COLUMN_TYPE = "type";
         public final static String COLUMN_STATION = "station";
         public final static String COLUMN_PLACEFORADS = "placeforads";
-        //public final static String COLUMN_WAGON = "wagon";
+        public final static String COLUMN_PLACEMENTPLACE = "placementplace";
+        public final static String COLUMN_WAGON = "wagon";
         public final static String COLUMN_PROBLEM = "problem";
         public final static String COLUMN_COMMENT = "comment";
 
@@ -77,6 +77,8 @@ public final class PhotoControllerContract {
                     COLUMN_COMMENT,
                     COLUMN_PROBLEM,
                     COLUMN_PLACEFORADS,
+                    COLUMN_PLACEMENTPLACE,
+                    COLUMN_WAGON,
                     COLUMN_STATION};
             String selection = _ID + " = ?";
             String[] selectionArgs = {String.valueOf(id)};
@@ -411,7 +413,7 @@ public final class PhotoControllerContract {
         public final static String COLUMN_MD5 = "md5";
     }
 
-    /*private PlaceForAds placeForAds;
+    /*private PlacementAdv placeForAds;
     private String id;
     private String brandName;
     private String layout;*/

@@ -11,20 +11,19 @@ import com.gema.photocontroller.db.PhotoControllerContract;
 import com.gema.photocontroller.files.WorkFiles;
 import com.gema.photocontroller.models.PlaceForAds;
 
+
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 public class PlaceForAdsList extends WorkFiles{
 
     private final String FILENAME = "placeforads.json";
 
-    //private ArrayList<PlaceForAds> list;
+    //private ArrayList<PlacementAdv> list;
 
     public PlaceForAdsList(Context context, String filename) {
         super(filename);
-        //list = new ArrayList<PlaceForAds>();
+        //list = new ArrayList<PlacementAdv>();
         //prepareList(context);
     }
 
@@ -37,19 +36,6 @@ public class PlaceForAdsList extends WorkFiles{
         if (!md5Equals(db, fileList)) {
             updateTable(db, fileList);
         }
-        //this.list = PhotoControllerContract.PlaceForAdsEntry.getAllEntries();
-
-//        try {
-//            JSONObject dataJson = new JSONObject(fileList);
-//            JSONArray placeForAdses = dataJson.getJSONArray("placeforads");
-//            for (int i = 0; i < placeForAdses.length(); i++) {
-//                JSONObject placeForAds = placeForAdses.getJSONObject(i);
-//                list.add(new PlaceForAds(placeForAds));
-//            }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
     }
 
     private void updateTable(SQLiteDatabase db, String fileList) {
@@ -107,7 +93,7 @@ public class PlaceForAdsList extends WorkFiles{
         return result;
     }
 
-//    public ArrayList<PlaceForAds> getList() {
+//    public ArrayList<PlacementAdv> getList() {
 //        return list;
 //    }
 

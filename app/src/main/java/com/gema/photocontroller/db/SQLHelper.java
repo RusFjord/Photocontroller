@@ -20,7 +20,6 @@ public class SQLHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    /**/
     @Override
     public void onCreate(SQLiteDatabase db) {
         List<String> tables = new ArrayList<>();
@@ -31,7 +30,8 @@ public class SQLHelper extends SQLiteOpenHelper {
                 + PhotoControllerContract.JournalEntry.COLUMN_TYPE + " TEXT NOT NULL, "
                 + PhotoControllerContract.JournalEntry.COLUMN_STATION + " INTEGER NOT NULL DEFAULT 0, "
                 + PhotoControllerContract.JournalEntry.COLUMN_PLACEFORADS + " INTEGER NOT NULL DEFAULT 0, "
-              //  + PhotoControllerContract.JournalEntry.COLUMN_WAGON + " INTEGER NOT NULL DEFAULT 0, "
+                + PhotoControllerContract.JournalEntry.COLUMN_PLACEMENTPLACE + " INTEGER NOT NULL DEFAULT 0, "
+                + PhotoControllerContract.JournalEntry.COLUMN_WAGON + " INTEGER NOT NULL DEFAULT 0, "
                 + PhotoControllerContract.JournalEntry.COLUMN_PROBLEM + " INTEGER NOT NULL DEFAULT 0,"
                 + PhotoControllerContract.JournalEntry.COLUMN_COMMENT + " TEXT NOT NULL);";
         tables.add(SQL_CREATE_JOURNAL_TABLE);

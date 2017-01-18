@@ -12,6 +12,7 @@ import com.gema.photocontroller.commons.JobWithZip;
 import com.gema.photocontroller.commons.SFTPClient;
 import com.gema.photocontroller.db.PhotoControllerContract;
 import com.gema.photocontroller.files.WorkFiles;
+import com.gema.photocontroller.interfaces.PlacementAdv;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,7 +29,7 @@ public class JournalRecord extends WorkFiles implements Comparable{
 
     private long id;
     private Date date;
-    private PlaceForAds placeForAds;
+    private PlacementAdv placementAdv;
     private ArrayList<File> files = new ArrayList<>();
     private boolean isSend = false;
     private String type;
@@ -46,15 +47,15 @@ public class JournalRecord extends WorkFiles implements Comparable{
         this.type = type;
     }
 
-    public JournalRecord(String type, PlaceForAds placeForAds, File photo) {
+    public JournalRecord(String type, PlacementAdv placementAdv, File photo) {
         this(type);
-        this.placeForAds = placeForAds;
+        this.placementAdv = placementAdv;
         this.files.add(photo);
     }
 
-    public JournalRecord(String type, PlaceForAds placeForAds, File photo, Problems problem) {
+    public JournalRecord(String type, PlacementAdv placementAdv, File photo, Problems problem) {
         this(type);
-        this.placeForAds = placeForAds;
+        this.placementAdv = placementAdv;
         this.files.add(photo);
         this.problem = problem;
     }
@@ -65,6 +66,7 @@ public class JournalRecord extends WorkFiles implements Comparable{
         this.files.addAll(photos);
     }
 
+    @Deprecated
     public JournalRecord(JSONObject jsonObject) {
         this();
         try {
@@ -73,7 +75,7 @@ public class JournalRecord extends WorkFiles implements Comparable{
             this.type = jsonObject.getString("type");
             if (jsonObject.has("placeforads")) {
                 JSONObject placeForAdsJSON = jsonObject.getJSONObject("placeforads");
-                this.placeForAds = new PlaceForAds(placeForAdsJSON);
+                this.placementAdv = new PlaceForAds(placeForAdsJSON);
             }
             if (jsonObject.has("station")) {
                 JSONObject stationsJSON = jsonObject.getJSONObject("station");
@@ -99,9 +101,7 @@ public class JournalRecord extends WorkFiles implements Comparable{
     }
 
     public JournalRecord(Cursor cursor) {
-
         this();
-
         int idColumnIndex = cursor.getColumnIndex(PhotoControllerContract.JournalEntry._ID);
         int dateColumnIndex = cursor.getColumnIndex(PhotoControllerContract.JournalEntry.COLUMN_DATE);
         int issendColumnIndex = cursor.getColumnIndex(PhotoControllerContract.JournalEntry.COLUMN_IS_SEND);
@@ -123,7 +123,7 @@ public class JournalRecord extends WorkFiles implements Comparable{
         } catch (Exception e) {
             Log.e("JOURNAL REC DATE FORMAT", "Ошибка форматирования даты");
         }
-        this.placeForAds = PhotoControllerContract.PlaceForAdsEntry.getOneEntry(cursor.getInt(placeforadsColumnIndex));
+        this.placementAdv = PhotoControllerContract.PlaceForAdsEntry.getOneEntry(cursor.getInt(placeforadsColumnIndex));
         this.problem = PhotoControllerContract.ProblemsEntry.getOneEntry(cursor.getInt(problemColumnIndex));
         this.station = PhotoControllerContract.StationsEntry.getOneEntry(cursor.getInt(stationColumnIndex));
 
@@ -135,14 +135,13 @@ public class JournalRecord extends WorkFiles implements Comparable{
     }
 
     public JSONObject getJSON() {
-
         JSONObject recordJSON = new JSONObject();
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault());
             recordJSON.put("date", dateFormat.format(this.date));
             recordJSON.put("type", this.type);
-            if (this.placeForAds != null) {
-                JSONObject placeForAdsJSON = this.placeForAds.getJSON();
+            if (this.placementAdv != null) {
+                JSONObject placeForAdsJSON = this.placementAdv.getJSON();
                 recordJSON.put("placeforads", placeForAdsJSON);
             }
             if (this.problem != null) {
@@ -161,7 +160,7 @@ public class JournalRecord extends WorkFiles implements Comparable{
                 path.put("path", file.getAbsolutePath());
                 filesJSON.put(path);
             }
-            recordJSON.put("files", filesJSON);
+            //recordJSON.put("files", filesJSON);
         } catch (Exception e) {
             e.getStackTrace();
         }
@@ -176,8 +175,8 @@ public class JournalRecord extends WorkFiles implements Comparable{
         return this.date;
     }
 
-    public PlaceForAds getPlaceForAds() {
-        return this.placeForAds;
+    public PlacementAdv getPlacementAdv() {
+        return this.placementAdv;
     }
 
     public Stations getStation() {
@@ -284,7 +283,7 @@ public class JournalRecord extends WorkFiles implements Comparable{
         currentEntry.put("is_send", this.isSend);
         int stationId = this.station == null ? 0 : this.station.getId();
         currentEntry.put("station", stationId);
-        long placeforadsId = this.placeForAds == null ? 0 : this.placeForAds.getId();
+        long placeforadsId = this.placementAdv == null ? 0 : this.placementAdv.getId();
         currentEntry.put("placeforads", placeforadsId);
         int problemId = this.problem == null ? 0 : this.problem.getId();
         currentEntry.put("problem", problemId);

@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gema.photocontroller.application.Photocontroler;
-import com.gema.photocontroller.commons.JournalList;
 import com.gema.photocontroller.db.PhotoControllerContract;
 import com.gema.photocontroller.models.JournalRecord;
 import com.gema.photocontroller.commons.PhotoHelper;
@@ -88,8 +87,6 @@ public class SinglePhotoActivity extends Activity {
                     journalRecord.setComment(comment);
                 }
                 journalRecord.add(true);
-//                JournalList journal = new JournalList("journal.json", getApplicationContext());
-//                journal.add(journalRecord, getApplicationContext());
                 finish();
             }
         });
@@ -121,8 +118,6 @@ public class SinglePhotoActivity extends Activity {
                         this.placeForAds = placeForAds;
                         placeForAdsTextView.setText(this.placeForAds.getName());
                     }
-//                    this.placeForAds = new PlaceForAds(data.getStringArrayExtra("data")[0], data.getStringArrayExtra("data")[1]);
-//                    placeForAdsTextView.setText(this.placeForAds.getName());
                 } catch (Exception e) {
                     e.getStackTrace();
                 }

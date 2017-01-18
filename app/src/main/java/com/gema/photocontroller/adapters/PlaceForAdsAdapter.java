@@ -42,11 +42,6 @@ public class PlaceForAdsAdapter extends ArrayAdapter<PlaceForAds> implements Fil
         return convertView;
     }
 
-    public PlaceForAds getElement(int index) {
-        PlaceForAds placeForAds = getItem(index);
-        return placeForAds;
-    }
-
     public Filter getFilter() {
         if (mFilter == null) {
             mFilter = new ItemFilter();

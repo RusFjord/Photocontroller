@@ -9,16 +9,12 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FilterQueryProvider;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
-import com.gema.photocontroller.adapters.PlaceForAdsAdapter;
 import com.gema.photocontroller.db.PhotoControllerContract;
-import com.gema.photocontroller.models.PlaceForAds;
 import com.gema.photocontroller.commons.PlaceForAdsList;
 
 public class PlaceForAdsActivity extends ListActivity {

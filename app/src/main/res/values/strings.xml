@@ -71,4 +71,9 @@
     <string name="this_is_your_id">This is your ID:</string>
     <string name="dates_placement_text">Period of placement</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="set_wagon">Set wagon</string>
+    <string name="set_package">Set package</string>
+
 </resources>

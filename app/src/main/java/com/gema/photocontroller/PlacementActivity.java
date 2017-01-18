@@ -9,18 +9,13 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.Toast;
 
-import com.gema.photocontroller.adapters.PlacementAdapter;
 import com.gema.photocontroller.commons.PlacementList;
 import com.gema.photocontroller.db.PhotoControllerContract;
-import com.gema.photocontroller.models.PlaceForAds;
-import com.gema.photocontroller.models.PlacementPlace;
 
 public class PlacementActivity extends ListActivity {
 

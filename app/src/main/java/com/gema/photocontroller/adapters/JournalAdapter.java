@@ -9,8 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.gema.photocontroller.R;
+import com.gema.photocontroller.interfaces.PlacementAdv;
 import com.gema.photocontroller.models.JournalRecord;
-import com.gema.photocontroller.models.PlaceForAds;
 import com.gema.photocontroller.models.Stations;
 
 import java.text.DateFormat;
@@ -47,11 +47,11 @@ public class JournalAdapter extends ArrayAdapter<JournalRecord>{
         time_journal.setText(time);
         time_journal.setTextColor(textColor);
 
-        PlaceForAds placeForAds = journalRecord.getPlaceForAds();
+        PlacementAdv placeForAds = journalRecord.getPlacementAdv();
         Stations station = journalRecord.getStation();
         String currentText = "";
         if (placeForAds != null) {
-            currentText = placeForAds.getName();
+            currentText = placeForAds.getRepresentation();
         } else {
             if (station != null) {
                 currentText = station.getName();

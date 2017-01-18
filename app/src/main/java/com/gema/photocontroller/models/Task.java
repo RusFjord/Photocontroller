@@ -1,5 +1,7 @@
 package com.gema.photocontroller.models;
 
+import com.gema.photocontroller.interfaces.PlacementAdv;
+
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
@@ -43,7 +45,7 @@ public class Task implements Comparable {
         return this.type;
     }
 
-    public PlaceForAds getPlaceForAds() {
+    public PlacementAdv getPlaceForAds() {
         return this.placeForAds;
     }
 

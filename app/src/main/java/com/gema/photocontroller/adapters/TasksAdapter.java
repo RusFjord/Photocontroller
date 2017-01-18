@@ -32,7 +32,7 @@ public class TasksAdapter extends ArrayAdapter<Task> {
         ((TextView) convertView.findViewById(R.id.date_task))
                 .setText(date);
         ((TextView) convertView.findViewById(R.id.placeforads_task))
-                .setText(task.getPlaceForAds().getName());
+                .setText(task.getPlaceForAds().getRepresentation());
         ((TextView) convertView.findViewById(R.id.type_task))
                 .setText(task.getType());
         ((TextView) convertView.findViewById(R.id.layout_task))

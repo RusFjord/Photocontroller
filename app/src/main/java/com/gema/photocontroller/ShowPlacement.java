@@ -8,10 +8,7 @@ import android.widget.TextView;
 
 import com.gema.photocontroller.application.Photocontroler;
 import com.gema.photocontroller.db.PhotoControllerContract;
-import com.gema.photocontroller.models.PlaceForAds;
 import com.gema.photocontroller.models.PlacementPlace;
-
-import java.util.ArrayList;
 
 public class ShowPlacement extends Activity {
 
@@ -47,7 +44,7 @@ public class ShowPlacement extends Activity {
                 dates_single_placement.setText(this.placementPlace.getStartStopPlacement());
                 final TextView placeforads_single_placement = (TextView) findViewById(R.id.placeforads_single_placement);
                 placeforads_single_placement.setTypeface(typeface);
-                //this.placeForAds = new PlaceForAds(data[1], data[2]);
+                //this.placeForAds = new PlacementAdv(data[1], data[2]);
                 placeforads_single_placement.setText(this.placementPlace.getPlaceForAds().getName());
                 final TextView brand_name_single_placement = (TextView) findViewById(R.id.brand_name_single_placement);
                 brand_name_single_placement.setTypeface(typeface);

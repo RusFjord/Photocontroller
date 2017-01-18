@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gema.photocontroller.application.Photocontroler;
-import com.gema.photocontroller.commons.JournalList;
 import com.gema.photocontroller.db.PhotoControllerContract;
 import com.gema.photocontroller.models.JournalRecord;
 import com.gema.photocontroller.commons.PhotoHelper;
@@ -103,8 +102,6 @@ public class DetoursActivity extends Activity {
                 if (!comment.isEmpty()) {
                     journalRecord.setComment(comment);
                 }
-//                JournalList journal = new JournalList("journal.json", getApplicationContext());
-//                journal.add(journalRecord, getApplicationContext());
                 journalRecord.add(true);
                 Toast.makeText(getApplicationContext(), R.string.record_journal_created, Toast.LENGTH_SHORT).show();
                 finish();
@@ -171,18 +168,4 @@ public class DetoursActivity extends Activity {
         }
     }
 
-//    private String getRealPathFromURI(Uri contentUri) {
-//        Cursor cursor = null;
-//        try {
-//            String[] proj = { MediaStore.Images.Media.DATA };
-//            cursor = getContentResolver().query(contentUri,  proj, null, null, null);
-//            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-//            cursor.moveToFirst();
-//            return cursor.getString(column_index);
-//        } finally {
-//            if (cursor != null) {
-//                cursor.close();
-//            }
-//        }
-//    }
 }
