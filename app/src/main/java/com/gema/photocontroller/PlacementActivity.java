@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 import com.gema.photocontroller.commons.PlacementList;
 import com.gema.photocontroller.db.PhotoControllerContract;
@@ -20,6 +21,8 @@ import com.gema.photocontroller.db.PhotoControllerContract;
 public class PlacementActivity extends ListActivity {
 
     private final int PLACEMENT_SHOW = 3233212;
+    private final String GET_PLACEMENT = "get";
+    private boolean isCall = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +59,23 @@ public class PlacementActivity extends ListActivity {
                 Cursor cursor = ((SimpleCursorAdapter)adapterView.getAdapter()).getCursor();
                 cursor.moveToPosition(pos);
 
-                Intent intent = new Intent(getApplicationContext(), ShowPlacement.class);
-                intent.putExtra("data", cursor.getLong(0));
-                startActivityForResult(intent, PLACEMENT_SHOW);
+                String data = "";
+                Bundle currentData = getIntent().getExtras();
+                if (currentData != null) {
+                    data = currentData.getString("data");
+                }
+
+                Intent intent;
+                if (data.equals(GET_PLACEMENT)) {
+                    intent = getIntent();
+                    intent.putExtra("data", cursor.getLong(0));
+                    setResult(RESULT_OK, intent);
+                    finish();
+                } else {
+                    intent = new Intent(getApplicationContext(), ShowPlacement.class);
+                    intent.putExtra("data", cursor.getLong(0));
+                    startActivityForResult(intent, PLACEMENT_SHOW);
+                }
             }
         });
 

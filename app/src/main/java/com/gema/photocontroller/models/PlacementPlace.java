@@ -167,7 +167,9 @@ public class PlacementPlace implements PlacementAdv {
 
     @Override
     public String getRepresentation() {
-        //TODO: Реализовать получение представления объекта
-        return null;
+        StringBuilder representation = new StringBuilder(this.aid);
+        representation.append(" ");
+        representation.append(this.brandName);
+        return representation.toString();
     }
 }

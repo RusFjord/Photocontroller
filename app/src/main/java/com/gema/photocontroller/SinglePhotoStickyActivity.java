@@ -62,6 +62,7 @@ public class SinglePhotoStickyActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), PlacementActivity.class);
+                intent.putExtra("data", "get");
                 startActivityForResult(intent, PLACEMENT_REQUEST);
             }
         });

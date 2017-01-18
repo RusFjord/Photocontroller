@@ -17,7 +17,7 @@
     <string name="password_edittext">Пароль</string>
     <string name="sign_in_caption">Войти</string>
 
-    <string name="text_about">Приложение Фотоконтролер предназначено для оперативного учета в отделе фотоконтроля. Приложение помогает фотографам компании получить список текущих задач, провести как одиночные снимки, так и серии снимков рекламных материалов, а также отправить результаты на сервер. Разработано ООО Эксперт Консалт ГК Гема. Разработчик: Ендовицкий Федор.</string>
+    <string name="text_about">Приложение Фотоконтролер предназначено для оперативного учета в отделе фотоконтроля. Приложение помогает фотографам компании получить список текущих задач, провести как одиночные снимки, так и серии снимков рекламных материалов, а также отправить результаты на сервер.\nРазработано: ООО Эксперт Консалт\nГруппа компаний Гема.\nРазработчик: Ендовицкий Федор.</string>
 
     <string name="button_ok">ОК</string>
     <string name="button_group_photo">Серия фото</string>
@@ -67,4 +67,8 @@
     <string name="no_station">Необходимо добавить станцию метро</string>
     <string name="this_is_your_id">Это ваш ID:</string>
     <string name="dates_placement_text">Период размещения</string>
+    <string name="set_package">Выберите пакет</string>
+    <string name="set_wagon">Выберите вагон</string>
+    <string name="use_shield_advertising">Щитовая реклама</string>
+    <string name="use_sticky_advertising">Липкая аппликация</string>
 </resources>

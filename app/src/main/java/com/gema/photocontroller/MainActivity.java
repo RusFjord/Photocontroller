@@ -136,7 +136,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.photoreports_btn:
                 //Toast.makeText(this, "Это фотоотчеты", Toast.LENGTH_SHORT).show();
-                intent = new Intent(this, PhotoreportsActivity.class);
+                intent = new Intent(this, ChangeTypeReportActivity.class);
                 break;
             case R.id.detours_btn:
                 //Toast.makeText(this, "Это объезды", Toast.LENGTH_SHORT).show();

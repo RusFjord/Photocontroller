@@ -76,7 +76,8 @@
             android:name=".StationsActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".WagonActivity" />
-        <activity android:name=".SinglePhotoStickyActivity"></activity>
+        <activity android:name=".SinglePhotoStickyActivity" />
+        <activity android:name=".ChangeTypeReportActivity"></activity>
     </application>
 
 </manifest>

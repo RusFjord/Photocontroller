@@ -65,12 +65,7 @@
         android:adjustViewBounds="true"
         android:layout_below="@+id/group_btn"
         android:layout_marginTop="@dimen/caption_place_for_ads"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/comments_edit_text"
-        android:layout_above="@id/group_photo_send_btn"
-        android:id="@+id/single_photo_comment"/>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="@dimen/main_menu_btn_height"
@@ -80,4 +75,10 @@
         android:text="@string/send_btn"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="@dimen/main_menu_btn_margin_bottom"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/comments_edit_text"
+        android:layout_above="@id/single_photo_sticky_send_btn"
+        android:id="@+id/single_photo_comment"/>
 </RelativeLayout>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_change_type_report"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.gema.photocontroller.ChangeTypeReportActivity">
+
+    <Button
+        android:id="@+id/change_shield_btn"
+        android:text="@string/use_shield_advertising"
+        style="@style/BtnFont"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_menu_btn_height"
+        android:background="@drawable/buttonshapeupper"
+        android:layout_marginBottom="@dimen/main_menu_btn_margin_bottom" />
+    <Button
+        android:id="@+id/change_sticky_btn"
+        android:text="@string/use_sticky_advertising"
+        style="@style/BtnFont"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_menu_btn_height"
+        android:background="@drawable/buttonshapelower" />
+</LinearLayout>
