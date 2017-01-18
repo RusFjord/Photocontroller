@@ -61,6 +61,7 @@ public class WagonType {
     }
 
     public void putDb(SQLiteDatabase db) {
-        db.insert(PhotoControllerContract.StationsEntry.TABLE_NAME, null, getContentValues());
+        ContentValues contentValues = getContentValues();
+        db.insert(PhotoControllerContract.WagonTypeEntry.TABLE_NAME, null, contentValues);
     }
 }

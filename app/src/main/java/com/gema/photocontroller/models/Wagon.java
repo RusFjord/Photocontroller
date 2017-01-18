@@ -2,6 +2,7 @@ package com.gema.photocontroller.models;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.gema.photocontroller.db.PhotoControllerContract;
 
@@ -44,7 +45,6 @@ public class Wagon {
     }
 
     public Wagon(JSONObject jsonObject) throws Exception {
-
         this.number = jsonObject.getLong("number");
         this.code = jsonObject.getString("code");
         this.name = jsonObject.getString("name");
@@ -53,10 +53,6 @@ public class Wagon {
     }
 
     public Wagon(Cursor cursor) {
-
-        /*int idColumnIndex = cursor.getColumnIndex(PhotoControllerContract.WagonTypeEntry._ID);
-        int codeColumnIndex = cursor.getColumnIndex(PhotoControllerContract.WagonTypeEntry.COLUMN_CODE);
-        int nameColumnIndex = cursor.getColumnIndex(PhotoControllerContract.WagonTypeEntry.COLUMN_NAME);*/
         int idColumnIndex = cursor.getColumnIndex(PhotoControllerContract.WagonEntry._ID);
         int numberColumnIndex = cursor.getColumnIndex(PhotoControllerContract.WagonEntry.COLUMN_NUMBER);
         int codeColumnIndex = cursor.getColumnIndex(PhotoControllerContract.WagonEntry.COLUMN_CODE);
@@ -69,11 +65,9 @@ public class Wagon {
         this.name = cursor.getString(nameColumnIndex);
         long idWagonType = cursor.getLong(wagonTypeColumnIndex);
         this.type = PhotoControllerContract.WagonTypeEntry.getOneEntry(idWagonType);
-
     }
 
-    public ContentValues getContentValues() {
-
+    private ContentValues getContentValues() {
         ContentValues contentValues = new ContentValues();
         if (this.id != 0 ) {
             contentValues.put(PhotoControllerContract.WagonTypeEntry._ID, this.id);
@@ -81,5 +75,10 @@ public class Wagon {
         contentValues.put(PhotoControllerContract.WagonTypeEntry.COLUMN_CODE, this.code);
         contentValues.put(PhotoControllerContract.WagonTypeEntry.COLUMN_NAME, this.name);
         return contentValues;
+    }
+
+    public void putDb(SQLiteDatabase db) {
+        ContentValues contentValues = getContentValues();
+        db.insert(PhotoControllerContract.WagonEntry.TABLE_NAME, null, contentValues);
     }
 }
