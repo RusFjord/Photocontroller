@@ -511,6 +511,32 @@ public final class PhotoControllerContract {
         public final static String COLUMN_NAME = "name";
         public final static String COLUMN_NUMBER = "number";
         public final static String COLUMN_WAGON_TYPE = "wagon_type";
+
+        public static Cursor getAllEntriesCursor() {
+            SQLiteDatabase db = Photocontroler.getDb();
+            Cursor cursor = null;
+            cursor = db.query(TABLE_NAME, null, null, null, null, null, null);
+            return cursor;
+        }
+
+        public static Cursor getFilteredEntriesCursor(String filter) {
+            SQLiteDatabase db = Photocontroler.getDb();
+            String[] projection = {
+                    _ID,
+                    COLUMN_CODE,
+                    COLUMN_NAME };
+            String selection = COLUMN_NAME + " like ?";
+            String[] selectionArgs = {"%" + filter + "%"};
+            Cursor cursor = db.query(
+                    TABLE_NAME,   // таблица
+                    projection,            // столбцы
+                    selection,                  // столбцы для условия WHERE
+                    selectionArgs,                  // значения для условия WHERE
+                    null,                  // Don't group the rows
+                    null,                  // Don't filter by row groups
+                    null);
+            return cursor;
+        }
     }
 
     public static final class WagonTypeEntry implements BaseColumns {
