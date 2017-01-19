@@ -28,23 +28,11 @@ public class PlacementList extends WorkFiles {
     }
 
     private void prepareList(Context context) {
-
         String fileList = super.ReadFile(context);
         SQLiteDatabase db = Photocontroler.getDb();
         if (!md5Equals(db, fileList)) {
             updateTable(db, fileList);
         }
-//        try {
-//            JSONObject dataJson = new JSONObject(fileList);
-//            JSONArray placements = dataJson.getJSONArray("placements");
-//            for (int i = 0; i < placements.length(); i++) {
-//                JSONObject placement = placements.getJSONObject(i);
-//                list.add(new PlacementPlace(placement));
-//            }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
     }
 
     public ArrayList<PlacementPlace> getList() {
@@ -52,7 +40,6 @@ public class PlacementList extends WorkFiles {
     }
 
     private void updateTable(SQLiteDatabase db, String fileList) {
-
         String dropQuery = "DELETE FROM " + PhotoControllerContract.PlacementEntry.TABLE_NAME + "; VACUUM;";
         db.execSQL(dropQuery);
         try {
@@ -64,7 +51,6 @@ public class PlacementList extends WorkFiles {
                 db.replace(PhotoControllerContract.PlacementEntry.TABLE_NAME, null, currentPlace.getContentValues());
             }
             String currentMd5 = Photocontroler.getMD5EncryptedString(fileList);
-            //db.beginTransaction();
             try (Cursor cursor = db.rawQuery("select md5 from " + PhotoControllerContract.FilesMd5Entry.TABLE_NAME + " where filename = ?", new String[]{FILENAME})) {
                 int idColumnIndex = cursor.getColumnIndex(PhotoControllerContract.FilesMd5Entry._ID);
                 long rowIndex = 0;
@@ -79,15 +65,12 @@ public class PlacementList extends WorkFiles {
                 contentValues.put(PhotoControllerContract.FilesMd5Entry.COLUMN_MD5, currentMd5);
                 db.replace(PhotoControllerContract.FilesMd5Entry.TABLE_NAME, null, contentValues);
             }
-
         } catch (Exception e) {
             Log.e("PLACEFORADS LIST", e.getMessage());
         }
-
     }
 
     private boolean md5Equals(SQLiteDatabase db, String fileList) {
-
         boolean result = false;
         String currentMD5 = null;
         try (Cursor cursor = db.rawQuery("select md5 from " + PhotoControllerContract.FilesMd5Entry.TABLE_NAME + " where filename = ?", new String[]{FILENAME})) {
@@ -104,11 +87,5 @@ public class PlacementList extends WorkFiles {
             }
         }
         return result;
-    }
-
-    @Deprecated
-    public PlacementPlace getElement(int index) {
-        PlacementPlace place = list.get(index);
-        return place;
     }
 }
