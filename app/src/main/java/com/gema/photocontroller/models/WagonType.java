@@ -44,7 +44,6 @@ public class WagonType {
     }
 
     public WagonType(JSONObject jsonObject) throws Exception {
-
         this.code = jsonObject.getString("code");
         this.name = jsonObject.getString("name");
     }

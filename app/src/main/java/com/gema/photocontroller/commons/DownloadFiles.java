@@ -109,7 +109,6 @@ public class DownloadFiles extends WorkFiles{
     }
 
     public boolean tryUpdate() {
-
         return this.isUpdate;
     }
 
@@ -120,7 +119,9 @@ public class DownloadFiles extends WorkFiles{
         if (this.isUpdate) {
             getUpdateFile(context);
         } else {
-            ArrayList<String> filenames = getListServerFiles();
+            this.preferenceData.updatePreference(context);
+
+            ArrayList<String> filenames = this.preferenceData.getFilesForDownload();
             ArrayList<File> files = new ArrayList<>();
             for (String filename : filenames) {
                 File returnedFile = getFile(context, sftpClient, filename);

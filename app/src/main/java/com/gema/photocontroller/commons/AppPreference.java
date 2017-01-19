@@ -50,6 +50,12 @@ public class AppPreference {
         return value;
     }
 
+    public void setPasswordApp(String newPassword) {
+        SharedPreferences.Editor editor = this.currentPreference.edit();
+        editor.putString(PASSWORD_APP, newPassword);
+        editor.apply();
+    }
+
     public void setStringValue(String key, String value) {
         if (this.currentPreference.contains(key)) {
             SharedPreferences.Editor editor = this.currentPreference.edit();

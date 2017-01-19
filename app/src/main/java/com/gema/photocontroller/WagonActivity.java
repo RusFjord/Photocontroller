@@ -11,6 +11,7 @@ import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
+import com.gema.photocontroller.commons.WagonTypeUpdate;
 import com.gema.photocontroller.commons.WagonUpdate;
 import com.gema.photocontroller.db.PhotoControllerContract;
 import com.gema.photocontroller.db.UpdateDbTable;
@@ -31,10 +32,10 @@ public class WagonActivity extends ListActivity {
             finish();
         }
         //PlacementList placementList = new PlacementList(getApplicationContext(), "placements.json");
-        UpdateDbTable wagonTypes = new WagonUpdate();
+        UpdateDbTable wagonTypes = new WagonTypeUpdate();
         wagonTypes.prepareTable(getApplicationContext(), "wagontypes.json");
         UpdateDbTable wagon = new WagonUpdate();
-        wagon.prepareTable(getApplicationContext(), "wagon.json");
+        wagon.prepareTable(getApplicationContext(), "wagons.json");
         String[] from = new String[] {"name"};
         int[] to = new int[] {R.id.wagon_name};
         final SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.list_wagon, cursor, from, to, 0);

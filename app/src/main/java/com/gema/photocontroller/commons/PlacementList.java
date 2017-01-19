@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class PlacementList extends WorkFiles {
 
-    private final String FILENAME = "placement.json";
+    private final String FILENAME = "placements.json";
     private ArrayList<PlacementPlace> list;
 
     public PlacementList(Context context, String filename) {
@@ -64,7 +64,7 @@ public class PlacementList extends WorkFiles {
                 db.replace(PhotoControllerContract.PlacementEntry.TABLE_NAME, null, currentPlace.getContentValues());
             }
             String currentMd5 = Photocontroler.getMD5EncryptedString(fileList);
-            db.beginTransaction();
+            //db.beginTransaction();
             try (Cursor cursor = db.rawQuery("select md5 from " + PhotoControllerContract.FilesMd5Entry.TABLE_NAME + " where filename = ?", new String[]{FILENAME})) {
                 int idColumnIndex = cursor.getColumnIndex(PhotoControllerContract.FilesMd5Entry._ID);
                 long rowIndex = 0;
@@ -72,12 +72,12 @@ public class PlacementList extends WorkFiles {
                     rowIndex = cursor.getInt(idColumnIndex);
                 }
                 ContentValues contentValues = new ContentValues();
-                contentValues.put(PhotoControllerContract.FilesMd5Entry._ID, rowIndex);
+                if (rowIndex != 0) {
+                    contentValues.put(PhotoControllerContract.FilesMd5Entry._ID, rowIndex);
+                }
                 contentValues.put(PhotoControllerContract.FilesMd5Entry.COLUMN_FILENAME, FILENAME);
                 contentValues.put(PhotoControllerContract.FilesMd5Entry.COLUMN_MD5, currentMd5);
                 db.replace(PhotoControllerContract.FilesMd5Entry.TABLE_NAME, null, contentValues);
-            } finally {
-                db.endTransaction();
             }
 
         } catch (Exception e) {
