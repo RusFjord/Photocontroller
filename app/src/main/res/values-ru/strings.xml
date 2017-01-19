@@ -71,4 +71,5 @@
     <string name="set_wagon">Выберите вагон</string>
     <string name="use_shield_advertising">Щитовая реклама</string>
     <string name="use_sticky_advertising">Липкая аппликация</string>
+    <string name="send_all">Отправить все</string>
 </resources>

@@ -7,10 +7,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.gema.photocontroller.adapters.JournalAdapter;
+import com.gema.photocontroller.application.Photocontroler;
 import com.gema.photocontroller.commons.JournalList;
 import com.gema.photocontroller.interfaces.ChangeSendStateJournalRecordListener;
 import com.gema.photocontroller.interfaces.ChangeSendStateJournalRecordPublisher;
@@ -29,7 +31,28 @@ public class JournalActivity extends ListActivity implements ChangeSendStateJour
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_journal);
         getJournal();
+        setButton();
         this.listeners = new ArrayList<>();
+    }
+
+    private void setButton() {
+        final Button send_all_btn = (Button) findViewById(R.id.send_all_btn);
+        send_all_btn.setTypeface(Photocontroler.getFont(getApplicationContext()));
+        send_all_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendAll();
+            }
+        });
+    }
+
+    private void sendAll() {
+        for (JournalRecord record : this.journalList.getList()) {
+            if(!record.getSendState()) {
+                SendJournalRecordTask task = new SendJournalRecordTask(record);
+                task.execute();
+            }
+        }
     }
 
     private void getJournal() {

@@ -77,5 +77,6 @@
     <string name="set_package">Set package</string>
     <string name="use_shield_advertising">Use shield advertising</string>
     <string name="use_sticky_advertising">Use sticky advertising</string>
+    <string name="send_all">Send all</string>
 
 </resources>
