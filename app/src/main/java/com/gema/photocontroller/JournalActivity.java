@@ -20,9 +20,8 @@ import com.gema.photocontroller.models.JournalRecord;
 
 import java.util.ArrayList;
 
-public class JournalActivity extends ListActivity implements ChangeSendStateJournalRecordPublisher{
+public class JournalActivity extends ListActivity {
 
-    private ArrayList<ChangeSendStateJournalRecordListener> listeners;
     private ArrayAdapter<JournalRecord> adapter;
     private JournalList journalList;
 
@@ -32,7 +31,6 @@ public class JournalActivity extends ListActivity implements ChangeSendStateJour
         setContentView(R.layout.activity_journal);
         getJournal();
         setButton();
-        this.listeners = new ArrayList<>();
     }
 
     private void setButton() {
@@ -86,28 +84,7 @@ public class JournalActivity extends ListActivity implements ChangeSendStateJour
         });
     }
 
-    @Override
-    public void addListener(ChangeSendStateJournalRecordListener listener) {
-        int index = this.listeners.indexOf(listener);
-        if (index < 0) {
-            this.listeners.add(listener);
-        }
-    }
 
-    @Override
-    public void deleteListener(ChangeSendStateJournalRecordListener listener) {
-        int index = this.listeners.indexOf(listener);
-        if (index >= 0 ) {
-            this.listeners.remove(index);
-        }
-    }
-
-    @Override
-    public void notifyListeners() {
-        for (ChangeSendStateJournalRecordListener listener : this.listeners) {
-            listener.SendStatusChanged();
-        }
-    }
 
     class SendJournalRecordTask extends AsyncTask<Void, Void, Void> {
 

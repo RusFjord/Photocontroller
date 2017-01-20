@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 
+import com.gema.photocontroller.commons.PoolOfUpdate;
 import com.gema.photocontroller.commons.SettingsHelper;
 import com.gema.photocontroller.db.SQLHelper;
 
@@ -17,13 +18,22 @@ public class Photocontroler extends Application {
 
     private static SQLHelper dbHelper;
     private static SQLiteDatabase db;
+    private static PoolOfUpdate poolOfUpdate;
 
     @Override
     public void onCreate() {
         super.onCreate();
         SettingsHelper.initInstance(this);
         setDb();
+        setPoolOfUpdate();
+    }
 
+    private void setPoolOfUpdate() {
+        poolOfUpdate = new PoolOfUpdate();
+    }
+
+    public static PoolOfUpdate getPoolOfUpdate() {
+        return poolOfUpdate;
     }
 
     private void setDb() {

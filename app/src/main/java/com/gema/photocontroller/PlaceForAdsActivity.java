@@ -14,11 +14,16 @@ import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
+import com.gema.photocontroller.application.Photocontroler;
+import com.gema.photocontroller.commons.PoolOfUpdate;
 import com.gema.photocontroller.db.PhotoControllerContract;
 import com.gema.photocontroller.commons.PlaceForAdsList;
+import com.gema.photocontroller.interfaces.UpdateRefsListener;
 
-public class PlaceForAdsActivity extends ListActivity {
+public class PlaceForAdsActivity extends ListActivity implements UpdateRefsListener {
 
+    private ListView listView;
+    private EditText placeforads_search;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,10 +31,24 @@ public class PlaceForAdsActivity extends ListActivity {
         getPlaceForAds();
     }
 
+    @Override
+    protected void onResume() {
+        PoolOfUpdate poolOfUpdate = Photocontroler.getPoolOfUpdate();
+        poolOfUpdate.addListener(this);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        PoolOfUpdate poolOfUpdate = Photocontroler.getPoolOfUpdate();
+        poolOfUpdate.deleteListener(this);
+        super.onPause();
+    }
+
     private void getPlaceForAds() {
 
-        PlaceForAdsList updateList = new PlaceForAdsList(this, "placeforads.json");
-        updateList.prepareList(this);
+//        PlaceForAdsList updateList = new PlaceForAdsList(this, "placeforads.json");
+//        updateList.prepareList(this);
 
         Cursor cursor = PhotoControllerContract.PlaceForAdsEntry.getAllEntriesCursor();
         if (cursor == null) {
@@ -48,7 +67,7 @@ public class PlaceForAdsActivity extends ListActivity {
             }
         });
 
-        final ListView listView = (ListView) findViewById(android.R.id.list);
+        listView = (ListView) findViewById(android.R.id.list);
         listView.setAdapter(adapter);
         listView.setFastScrollEnabled(true);
         listView.setTextFilterEnabled(true);
@@ -65,7 +84,7 @@ public class PlaceForAdsActivity extends ListActivity {
             }
         });
 
-        final EditText placeforads_search = (EditText) findViewById(R.id.placeforads_search);
+        placeforads_search = (EditText) findViewById(R.id.placeforads_search);
         placeforads_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -84,5 +103,14 @@ public class PlaceForAdsActivity extends ListActivity {
 
             }
         });
+    }
+
+    @Override
+    public void update() {
+//        String currentText = placeforads_search.getText().toString();
+//        SimpleCursorAdapter filterAdapter = (SimpleCursorAdapter)listView.getAdapter();
+//        filterAdapter.getFilter().filter(currentText);
+        SimpleCursorAdapter filterAdapter = (SimpleCursorAdapter)listView.getAdapter();
+        filterAdapter.notifyDataSetChanged();
     }
 }

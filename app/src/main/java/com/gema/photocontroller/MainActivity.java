@@ -2,20 +2,12 @@ package com.gema.photocontroller;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Application;
-import android.app.DownloadManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,9 +16,10 @@ import com.gema.photocontroller.application.Photocontroler;
 import com.gema.photocontroller.commands.AppUpdateCommand;
 import com.gema.photocontroller.commons.AppPreference;
 import com.gema.photocontroller.commons.DownloadFiles;
+import com.gema.photocontroller.commons.PlaceForAdsUpdate;
+import com.gema.photocontroller.commons.PoolOfUpdate;
+import com.gema.photocontroller.db.UpdateDbTable;
 import com.gema.photocontroller.interfaces.Command;
-
-import java.io.File;
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
@@ -63,6 +56,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
     }
 
+    private void makeUpdateRefs() {
+        UpdateDbTable placeForAds = new PlaceForAdsUpdate();
+        placeForAds.prepareTable(this, "placeforads.json");
+        PoolOfUpdate poolOfUpdate = Photocontroler.getPoolOfUpdate();
+        poolOfUpdate.notifyListeners();
+    }
+
     class MyTask extends AsyncTask<Void, Void, Void> {
 
         DownloadFiles downloadFiles;
@@ -79,6 +79,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         @Override
         protected Void doInBackground(Void... params) {
             downloadFiles.getFiles(getApplicationContext());
+            makeUpdateRefs();
             return null;
         }
 
@@ -86,6 +87,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             tryUpdateApp(this.downloadFiles);
+
         }
     }
 
