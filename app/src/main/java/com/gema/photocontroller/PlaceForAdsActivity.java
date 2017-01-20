@@ -24,6 +24,7 @@ public class PlaceForAdsActivity extends ListActivity implements UpdateRefsListe
 
     private ListView listView;
     private EditText placeforads_search;
+    private SimpleCursorAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +59,7 @@ public class PlaceForAdsActivity extends ListActivity implements UpdateRefsListe
 
         String[] from = new String[] {"code", "name"};
         int[] to = new int[] {R.id.id_placeforads, R.id.name_placeforads};
-        final SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.list_placeforads, cursor, from, to, 0);
+        this.adapter = new SimpleCursorAdapter(this, R.layout.list_placeforads, cursor, from, to, 0);
 
         adapter.setFilterQueryProvider(new FilterQueryProvider() {
             @Override
@@ -110,7 +111,9 @@ public class PlaceForAdsActivity extends ListActivity implements UpdateRefsListe
 //        String currentText = placeforads_search.getText().toString();
 //        SimpleCursorAdapter filterAdapter = (SimpleCursorAdapter)listView.getAdapter();
 //        filterAdapter.getFilter().filter(currentText);
-        SimpleCursorAdapter filterAdapter = (SimpleCursorAdapter)listView.getAdapter();
-        filterAdapter.notifyDataSetChanged();
+        Cursor newCursor = PhotoControllerContract.PlaceForAdsEntry.getAllEntriesCursor();
+        //this.adapter.swapCursor(newCursor);
+        this.adapter.changeCursor(newCursor);
+        this.adapter.notifyDataSetChanged();
     }
 }

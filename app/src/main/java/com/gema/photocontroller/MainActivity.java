@@ -79,7 +79,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         @Override
         protected Void doInBackground(Void... params) {
             downloadFiles.getFiles(getApplicationContext());
-            makeUpdateRefs();
+            //makeUpdateRefs();
             return null;
         }
 
@@ -87,7 +87,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             tryUpdateApp(this.downloadFiles);
-
+            makeUpdateRefs();
         }
     }
 
