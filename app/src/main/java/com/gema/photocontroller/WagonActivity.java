@@ -18,9 +18,12 @@ import com.gema.photocontroller.commons.WagonTypeUpdate;
 import com.gema.photocontroller.commons.WagonUpdate;
 import com.gema.photocontroller.db.PhotoControllerContract;
 import com.gema.photocontroller.db.UpdateDbTable;
+import com.gema.photocontroller.interfaces.UpdateRefsListener;
 
-public class WagonActivity extends ListActivity {
+public class WagonActivity extends ListActivity implements UpdateRefsListener {
 
+    private SimpleCursorAdapter adapter;
+    private EditText wagon_search;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,14 +37,9 @@ public class WagonActivity extends ListActivity {
             Log.e("CURSOR WAGON", "Ошибка получения данных по вагонам");
             finish();
         }
-        //PlacementList placementList = new PlacementList(getApplicationContext(), "placements.json");
-        UpdateDbTable wagonTypes = new WagonTypeUpdate();
-        wagonTypes.prepareTable(getApplicationContext(), "wagontypes.json");
-        UpdateDbTable wagon = new WagonUpdate();
-        wagon.prepareTable(getApplicationContext(), "wagons.json");
         String[] from = new String[] {"name"};
         int[] to = new int[] {R.id.wagon_name};
-        final SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.list_wagon, cursor, from, to, 0);
+        adapter = new SimpleCursorAdapter(this, R.layout.list_wagon, cursor, from, to, 0);
         adapter.setFilterQueryProvider(new FilterQueryProvider() {
             @Override
             public Cursor runQuery(CharSequence charSequence) {
@@ -65,7 +63,7 @@ public class WagonActivity extends ListActivity {
                 finish();
             }
         });
-        final EditText wagon_search = (EditText) findViewById(R.id.wagon_search);
+        wagon_search = (EditText) findViewById(R.id.wagon_search);
         wagon_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -84,5 +82,20 @@ public class WagonActivity extends ListActivity {
 
             }
         });
+    }
+
+    @Override
+    public void update() {
+        String filter = this.wagon_search.getText().toString();
+        Cursor newCursor = null;
+        if(filter.isEmpty()) {
+            newCursor = PhotoControllerContract.WagonEntry.getAllEntriesCursor();
+        } else {
+            newCursor = PhotoControllerContract.WagonEntry.getFilteredEntriesCursor(filter);
+        }
+        if(newCursor != null) {
+            this.adapter.changeCursor(newCursor);
+            this.adapter.notifyDataSetChanged();
+        }
     }
 }
