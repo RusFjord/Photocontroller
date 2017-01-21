@@ -22,20 +22,6 @@ public class PlaceForAdsUpdate extends UpdateDbTable {
                 PlaceForAds currentPlaceforads = new PlaceForAds(placeforads);
                 db.insert(PhotoControllerContract.PlaceForAdsEntry.TABLE_NAME, null, currentPlaceforads.getContentValues());
             }
-//            String currentMd5 = Photocontroler.getMD5EncryptedString(fileList);
-//            try (Cursor cursor = db.rawQuery("select md5 from " + PhotoControllerContract.FilesMd5Entry.TABLE_NAME + " where filename = ?", new String[]{FILENAME})) {
-//                int idColumnIndex = cursor.getColumnIndex(PhotoControllerContract.FilesMd5Entry._ID);
-//                long rowIndex = 0;
-//                while (cursor.moveToNext()) {
-//                    rowIndex = cursor.getInt(idColumnIndex);
-//                }
-//                ContentValues contentValues = new ContentValues();
-//                contentValues.put(PhotoControllerContract.FilesMd5Entry._ID, (rowIndex == 0 ? null : rowIndex));
-//                contentValues.put(PhotoControllerContract.FilesMd5Entry.COLUMN_FILENAME, FILENAME);
-//                contentValues.put(PhotoControllerContract.FilesMd5Entry.COLUMN_MD5, currentMd5);
-//                db.replace(PhotoControllerContract.FilesMd5Entry.TABLE_NAME, null, contentValues);
-//            }
-
         } catch (Exception e) {
             Log.e("PLACEFORADS LIST", e.getMessage());
         }

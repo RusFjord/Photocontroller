@@ -47,10 +47,6 @@ public class PlaceForAdsActivity extends ListActivity implements UpdateRefsListe
     }
 
     private void getPlaceForAds() {
-
-//        PlaceForAdsList updateList = new PlaceForAdsList(this, "placeforads.json");
-//        updateList.prepareList(this);
-
         Cursor cursor = PhotoControllerContract.PlaceForAdsEntry.getAllEntriesCursor();
         if (cursor == null) {
             Log.e("CURSOR PLACEFORADS", "Ошибка получения данных рекламных мест");
@@ -108,12 +104,16 @@ public class PlaceForAdsActivity extends ListActivity implements UpdateRefsListe
 
     @Override
     public void update() {
-//        String currentText = placeforads_search.getText().toString();
-//        SimpleCursorAdapter filterAdapter = (SimpleCursorAdapter)listView.getAdapter();
-//        filterAdapter.getFilter().filter(currentText);
-        Cursor newCursor = PhotoControllerContract.PlaceForAdsEntry.getAllEntriesCursor();
-        //this.adapter.swapCursor(newCursor);
-        this.adapter.changeCursor(newCursor);
-        this.adapter.notifyDataSetChanged();
+        String filter = this.placeforads_search.getText().toString();
+        Cursor newCursor = null;
+        if(filter.isEmpty()) {
+            newCursor = PhotoControllerContract.PlaceForAdsEntry.getAllEntriesCursor();
+        } else {
+            newCursor = PhotoControllerContract.PlaceForAdsEntry.getFilterCodeEntries(filter);
+        }
+        if(newCursor != null) {
+            this.adapter.changeCursor(newCursor);
+            this.adapter.notifyDataSetChanged();
+        }
     }
 }
