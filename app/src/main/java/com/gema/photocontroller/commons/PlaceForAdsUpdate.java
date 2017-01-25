@@ -11,6 +11,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class PlaceForAdsUpdate extends UpdateDbTable {
+
+    public PlaceForAdsUpdate(PreferenceData preferenceData) {
+        super(preferenceData);
+    }
+
     @Override
     protected void updateTable(SQLiteDatabase db, String fileList) {
         dropDb(db, PhotoControllerContract.PlaceForAdsEntry.TABLE_NAME);

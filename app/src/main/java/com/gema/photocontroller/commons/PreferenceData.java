@@ -13,16 +13,19 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PreferenceData extends WorkFiles {
 
     private String version;
     private String password;
     private ArrayList<String> listForDownload;
+    private HashMap<String, String> remoteMd5;
 
     public PreferenceData(String filename, Context context) {
         super(filename);
         this.listForDownload = new ArrayList<>();
+        this.remoteMd5 = new HashMap<>();
         readData(context);
     }
 
@@ -52,6 +55,7 @@ public class PreferenceData extends WorkFiles {
             JSONObject object = list.getJSONObject(i);
             String filename = object.getString("filename");
             String newMd5 = object.getString("md5");
+            this.remoteMd5.put(filename, newMd5);
             if (!md5Equals(db, filename + ".json", newMd5)) {
                 listForDownload.add(filename + ".zip");
             }
@@ -84,6 +88,30 @@ public class PreferenceData extends WorkFiles {
     public void updatePreference(Context context) {
         AppPreference preference = new AppPreference(context);
         preference.setPasswordApp(this.password);
+    }
+
+    public boolean tryRemoteMd5(String filename) {
+        boolean result = false;
+        String currentMD5 = null;
+        SQLiteDatabase db = Photocontroler.getDb();
+        try (Cursor cursor = db.rawQuery("select md5 from " + PhotoControllerContract.FilesMd5Entry.TABLE_NAME + " where filename = ?", new String[]{filename})) {
+            int md5ColumnIndex = cursor.getColumnIndex(PhotoControllerContract.FilesMd5Entry.COLUMN_MD5);
+
+            while (cursor.moveToNext()) {
+                currentMD5 = cursor.getString(md5ColumnIndex);
+            }
+        }
+        if (currentMD5 == null) {
+            result = true;
+        } else {
+            String remoteMD5 = this.remoteMd5.get(filename);
+            if (remoteMD5 != null) {
+                if (!currentMD5.equals(remoteMD5)) {
+                    result = true;
+                }
+            }
+        }
+        return result;
     }
 
 }

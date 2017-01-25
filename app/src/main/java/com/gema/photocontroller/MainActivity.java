@@ -18,6 +18,7 @@ import com.gema.photocontroller.commons.AppPreference;
 import com.gema.photocontroller.commons.DownloadFiles;
 import com.gema.photocontroller.commons.PlaceForAdsUpdate;
 import com.gema.photocontroller.commons.PoolOfUpdate;
+import com.gema.photocontroller.commons.PreferenceData;
 import com.gema.photocontroller.commons.WagonTypeUpdate;
 import com.gema.photocontroller.commons.WagonUpdate;
 import com.gema.photocontroller.db.UpdateDbTable;
@@ -58,12 +59,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    private void makeUpdateRefs() {
-        UpdateDbTable placeForAds = new PlaceForAdsUpdate();
+    private void makeUpdateRefs(PreferenceData preferenceData) {
+        UpdateDbTable placeForAds = new PlaceForAdsUpdate(preferenceData);
         placeForAds.prepareTable(this, "placeforads.json");
-        UpdateDbTable wagonTypes = new WagonTypeUpdate();
+        UpdateDbTable wagonTypes = new WagonTypeUpdate(preferenceData);
         wagonTypes.prepareTable(this, "wagontypes.json");
-        UpdateDbTable wagon = new WagonUpdate();
+        UpdateDbTable wagon = new WagonUpdate(preferenceData);
         wagon.prepareTable(this, "wagons.json");
         PoolOfUpdate poolOfUpdate = Photocontroler.getPoolOfUpdate();
         poolOfUpdate.notifyListeners();
@@ -92,7 +93,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             tryUpdateApp(this.downloadFiles);
-            makeUpdateRefs();
+            makeUpdateRefs(this.downloadFiles.getPreferenceData());
         }
     }
 

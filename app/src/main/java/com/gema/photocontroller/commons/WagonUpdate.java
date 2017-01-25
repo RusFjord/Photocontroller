@@ -12,6 +12,10 @@ import org.json.JSONObject;
 
 public class WagonUpdate extends UpdateDbTable {
 
+    public WagonUpdate(PreferenceData preferenceData) {
+        super(preferenceData);
+    }
+
     @Override
     protected void updateTable(SQLiteDatabase db, String fileList) {
         dropDb(db, PhotoControllerContract.WagonEntry.TABLE_NAME);

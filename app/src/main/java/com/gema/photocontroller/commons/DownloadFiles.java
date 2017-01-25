@@ -158,4 +158,8 @@ public class DownloadFiles extends WorkFiles{
         File updateFile = getFile(sftpClient, remoteFileName, localFileName);
         updateFile.deleteOnExit();
     }
+
+    public PreferenceData getPreferenceData() {
+        return this.preferenceData;
+    }
 }

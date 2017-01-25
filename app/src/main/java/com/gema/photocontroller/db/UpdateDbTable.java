@@ -6,22 +6,25 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.gema.photocontroller.application.Photocontroler;
+import com.gema.photocontroller.commons.PreferenceData;
 import com.gema.photocontroller.files.WorkFiles;
 
 public abstract class UpdateDbTable extends WorkFiles {
 
     private String filename = "";
+    private PreferenceData preferenceData;
 
-    public UpdateDbTable() {
+    public UpdateDbTable(PreferenceData preferenceData) {
         super("");
+        this.preferenceData = preferenceData;
     }
 
     public void prepareTable(Context context, String filename) {
-        super.setFilename(filename);
-        String fileList = super.ReadFile(context);
-        SQLiteDatabase db = Photocontroler.getDb();
-
-        if (!md5Equals(db, fileList)) {
+        if (tryUpdateNeed(filename)) {
+            this.filename = filename;
+            super.setFilename(filename);
+            String fileList = super.ReadFile(context);
+            SQLiteDatabase db = Photocontroler.getDb();
             updateTable(db, fileList);
             setMd5(db, fileList);
         }
@@ -69,5 +72,9 @@ public abstract class UpdateDbTable extends WorkFiles {
     protected void dropDb(SQLiteDatabase db, String tableName) {
         String dropQuery = "DELETE FROM " + tableName + "; VACUUM;";
         db.execSQL(dropQuery);
+    }
+
+    private boolean tryUpdateNeed(String filename) {
+        return this.preferenceData.tryRemoteMd5(filename);
     }
 }
