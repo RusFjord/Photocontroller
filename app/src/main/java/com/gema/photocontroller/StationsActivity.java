@@ -114,9 +114,9 @@ public class StationsActivity extends ListActivity implements UpdateRefsListener
         String filter = this.stations_search.getText().toString();
         Cursor newCursor = null;
         if(filter.isEmpty()) {
-            newCursor = PhotoControllerContract.PlaceForAdsEntry.getAllEntriesCursor();
+            newCursor = PhotoControllerContract.StationsEntry.getAllEntriesCursor();
         } else {
-            newCursor = PhotoControllerContract.PlaceForAdsEntry.getFilterCodeEntries(filter);
+            newCursor = PhotoControllerContract.StationsEntry.getFilterCodeEntries(filter);
         }
         if(newCursor != null) {
             this.adapter.changeCursor(newCursor);

@@ -20,6 +20,7 @@ import com.gema.photocontroller.commons.PlaceForAdsUpdate;
 import com.gema.photocontroller.commons.PlacementUpdate;
 import com.gema.photocontroller.commons.PoolOfUpdate;
 import com.gema.photocontroller.commons.PreferenceData;
+import com.gema.photocontroller.commons.ProblemsUpdate;
 import com.gema.photocontroller.commons.StationsUpdate;
 import com.gema.photocontroller.commons.WagonTypeUpdate;
 import com.gema.photocontroller.commons.WagonUpdate;
@@ -52,8 +53,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         myTask.execute();
     }
 
-    private void tryUpdateApp(DownloadFiles downloadFiles)
-    {
+    private void tryUpdateApp(DownloadFiles downloadFiles) {
         if (downloadFiles.tryUpdate()) {
             Command update = new AppUpdateCommand();
             update.execute(getApplicationContext());
@@ -72,6 +72,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         placement.prepareTable(this, "placements.json", preferenceData.getCurrentMd5("placements"));
         UpdateDbTable stations = new StationsUpdate(preferenceData);
         stations.prepareTable(this, "stations.json", preferenceData.getCurrentMd5("stations"));
+        UpdateDbTable problems = new ProblemsUpdate(preferenceData);
+        problems.prepareTable(this, "problems.json", preferenceData.getCurrentMd5("problems"));
         PoolOfUpdate poolOfUpdate = Photocontroler.getPoolOfUpdate();
         poolOfUpdate.notifyListeners();
     }
