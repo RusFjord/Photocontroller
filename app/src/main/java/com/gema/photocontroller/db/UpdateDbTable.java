@@ -19,14 +19,14 @@ public abstract class UpdateDbTable extends WorkFiles {
         this.preferenceData = preferenceData;
     }
 
-    public void prepareTable(Context context, String filename) {
+    public void prepareTable(Context context, String filename, String currentMd5) {
         if (tryUpdateNeed(filename)) {
             this.filename = filename;
             super.setFilename(filename);
             String fileList = super.ReadFile(context);
             SQLiteDatabase db = Photocontroler.getDb();
             updateTable(db, fileList);
-            setMd5(db, fileList);
+            setMd5(db, currentMd5);
         }
     }
 
@@ -51,8 +51,8 @@ public abstract class UpdateDbTable extends WorkFiles {
         return result;
     }
 
-    private void setMd5(SQLiteDatabase db, String fileList) {
-        String currentMd5 = Photocontroler.getMD5EncryptedString(fileList);
+    private void setMd5(SQLiteDatabase db, String currentMd5) {
+        //String currentMd5 = Photocontroler.getMD5EncryptedString(fileList);
         try (Cursor cursor = db.rawQuery("select _id, md5 from " + PhotoControllerContract.FilesMd5Entry.TABLE_NAME + " where filename = ?", new String[]{filename})) {
             int idColumnIndex = cursor.getColumnIndex(PhotoControllerContract.FilesMd5Entry._ID);
             long rowIndex = 0;

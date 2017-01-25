@@ -61,11 +61,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     private void makeUpdateRefs(PreferenceData preferenceData) {
         UpdateDbTable placeForAds = new PlaceForAdsUpdate(preferenceData);
-        placeForAds.prepareTable(this, "placeforads.json");
+        placeForAds.prepareTable(this, "placeforads.json", preferenceData.getCurrentMd5("placeforads"));
         UpdateDbTable wagonTypes = new WagonTypeUpdate(preferenceData);
-        wagonTypes.prepareTable(this, "wagontypes.json");
+        wagonTypes.prepareTable(this, "wagontypes.json", preferenceData.getCurrentMd5("wagontypes"));
         UpdateDbTable wagon = new WagonUpdate(preferenceData);
-        wagon.prepareTable(this, "wagons.json");
+        wagon.prepareTable(this, "wagons.json", preferenceData.getCurrentMd5("wagons"));
         PoolOfUpdate poolOfUpdate = Photocontroler.getPoolOfUpdate();
         poolOfUpdate.notifyListeners();
     }

@@ -114,4 +114,7 @@ public class PreferenceData extends WorkFiles {
         return result;
     }
 
+    public String getCurrentMd5(String filename) {
+        return this.remoteMd5.get(filename);
+    }
 }
