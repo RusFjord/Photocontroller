@@ -20,6 +20,7 @@ import com.gema.photocontroller.commons.PlaceForAdsUpdate;
 import com.gema.photocontroller.commons.PlacementUpdate;
 import com.gema.photocontroller.commons.PoolOfUpdate;
 import com.gema.photocontroller.commons.PreferenceData;
+import com.gema.photocontroller.commons.StationsUpdate;
 import com.gema.photocontroller.commons.WagonTypeUpdate;
 import com.gema.photocontroller.commons.WagonUpdate;
 import com.gema.photocontroller.db.UpdateDbTable;
@@ -69,6 +70,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         wagon.prepareTable(this, "wagons.json", preferenceData.getCurrentMd5("wagons"));
         UpdateDbTable placement = new PlacementUpdate(preferenceData);
         placement.prepareTable(this, "placements.json", preferenceData.getCurrentMd5("placements"));
+        UpdateDbTable stations = new StationsUpdate(preferenceData);
+        stations.prepareTable(this, "stations.json", preferenceData.getCurrentMd5("stations"));
         PoolOfUpdate poolOfUpdate = Photocontroler.getPoolOfUpdate();
         poolOfUpdate.notifyListeners();
     }

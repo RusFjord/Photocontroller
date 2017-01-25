@@ -28,6 +28,7 @@ public class PlacementActivity extends ListActivity implements UpdateRefsListene
     private boolean isCall = false;
     private SimpleCursorAdapter adapter;
     private EditText placement_search;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +52,11 @@ public class PlacementActivity extends ListActivity implements UpdateRefsListene
     }
 
     private void getPlacement() {
-
         Cursor cursor = PhotoControllerContract.PlacementEntry.getAllEntriesCursor();
         if (cursor == null) {
-            Log.e("CURSOR PLACEFORADS", "Ошибка получения данных рекламных мест");
+            Log.e("CURSOR PLACEMENTS", "Ошибка получения данных размещений");
             finish();
         }
-        //PlacementList placementList = new PlacementList(getApplicationContext(), "placements.json");
         String[] from = new String[] {"aid", "placeforadsName", "brandname"};
         int[] to = new int[] {R.id.id_placement, R.id.placeforads_placement, R.id.brand_name_placement};
         adapter = new SimpleCursorAdapter(this, R.layout.list_placement, cursor, from, to, 0);
@@ -67,8 +66,7 @@ public class PlacementActivity extends ListActivity implements UpdateRefsListene
                 return PhotoControllerContract.PlacementEntry.getFilterAidEntries(charSequence.toString());
             }
         });
-
-        final ListView listView = (ListView) findViewById(android.R.id.list);
+        listView = (ListView) findViewById(android.R.id.list);
         listView.setAdapter(adapter);
         listView.setFastScrollEnabled(true);
         listView.setTextFilterEnabled(true);

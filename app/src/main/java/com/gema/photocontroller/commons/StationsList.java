@@ -36,7 +36,7 @@ public class StationsList extends WorkFiles{
         if (!md5Equals(db, fileList)) {
             updateTable(db, fileList);
         }
-        this.list = PhotoControllerContract.StationsEntry.getAllEntries();
+        //this.list = PhotoControllerContract.StationsEntry.getAllEntries();
     }
 
     private void updateTable(SQLiteDatabase db, String fileList) {
