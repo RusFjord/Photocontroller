@@ -55,13 +55,14 @@ public class PreferenceData extends WorkFiles {
             JSONObject object = list.getJSONObject(i);
             String filename = object.getString("filename");
             String newMd5 = object.getString("md5");
-            this.remoteMd5.put(filename, newMd5);
-            if (!md5Equals(db, filename + ".json", newMd5)) {
+            this.remoteMd5.put(filename + ".json", newMd5);
+            if (tryRemoteMd5(filename + ".json")) {
                 listForDownload.add(filename + ".zip");
             }
         }
     }
 
+    @Deprecated
     private boolean md5Equals(SQLiteDatabase db, String filename, String newMd5) {
 
         boolean result = false;

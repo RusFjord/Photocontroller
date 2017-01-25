@@ -46,7 +46,7 @@ public class Wagon {
 
     public Wagon(JSONObject jsonObject) throws Exception {
         this.number = jsonObject.getLong("number");
-        this.code = jsonObject.getString("code");
+        this.code = jsonObject.getString("id");
         this.name = jsonObject.getString("name");
         String typeCode = jsonObject.getString("type");
         this.type = PhotoControllerContract.WagonTypeEntry.getOneEntryCode(typeCode);

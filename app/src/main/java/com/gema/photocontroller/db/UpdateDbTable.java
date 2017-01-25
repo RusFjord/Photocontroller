@@ -52,7 +52,6 @@ public abstract class UpdateDbTable extends WorkFiles {
     }
 
     private void setMd5(SQLiteDatabase db, String currentMd5) {
-        //String currentMd5 = Photocontroler.getMD5EncryptedString(fileList);
         try (Cursor cursor = db.rawQuery("select _id, md5 from " + PhotoControllerContract.FilesMd5Entry.TABLE_NAME + " where filename = ?", new String[]{filename})) {
             int idColumnIndex = cursor.getColumnIndex(PhotoControllerContract.FilesMd5Entry._ID);
             long rowIndex = 0;
