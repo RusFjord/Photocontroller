@@ -15,20 +15,39 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
+import com.gema.photocontroller.application.Photocontroler;
 import com.gema.photocontroller.commons.PlacementList;
+import com.gema.photocontroller.commons.PoolOfUpdate;
 import com.gema.photocontroller.db.PhotoControllerContract;
+import com.gema.photocontroller.interfaces.UpdateRefsListener;
 
-public class PlacementActivity extends ListActivity {
+public class PlacementActivity extends ListActivity implements UpdateRefsListener {
 
     private final int PLACEMENT_SHOW = 3233212;
     private final String GET_PLACEMENT = "get";
     private boolean isCall = false;
+    private SimpleCursorAdapter adapter;
+    private EditText placement_search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_placement);
         getPlacement();
+    }
+
+    @Override
+    protected void onResume() {
+        PoolOfUpdate poolOfUpdate = Photocontroler.getPoolOfUpdate();
+        poolOfUpdate.addListener(this);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        PoolOfUpdate poolOfUpdate = Photocontroler.getPoolOfUpdate();
+        poolOfUpdate.deleteListener(this);
+        super.onPause();
     }
 
     private void getPlacement() {
@@ -38,10 +57,10 @@ public class PlacementActivity extends ListActivity {
             Log.e("CURSOR PLACEFORADS", "Ошибка получения данных рекламных мест");
             finish();
         }
-        PlacementList placementList = new PlacementList(getApplicationContext(), "placements.json");
+        //PlacementList placementList = new PlacementList(getApplicationContext(), "placements.json");
         String[] from = new String[] {"aid", "placeforadsName", "brandname"};
         int[] to = new int[] {R.id.id_placement, R.id.placeforads_placement, R.id.brand_name_placement};
-        final SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.list_placement, cursor, from, to, 0);
+        adapter = new SimpleCursorAdapter(this, R.layout.list_placement, cursor, from, to, 0);
         adapter.setFilterQueryProvider(new FilterQueryProvider() {
             @Override
             public Cursor runQuery(CharSequence charSequence) {
@@ -79,8 +98,8 @@ public class PlacementActivity extends ListActivity {
             }
         });
 
-        final EditText placeforads_search = (EditText) findViewById(R.id.placement_search);
-        placeforads_search.addTextChangedListener(new TextWatcher() {
+        placement_search = (EditText) findViewById(R.id.placement_search);
+        placement_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -98,5 +117,20 @@ public class PlacementActivity extends ListActivity {
 
             }
         });
+    }
+
+    @Override
+    public void update() {
+        String filter = this.placement_search.getText().toString();
+        Cursor newCursor = null;
+        if(filter.isEmpty()) {
+            newCursor = PhotoControllerContract.PlacementEntry.getAllEntriesCursor();
+        } else {
+            newCursor = PhotoControllerContract.PlacementEntry.getFilterAidEntries(filter);
+        }
+        if(newCursor != null) {
+            this.adapter.changeCursor(newCursor);
+            this.adapter.notifyDataSetChanged();
+        }
     }
 }
