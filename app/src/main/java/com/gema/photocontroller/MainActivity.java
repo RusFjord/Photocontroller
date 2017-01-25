@@ -17,6 +17,7 @@ import com.gema.photocontroller.commands.AppUpdateCommand;
 import com.gema.photocontroller.commons.AppPreference;
 import com.gema.photocontroller.commons.DownloadFiles;
 import com.gema.photocontroller.commons.PlaceForAdsUpdate;
+import com.gema.photocontroller.commons.PlacementUpdate;
 import com.gema.photocontroller.commons.PoolOfUpdate;
 import com.gema.photocontroller.commons.PreferenceData;
 import com.gema.photocontroller.commons.WagonTypeUpdate;
@@ -66,6 +67,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         wagonTypes.prepareTable(this, "wagontypes.json", preferenceData.getCurrentMd5("wagontypes"));
         UpdateDbTable wagon = new WagonUpdate(preferenceData);
         wagon.prepareTable(this, "wagons.json", preferenceData.getCurrentMd5("wagons"));
+        UpdateDbTable placement = new PlacementUpdate(preferenceData);
+        placement.prepareTable(this, "placements.json", preferenceData.getCurrentMd5("placements"));
         PoolOfUpdate poolOfUpdate = Photocontroler.getPoolOfUpdate();
         poolOfUpdate.notifyListeners();
     }
