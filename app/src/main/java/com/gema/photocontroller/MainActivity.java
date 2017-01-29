@@ -14,6 +14,7 @@ import android.widget.ImageView;
 
 import com.gema.photocontroller.application.Photocontroler;
 import com.gema.photocontroller.commands.AppUpdateCommand;
+import com.gema.photocontroller.commands.RefUpdateCommand;
 import com.gema.photocontroller.commons.AppPreference;
 import com.gema.photocontroller.commons.DownloadFiles;
 import com.gema.photocontroller.commons.PlaceForAdsUpdate;
@@ -62,20 +63,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     private void makeUpdateRefs(PreferenceData preferenceData) {
-        UpdateDbTable placeForAds = new PlaceForAdsUpdate(preferenceData);
-        placeForAds.prepareTable(this, "placeforads.json", preferenceData.getCurrentMd5("placeforads.json"));
-        UpdateDbTable wagonTypes = new WagonTypeUpdate(preferenceData);
-        wagonTypes.prepareTable(this, "wagontypes.json", preferenceData.getCurrentMd5("wagontypes.json"));
-        UpdateDbTable wagon = new WagonUpdate(preferenceData);
-        wagon.prepareTable(this, "wagons.json", preferenceData.getCurrentMd5("wagons.json"));
-        UpdateDbTable placement = new PlacementUpdate(preferenceData);
-        placement.prepareTable(this, "placements.json", preferenceData.getCurrentMd5("placements.json"));
-        UpdateDbTable stations = new StationsUpdate(preferenceData);
-        stations.prepareTable(this, "stations.json", preferenceData.getCurrentMd5("stations.json"));
-        UpdateDbTable problems = new ProblemsUpdate(preferenceData);
-        problems.prepareTable(this, "problems.json", preferenceData.getCurrentMd5("problems.json"));
-        PoolOfUpdate poolOfUpdate = Photocontroler.getPoolOfUpdate();
-        poolOfUpdate.notifyListeners();
+        RefUpdateCommand makeUpdate = new RefUpdateCommand(preferenceData, this);
+        makeUpdate.execute();
     }
 
     class MyTask extends AsyncTask<Void, Void, Void> {
@@ -102,6 +91,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             super.onPostExecute(result);
             tryUpdateApp(this.downloadFiles);
             makeUpdateRefs(this.downloadFiles.getPreferenceData());
+
         }
     }
 
