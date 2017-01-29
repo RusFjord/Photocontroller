@@ -11,4 +11,5 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="caption_place_for_ads">18sp</dimen>
     <dimen name="caption_place_for_ads_padding">5dp</dimen>
+    <dimen name="caption_sticky">16sp</dimen>
 </resources>

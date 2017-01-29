@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/set_package"
-        android:textSize="@dimen/caption_place_for_ads"
+        android:textSize="@dimen/caption_sticky"
         android:id="@+id/change_package"
         android:layout_marginBottom="25dp"
         android:padding="@dimen/caption_place_for_ads_padding"
