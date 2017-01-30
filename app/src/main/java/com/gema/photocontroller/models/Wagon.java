@@ -17,7 +17,6 @@ public class Wagon {
     private WagonType type;
 
     public Wagon(String number, String code, String name, WagonType type) {
-
         this.number = number;
         this.type = type;
         this.code = code;

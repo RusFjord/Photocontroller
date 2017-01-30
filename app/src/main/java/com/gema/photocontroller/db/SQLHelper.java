@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ public class SQLHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "photocontroller.db";
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public SQLHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -93,7 +94,7 @@ public class SQLHelper extends SQLiteOpenHelper {
                 + PhotoControllerContract.WagonEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + PhotoControllerContract.WagonEntry.COLUMN_CODE + " TEXT NOT NULL, "
                 + PhotoControllerContract.WagonEntry.COLUMN_NAME + " TEXT NOT NULL, "
-                + PhotoControllerContract.WagonEntry.COLUMN_NUMBER + " INTEGER DEFAULT 0, "
+                + PhotoControllerContract.WagonEntry.COLUMN_NUMBER + " TEXT NOT NULL, "
                 + PhotoControllerContract.WagonEntry.COLUMN_WAGON_TYPE + " INTEGER DEFAULT 0);";
         tables.add(SQL_CREATE_WAGON_TABLE);
 
@@ -103,6 +104,10 @@ public class SQLHelper extends SQLiteOpenHelper {
                 + PhotoControllerContract.WagonTypeEntry.COLUMN_NAME + " TEXT NOT NULL);";
         tables.add(SQL_CREATE_WAGON_TYPE_TABLE);
 
+        String SQL_CREATE_WAGON_TYPE_TABLE_INDEX = "CREATE INDEX IF NOT EXISTS " + PhotoControllerContract.WagonTypeEntry.TABLE_NAME  + "_index ON " + PhotoControllerContract.WagonTypeEntry.TABLE_NAME + " ("
+                + PhotoControllerContract.WagonTypeEntry.COLUMN_CODE + ");";
+        tables.add(SQL_CREATE_WAGON_TYPE_TABLE_INDEX);
+
         for (String table : tables) {
             db.execSQL(table);
         }
@@ -110,16 +115,24 @@ public class SQLHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-        Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
-        List<String> tables = new ArrayList<>();
-        while (c.moveToNext()) {
-            tables.add(c.getString(0));
+        String dropQuery = "DROP TABLE IF EXISTS " + PhotoControllerContract.WagonEntry.TABLE_NAME;
+        db.execSQL(dropQuery);
+        String SQL_CREATE_WAGON_TABLE = "CREATE TABLE IF NOT EXISTS " + PhotoControllerContract.WagonEntry.TABLE_NAME + " ("
+                + PhotoControllerContract.WagonEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + PhotoControllerContract.WagonEntry.COLUMN_CODE + " TEXT NOT NULL, "
+                + PhotoControllerContract.WagonEntry.COLUMN_NAME + " TEXT NOT NULL, "
+                + PhotoControllerContract.WagonEntry.COLUMN_NUMBER + " TEXT NOT NULL, "
+                + PhotoControllerContract.WagonEntry.COLUMN_WAGON_TYPE + " INTEGER DEFAULT 0);";
+        db.execSQL(SQL_CREATE_WAGON_TABLE);
+        db.beginTransaction();
+        String updateMd5 = "DELETE FROM " + PhotoControllerContract.FilesMd5Entry.TABLE_NAME + " WHERE " + PhotoControllerContract.FilesMd5Entry.COLUMN_FILENAME + " = 'wagons.json'";
+        try {
+            db.execSQL(updateMd5);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.e("UPGRADE DB", e.getMessage());
+        } finally {
+            db.endTransaction();
         }
-        for (String table : tables) {
-            String dropQuery = "DROP TABLE IF EXISTS " + table;
-            db.execSQL(dropQuery);
-        }
-        onCreate(db);
     }
 }
