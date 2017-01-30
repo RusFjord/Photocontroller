@@ -54,6 +54,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         myTask.execute();
     }
 
+    @Deprecated
     private boolean tryUpdateApp(DownloadFiles downloadFiles) {
         boolean result = false;
         if (downloadFiles.tryUpdate()) {
@@ -64,11 +65,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         return result;
     }
 
-    private void makeUpdateRefs(PreferenceData preferenceData, boolean isUpdate) {
-        if (!isUpdate) {
-            RefUpdateCommand makeUpdate = new RefUpdateCommand(preferenceData, this);
-            makeUpdate.execute();
-        }
+    private void makeUpdateRefs(PreferenceData preferenceData) {
+        RefUpdateCommand makeUpdate = new RefUpdateCommand(preferenceData, this);
+        makeUpdate.execute();
     }
 
     class MyTask extends AsyncTask<Void, Void, Void> {
@@ -92,8 +91,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         @Override
         protected void onPostExecute(Void result) {
-            boolean resultTry = tryUpdateApp(this.downloadFiles);
-            makeUpdateRefs(this.downloadFiles.getPreferenceData(), resultTry);
+            //boolean resultTry = tryUpdateApp(this.downloadFiles);
+            makeUpdateRefs(this.downloadFiles.getPreferenceData());
             super.onPostExecute(result);
         }
     }
