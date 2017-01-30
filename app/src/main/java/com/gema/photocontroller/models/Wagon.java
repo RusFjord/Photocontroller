@@ -11,12 +11,12 @@ import org.json.JSONObject;
 public class Wagon {
 
     private long id;
-    private long number;
+    private String number;
     private String code;
     private String name;
     private WagonType type;
 
-    public Wagon(long number, String code, String name, WagonType type) {
+    public Wagon(String number, String code, String name, WagonType type) {
 
         this.number = number;
         this.type = type;
@@ -24,7 +24,7 @@ public class Wagon {
         this.name = name;
     }
 
-    public long getNumber() {
+    public String getNumber() {
         return number;
     }
 
@@ -45,7 +45,7 @@ public class Wagon {
     }
 
     public Wagon(JSONObject jsonObject) throws Exception {
-        this.number = jsonObject.getLong("number");
+        this.number = jsonObject.getString("number");
         this.code = jsonObject.getString("id");
         this.name = jsonObject.getString("name");
         String typeCode = jsonObject.getString("type");
@@ -60,7 +60,7 @@ public class Wagon {
         int wagonTypeColumnIndex = cursor.getColumnIndex(PhotoControllerContract.WagonEntry.COLUMN_WAGON_TYPE);
 
         this.id = cursor.getLong(idColumnIndex);
-        this.number = cursor.getLong(numberColumnIndex);
+        this.number = cursor.getString(numberColumnIndex);
         this.code = cursor.getString(codeColumnIndex);
         this.name = cursor.getString(nameColumnIndex);
         long idWagonType = cursor.getLong(wagonTypeColumnIndex);
