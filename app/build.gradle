@@ -7,7 +7,7 @@ android {
         applicationId "com.gema.photocontroller"
         minSdkVersion 19
         targetSdkVersion 22
-        versionCode 0
+        versionCode 1
         versionName "1.1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
