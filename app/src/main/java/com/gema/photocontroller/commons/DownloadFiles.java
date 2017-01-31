@@ -15,10 +15,12 @@ public class DownloadFiles extends WorkFiles{
     private AppPreference preference;
     private PreferenceData preferenceData;
     private boolean isUpdate = false;
+    //private ArrayList<String> listForDownload;
 
     public DownloadFiles(String path, Context context) {
         super("tasks.json");
         this.preference = new AppPreference(context);
+        //listForDownload = new ArrayList<>();
     }
 
     private ArrayList<String> getListServerFiles() {
@@ -91,20 +93,14 @@ public class DownloadFiles extends WorkFiles{
         return result;
     }
 
-    private void preparePreferenceData(Context context, String filename) {
-        this.preferenceData = new PreferenceData(filename, context);
-    }
-
-    private void tryVersion(Context context, SFTPClient sftpClient, String remoteRoot, String currentVersion) {
+    private void preparePreferenceData(Context context, SFTPClient sftpClient, String remoteRoot) {
         String filenamePreference = "preference.json";
         String remoteFileName = remoteRoot + filenamePreference;
         String localFileName = context.getApplicationInfo().dataDir + File.separatorChar + filenamePreference;
         if (sftpClient.exist(remoteFileName)) {
             sftpClient.download(localFileName, remoteFileName);
-            preparePreferenceData(context, filenamePreference);
-            if (!currentVersion.equals(this.preferenceData.getVersion())) {
-                this.isUpdate = true;
-            }
+            this.preferenceData = new PreferenceData(filenamePreference, context);
+            this.preferenceData.updatePreference(context);
         }
     }
 
@@ -115,37 +111,31 @@ public class DownloadFiles extends WorkFiles{
     public void getFiles(Context context) {
         AppPreference.RemoteStructure remoteStructure = this.preference.getRemoteSettings();
         SFTPClient sftpClient = new SFTPClient(remoteStructure.getRemoteHost(), remoteStructure.getRemoteLogin(), remoteStructure.getRemotePassword());
-        tryVersion(context, sftpClient, remoteStructure.getRemoteRoot(), preference.getStringValue("current_version"));
-        if (this.isUpdate) {
-            getUpdateFile(context);
-        } else {
-            this.preferenceData.updatePreference(context);
 
-            ArrayList<String> filenames = this.preferenceData.getFilesForDownload();
-            ArrayList<File> files = new ArrayList<>();
-            for (String filename : filenames) {
-                File returnedFile = getFile(context, sftpClient, filename);
-                if (returnedFile != null) {
-                    files.add(returnedFile);
-                }
+        preparePreferenceData(context, sftpClient, remoteStructure.getRemoteRoot());
+        ArrayList<String> filenames = this.preferenceData.getFilesForDownload();
+        ArrayList<File> files = new ArrayList<>();
+        for (String filename : filenames) {
+            File returnedFile = getFile(context, sftpClient, filename);
+            if (returnedFile != null) {
+                files.add(returnedFile);
             }
-            JobWithZip jobWithZip = new JobWithZip();
-            File destDir = new File(context.getApplicationInfo().dataDir);
-            for (File zipFile : files) {
-                String localFileName = zipFile.getAbsolutePath();
-                if (localFileName.contains(".zip")) {
-                    try {
-                        ArrayList<File> unZipFiles = jobWithZip.toUnZip(localFileName, destDir);
-                        for (File file : unZipFiles) {
-                            Log.i("UnZip", "Файл " + file.getName() + " разархивирован");
-                        }
-                    } catch (Exception e) {
-                        Log.e("UnZip", e.getMessage());
+        }
+        JobWithZip jobWithZip = new JobWithZip();
+        File destDir = new File(context.getApplicationInfo().dataDir);
+        for (File zipFile : files) {
+            String localFileName = zipFile.getAbsolutePath();
+            if (localFileName.contains(".zip")) {
+                try {
+                    ArrayList<File> unZipFiles = jobWithZip.toUnZip(localFileName, destDir);
+                    for (File file : unZipFiles) {
+                        Log.i("UnZip", "Файл " + file.getName() + " разархивирован");
                     }
+                } catch (Exception e) {
+                    Log.e("UnZip", e.getMessage());
                 }
             }
         }
-
     }
 
     private void getUpdateFile(Context context) {
