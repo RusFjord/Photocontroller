@@ -71,8 +71,12 @@ public class Wagon {
         if (this.id != 0 ) {
             contentValues.put(PhotoControllerContract.WagonTypeEntry._ID, this.id);
         }
-        contentValues.put(PhotoControllerContract.WagonTypeEntry.COLUMN_CODE, this.code);
-        contentValues.put(PhotoControllerContract.WagonTypeEntry.COLUMN_NAME, this.name);
+        contentValues.put(PhotoControllerContract.WagonEntry.COLUMN_CODE, this.code);
+        contentValues.put(PhotoControllerContract.WagonEntry.COLUMN_NAME, this.name);
+        contentValues.put(PhotoControllerContract.WagonEntry.COLUMN_NUMBER, this.number);
+        if (this.type != null) {
+            contentValues.put(PhotoControllerContract.WagonEntry.COLUMN_WAGON_TYPE, this.type.getId());
+        }
         return contentValues;
     }
 
