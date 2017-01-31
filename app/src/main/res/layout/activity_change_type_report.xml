@@ -22,7 +22,7 @@
     <Button
         android:id="@+id/change_sticky_btn"
         android:text="@string/use_sticky_advertising"
-        style="@style/BtnFont"
+        style="@style/BtnFontSticky"
         android:layout_width="match_parent"
         android:layout_height="@dimen/main_menu_btn_height"
         android:background="@drawable/buttonshapelower" />
