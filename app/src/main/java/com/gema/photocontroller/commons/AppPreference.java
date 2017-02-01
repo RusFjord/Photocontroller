@@ -33,6 +33,7 @@ public class AppPreference {
         final String APP_PREFERENCES = "PhotoControllerPreference";
         this.currentPreference = context.getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         boolean appFirstStart = this.currentPreference.getBoolean(APP_FIRST_START, true);
+
         if(appFirstStart) {
             this.onFirstStart(context);
         }
@@ -65,12 +66,11 @@ public class AppPreference {
     }
 
     private void onFirstStart(Context context) {
-
         SharedPreferences.Editor editor = this.currentPreference.edit();
         editor.putBoolean(APP_FIRST_START, false);
-        editor.putString(REMOTE_HOST, "trk-media.ru");
-        editor.putString(REMOTE_LOGIN, "xml_sftp");
-        editor.putString(REMOTE_PASSWORD, "cpu2800");
+        editor.putString(REMOTE_HOST, "");
+        editor.putString(REMOTE_LOGIN, "");
+        editor.putString(REMOTE_PASSWORD, "");
         editor.putString(TASKS_FILE, "tasks.zip");
         editor.putString(PLACEFORADS_FILE, "placeforads.zip");
         editor.putString(STATIONS_FILE, "stations.zip");
@@ -79,10 +79,7 @@ public class AppPreference {
         TelephonyManager telephonyManager = (TelephonyManager)context.getSystemService(context.TELEPHONY_SERVICE);
         String deviceIMEI = telephonyManager.getDeviceId();
         editor.putString(DEVICE_IMEI, deviceIMEI);
-        editor.putString(PASSWORD_APP, "123");
-
-
-        //editor.putString(CURRENT_VERSION, versionName);
+        editor.putString(PASSWORD_APP, "admin");
         editor.putString(PREFERENCE_FILE, "preference.zip");
         editor.putString(DISTRIBUTION_PATH, "distribution/");
         editor.putString(ROOT_REMOTE_DIRECTORY, "/uploads/app/");
@@ -109,6 +106,15 @@ public class AppPreference {
         result.put(PLACEFORADS_FILE, this.currentPreference.getString(PLACEFORADS_FILE, ""));
         result.put(PLACEMENTS_FILE, this.currentPreference.getString(PLACEMENTS_FILE, ""));
         result.put(STATIONS_FILE, this.currentPreference.getString(STATIONS_FILE, ""));
+        return result;
+    }
+
+    public boolean hasRemoteSettings() {
+        boolean result = true;
+        RemoteStructure remoteStructure = getRemoteSettings();
+        if (remoteStructure.getRemoteHost().isEmpty()||remoteStructure.getRemoteLogin().isEmpty()||remoteStructure.getRemotePassword().isEmpty()) {
+            result = false;
+        }
         return result;
     }
 
