@@ -3,6 +3,7 @@ package com.gema.photocontroller.models;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.gema.photocontroller.db.PhotoControllerContract;
 
@@ -83,5 +84,16 @@ public class Wagon {
     public void putDb(SQLiteDatabase db) {
         ContentValues contentValues = getContentValues();
         db.insert(PhotoControllerContract.WagonEntry.TABLE_NAME, null, contentValues);
+    }
+
+    public JSONObject getJSON() {
+        JSONObject problemJSON = new JSONObject();
+        try {
+            problemJSON.put("code", this.code);
+            problemJSON.put("name", this.name);
+        } catch (Exception e) {
+            Log.e("GETJSON WAGON", "Ошибка сериализации объекта wagon в JSON");
+        }
+        return problemJSON;
     }
 }

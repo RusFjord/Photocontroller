@@ -36,6 +36,7 @@ public class JournalRecord extends WorkFiles implements Comparable{
     private Stations station;
     private String comment;
     private Problems problem;
+    private Wagon wagon;
 
     private JournalRecord() {
         super("test");
@@ -53,6 +54,13 @@ public class JournalRecord extends WorkFiles implements Comparable{
         this.files.add(photo);
     }
 
+    public JournalRecord(String type, PlacementAdv placementAdv, Wagon wagon, File photo) {
+        this(type);
+        this.placementAdv = placementAdv;
+        this.wagon = wagon;
+        this.files.add(photo);
+    }
+
     public JournalRecord(String type, PlacementAdv placementAdv, File photo, Problems problem) {
         this(type);
         this.placementAdv = placementAdv;
@@ -64,40 +72,6 @@ public class JournalRecord extends WorkFiles implements Comparable{
         this(type);
         this.station = station;
         this.files.addAll(photos);
-    }
-
-    @Deprecated
-    public JournalRecord(JSONObject jsonObject) {
-        this();
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault());
-            this.date = dateFormat.parse(jsonObject.getString("date"));
-            this.type = jsonObject.getString("type");
-            if (jsonObject.has("placeforads")) {
-                JSONObject placeForAdsJSON = jsonObject.getJSONObject("placeforads");
-                this.placementAdv = new PlaceForAds(placeForAdsJSON);
-            }
-            if (jsonObject.has("station")) {
-                JSONObject stationsJSON = jsonObject.getJSONObject("station");
-                this.station = new Stations(stationsJSON);
-            }
-            if (jsonObject.has("problem")) {
-                JSONObject problemJSON = jsonObject.getJSONObject("problem");
-                this.problem = new Problems(problemJSON);
-            }
-            if (jsonObject.has("comment")) {
-                this.comment = jsonObject.getString("comment");
-            }
-            this.isSend = jsonObject.getBoolean("isSend");
-            JSONArray filesJSON = jsonObject.getJSONArray("files");
-            for (int i = 0; i < filesJSON.length(); i++) {
-                JSONObject fileJSON = filesJSON.getJSONObject(i);
-                File file = new File(fileJSON.getString("path"));
-                this.files.add(file);
-            }
-        } catch (Exception e) {
-            Log.e("JOURNAL RECORD", e.getMessage());
-        }
     }
 
     public JournalRecord(Cursor cursor) {
@@ -152,6 +126,10 @@ public class JournalRecord extends WorkFiles implements Comparable{
                 JSONObject stationsJSON = this.station.getJSON();
                 recordJSON.put("station", stationsJSON);
             }
+            if (this.wagon != null) {
+                JSONObject wagonJSON = this.wagon.getJSON();
+                recordJSON.put("wagon", wagonJSON);
+            }
             recordJSON.put("comment", this.comment);
             recordJSON.put("isSend", this.isSend);
             JSONArray filesJSON = new JSONArray();
@@ -160,7 +138,6 @@ public class JournalRecord extends WorkFiles implements Comparable{
                 path.put("path", file.getAbsolutePath());
                 filesJSON.put(path);
             }
-            //recordJSON.put("files", filesJSON);
         } catch (Exception e) {
             e.getStackTrace();
         }
@@ -244,7 +221,6 @@ public class JournalRecord extends WorkFiles implements Comparable{
             Log.e("SEND JOURNALRECORD", e.getMessage());
         }
         this.deleteTempFiles(dir);
-        //return this.isSend;
     }
 
     private void deleteTempFiles(File tempDir) {
