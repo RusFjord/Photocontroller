@@ -14,11 +14,7 @@ import android.widget.Toast;
 import com.gema.photocontroller.adapters.JournalAdapter;
 import com.gema.photocontroller.application.Photocontroler;
 import com.gema.photocontroller.commons.JournalList;
-import com.gema.photocontroller.interfaces.ChangeSendStateJournalRecordListener;
-import com.gema.photocontroller.interfaces.ChangeSendStateJournalRecordPublisher;
 import com.gema.photocontroller.models.JournalRecord;
-
-import java.util.ArrayList;
 
 public class JournalActivity extends ListActivity {
 
@@ -70,16 +66,17 @@ public class JournalActivity extends ListActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
                 JournalAdapter journalAdapter = (JournalAdapter) adapter;
                 JournalRecord current = journalAdapter.getItem(pos);
-                int message;
-                if (!current.getSendState()) {
-
-                    message = R.string.send_journal_record;
-                    SendJournalRecordTask task = new SendJournalRecordTask(current);
-                    task.execute();
-                } else {
-                    message = R.string.journal_record_was_send;
+                if (current != null) {
+                    int message;
+                    if (!current.getSendState()) {
+                        message = R.string.send_journal_record;
+                        SendJournalRecordTask task = new SendJournalRecordTask(current);
+                        task.execute();
+                    } else {
+                        message = R.string.journal_record_was_send;
+                    }
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -89,8 +86,6 @@ public class JournalActivity extends ListActivity {
     class SendJournalRecordTask extends AsyncTask<Void, Void, Void> {
 
         private JournalRecord journalRecord;
-        private boolean isSend = false;
-        //JournalAdapter journalAdapter;
 
         private SendJournalRecordTask(JournalRecord journalRecord) {
             this.journalRecord = journalRecord;
@@ -115,7 +110,6 @@ public class JournalActivity extends ListActivity {
         @Override
         protected void onPostExecute(Void result) {
             if (journalRecord.getSendState()) {
-                //journalList.writeJSONArrayIntoFile(getApplicationContext());
                 adapter.notifyDataSetChanged();
             }
             super.onPostExecute(result);

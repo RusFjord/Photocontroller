@@ -16,20 +16,17 @@ public class Problems {
     private String name;
 
     public Problems(int id, String code, String name) {
-
         this.id = id;
         this.code = code;
         this.name = name;
     }
 
     public Problems(JSONObject jsonObject) throws Exception {
-
         this.code = jsonObject.getString("id");
         this.name = jsonObject.getString("name");
     }
 
     public JSONObject getJSON() {
-
         JSONObject problemJSON = new JSONObject();
         try {
             problemJSON.put("id", this.id);
