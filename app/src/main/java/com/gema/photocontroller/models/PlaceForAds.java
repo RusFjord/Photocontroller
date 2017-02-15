@@ -42,6 +42,7 @@ public class PlaceForAds implements PlacementAdv {
         JSONObject placeForAdsJSON = new JSONObject();
         try {
             placeForAdsJSON.put("id", this.id);
+            placeForAdsJSON.put("code", this.code);
             placeForAdsJSON.put("name", this.name);
         } catch (Exception e) {
             Log.e("PLACEFORADS", "Ошибка формирования json");

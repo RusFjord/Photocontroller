@@ -26,14 +26,15 @@ public class Stations {
 
     public JSONObject getJSON() {
 
-        JSONObject problemJSON = new JSONObject();
+        JSONObject stationJSON = new JSONObject();
         try {
-            problemJSON.put("id", this.id);
-            problemJSON.put("name", this.name);
+            stationJSON.put("id", this.id);
+            stationJSON.put("code", this.code);
+            stationJSON.put("name", this.name);
         } catch (Exception e) {
             Log.e("GETJSON STATIONS", "Ошибка сериализации объекта station в JSON");
         }
-        return problemJSON;
+        return stationJSON;
     }
 
     public int getId() {

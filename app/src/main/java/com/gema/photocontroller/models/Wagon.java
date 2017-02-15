@@ -87,13 +87,14 @@ public class Wagon {
     }
 
     public JSONObject getJSON() {
-        JSONObject problemJSON = new JSONObject();
+        JSONObject wagonJSON = new JSONObject();
         try {
-            problemJSON.put("code", this.code);
-            problemJSON.put("name", this.name);
+            wagonJSON.put("id", this.id);
+            wagonJSON.put("code", this.code);
+            wagonJSON.put("name", this.name);
         } catch (Exception e) {
             Log.e("GETJSON WAGON", "Ошибка сериализации объекта wagon в JSON");
         }
-        return problemJSON;
+        return wagonJSON;
     }
 }

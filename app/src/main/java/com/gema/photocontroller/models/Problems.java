@@ -30,6 +30,7 @@ public class Problems {
         JSONObject problemJSON = new JSONObject();
         try {
             problemJSON.put("id", this.id);
+            problemJSON.put("code", this.code);
             problemJSON.put("name", this.name);
         } catch (Exception e) {
             Log.e("GETJSON PROBLEMS", "Ошибка сериализации объекта problems в JSON");
