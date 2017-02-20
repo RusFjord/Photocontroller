@@ -2,14 +2,22 @@ package com.gema.photocontroller;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gema.photocontroller.application.Photocontroler;
 import com.gema.photocontroller.db.PhotoControllerContract;
 import com.gema.photocontroller.models.PlaceForAds;
 import com.gema.photocontroller.models.PlacementPlace;
+
+import java.io.InputStream;
+import java.util.Objects;
 
 public class ShowPlacement extends Activity {
 
@@ -56,11 +64,42 @@ public class ShowPlacement extends Activity {
                 brand_name_single_placement.setTypeface(typeface);
                 brand_name_single_placement.setText(this.placementPlace.getBrandName());
                 //TODO: Установить картинку из файла макета
-                final TextView layout_single_placement = (TextView) findViewById(R.id.layout_single_placement);
-                layout_single_placement.setTypeface(typeface);
-                layout_single_placement.setText(this.placementPlace.getLayout());
+                final ImageView layout_single_placement = (ImageView) findViewById(R.id.layout_single_placement);
+                //layout_single_placement.setTypeface(typeface);
+                //layout_single_placement.setText(this.placementPlace.getLayout());
+                String url = this.placementPlace.getLayout();
+                //String url = "http://pikchyriki.net/avatar/multyashki/100/33.jpg";
+                if (url != null && !Objects.equals(url, "")) {
+                    DownloadImageTask downloadImageTask = new DownloadImageTask(layout_single_placement);
+                    downloadImageTask.execute(url);
+                }
             }
         }
 
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("DOWNLOAD IMAGE TASK", e.getMessage());
+                //e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 }

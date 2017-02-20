@@ -97,11 +97,11 @@
             android:text="@string/layout_placement_text"
             style="@style/GemaStyleFont.GemaStyleBoldFont"
             android:layout_marginBottom="@dimen/text_margin"/>
-        <TextView
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/layout_single_placement"
-            style="@style/GemaStyleFont"/>
+            android:adjustViewBounds="true" />
     </LinearLayout>
 
 </RelativeLayout>

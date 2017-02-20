@@ -48,8 +48,9 @@ public class PreferenceData extends WorkFiles {
     }
 
     private void prepareListFiles(JSONArray list) throws Exception {
+        //String personTasks = "tasks-" +
         listForDownload.add("tasks.zip");
-        SQLiteDatabase db = Photocontroler.getDb();
+        //SQLiteDatabase db = Photocontroler.getDb();
         int length = list.length();
         for (int i = 0; i < length; i++) {
             JSONObject object = list.getJSONObject(i);
