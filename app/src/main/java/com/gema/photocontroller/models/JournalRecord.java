@@ -84,6 +84,7 @@ public class JournalRecord extends WorkFiles implements Comparable{
         int problemColumnIndex = cursor.getColumnIndex(PhotoControllerContract.JournalEntry.COLUMN_PROBLEM);
         int stationColumnIndex = cursor.getColumnIndex(PhotoControllerContract.JournalEntry.COLUMN_STATION);
         int commentColumnIndex = cursor.getColumnIndex(PhotoControllerContract.JournalEntry.COLUMN_COMMENT);
+        int wagonColumnIndex = cursor.getColumnIndex(PhotoControllerContract.JournalEntry.COLUMN_WAGON);
 
         this.id = cursor.getLong(idColumnIndex);
         this.comment = cursor.getString(commentColumnIndex);
@@ -100,6 +101,7 @@ public class JournalRecord extends WorkFiles implements Comparable{
         this.placementAdv = PhotoControllerContract.PlaceForAdsEntry.getOneEntry(cursor.getInt(placeforadsColumnIndex));
         this.problem = PhotoControllerContract.ProblemsEntry.getOneEntry(cursor.getInt(problemColumnIndex));
         this.station = PhotoControllerContract.StationsEntry.getOneEntry(cursor.getInt(stationColumnIndex));
+        this.wagon = PhotoControllerContract.WagonEntry.getOneEntry(cursor.getLong(wagonColumnIndex));
 
         ArrayList<String> paths = PhotoControllerContract.FilesEntry.getAllForID(this.id);
         for (String path : paths) {
@@ -263,6 +265,8 @@ public class JournalRecord extends WorkFiles implements Comparable{
         currentEntry.put("placeforads", placeforadsId);
         int problemId = this.problem == null ? 0 : this.problem.getId();
         currentEntry.put("problem", problemId);
+        long wagonId = this.wagon == null ? 0 : this.wagon.getId();
+        currentEntry.put("wagon", wagonId);
 
         return currentEntry;
     }
@@ -280,5 +284,9 @@ public class JournalRecord extends WorkFiles implements Comparable{
                 db.insert(PhotoControllerContract.FilesEntry.TABLE_NAME, null, currentFileEntry);
             }
         }
+    }
+
+    public Wagon getWagon() {
+        return this.wagon;
     }
 }

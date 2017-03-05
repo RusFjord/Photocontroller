@@ -12,6 +12,7 @@ import com.gema.photocontroller.R;
 import com.gema.photocontroller.interfaces.PlacementAdv;
 import com.gema.photocontroller.models.JournalRecord;
 import com.gema.photocontroller.models.Stations;
+import com.gema.photocontroller.models.Wagon;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -47,14 +48,26 @@ public class JournalAdapter extends ArrayAdapter<JournalRecord>{
         time_journal.setText(time);
         time_journal.setTextColor(textColor);
 
+        TextView type_journal = (TextView) convertView.findViewById(R.id.type_journal);
+        String typePhoto = journalRecord.getType();
+        type_journal.setText(typePhoto);
+        type_journal.setTextColor(textColor);
+
         PlacementAdv placeForAds = journalRecord.getPlacementAdv();
         Stations station = journalRecord.getStation();
+        Wagon wagon = journalRecord.getWagon();
         String currentText = "";
-        if (placeForAds != null) {
-            currentText = placeForAds.getRepresentation();
+        if (typePhoto.equals("Фотоотчет ЛА")) {
+            if (wagon != null) {
+                currentText = wagon.getName();
+            }
         } else {
-            if (station != null) {
-                currentText = station.getName();
+            if (placeForAds != null) {
+                currentText = placeForAds.getRepresentation();
+            } else {
+                if (station != null) {
+                    currentText = station.getName();
+                }
             }
         }
 
@@ -62,9 +75,7 @@ public class JournalAdapter extends ArrayAdapter<JournalRecord>{
         placeforads_journal.setText(currentText);
         placeforads_journal.setTextColor(textColor);
 
-        TextView type_journal = (TextView) convertView.findViewById(R.id.type_journal);
-        type_journal.setText(journalRecord.getType());
-        type_journal.setTextColor(textColor);
+
 
         TextView letter_journal = (TextView) convertView.findViewById(R.id.letter_journal);
         letter_journal.setText(journalRecord.getComment());

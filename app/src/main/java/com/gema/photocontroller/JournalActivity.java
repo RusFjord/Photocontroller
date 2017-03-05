@@ -83,7 +83,7 @@ public class JournalActivity extends ListActivity {
 
 
 
-    class SendJournalRecordTask extends AsyncTask<Void, Void, Void> {
+    private class SendJournalRecordTask extends AsyncTask<Void, Void, Void> {
 
         private JournalRecord journalRecord;
 

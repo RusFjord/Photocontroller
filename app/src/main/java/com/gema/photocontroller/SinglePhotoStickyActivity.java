@@ -70,32 +70,32 @@ public class SinglePhotoStickyActivity extends Activity {
 
     private void setButtons() {
         Typeface typeface = Photocontroler.getFont(getApplicationContext());
-        final Button make_photo_btn = (Button)findViewById(R.id.make_single_photo_sticky_btn);
-        make_photo_btn.setTypeface(typeface);
-        make_photo_btn.setOnClickListener(new View.OnClickListener() {
+        final Button make_single_photo_sticky_btn = (Button)findViewById(R.id.make_single_photo_sticky_btn);
+        make_single_photo_sticky_btn.setTypeface(typeface);
+        make_single_photo_sticky_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 makePhoto();
             }
         });
 
-        final Button get_photo_btn = (Button)findViewById(R.id.get_single_photo_sticky_btn);
-        get_photo_btn.setTypeface(typeface);
-        get_photo_btn.setOnClickListener(new View.OnClickListener() {
+        final Button get_single_photo_sticky_btn = (Button)findViewById(R.id.get_single_photo_sticky_btn);
+        get_single_photo_sticky_btn.setTypeface(typeface);
+        get_single_photo_sticky_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getPhotoFromGallery();
             }
         });
 
-        final Button group_photo_send_btn = (Button) findViewById(R.id.single_photo_sticky_send_btn);
-        group_photo_send_btn.setTypeface(typeface);
-        group_photo_send_btn.setOnClickListener(new View.OnClickListener() {
+        final Button single_photo_sticky_send_btn = (Button) findViewById(R.id.single_photo_sticky_send_btn);
+        single_photo_sticky_send_btn.setTypeface(typeface);
+        single_photo_sticky_send_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), R.string.record_journal_created, Toast.LENGTH_SHORT).show();
 
-                JournalRecord journalRecord = new JournalRecord(TYPE, stickyPackage, photoFile);
+                JournalRecord journalRecord = new JournalRecord(TYPE, stickyPackage, wagon, photoFile);
                 final EditText editText = (EditText) findViewById(R.id.single_photo_comment);
                 String comment = editText.getText().toString().trim();
                 if (!comment.isEmpty()) {
