@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         config {
-            keyAlias 'Phocontroller'
+            keyAlias 'Photocontroller'
             keyPassword '2363.RuW'
             storeFile file('D:/Development/Work/Key-Store/photocontroller_key_store.jks')
             storePassword '2363.RuW'
